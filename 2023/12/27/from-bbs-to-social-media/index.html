@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Merriweather:300,300italic,400,400italic,700,700italic|Menlo:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hydropek.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="摘要 互联网的快速发展使得信息的传播和交流变得更加便捷和广泛。从早期的BBS（电子布告栏系统）到现代的社交媒体平台，用户生成内容（UGC）的分发算法经历了巨大的演变。在过去，BBS通过简单的时间排序展示内容，而如今的社交媒体平台则依靠复杂的推荐算法和个性化信息流来向用户推荐他们可能感兴趣的内容。本文将探讨早期平台的分发算法的特点以及其背后的原因，同时介绍现代平台采用的推荐算法，如协同过滤算法，并讨">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从BBS到社交媒体：UGC分发算法的演变与展望">
+<meta property="og:url" content="https://hydropek.github.io/2023/12/27/from-bbs-to-social-media/index.html">
+<meta property="og:site_name" content="hydropek&#39;s blog">
+<meta property="og:description" content="摘要 互联网的快速发展使得信息的传播和交流变得更加便捷和广泛。从早期的BBS（电子布告栏系统）到现代的社交媒体平台，用户生成内容（UGC）的分发算法经历了巨大的演变。在过去，BBS通过简单的时间排序展示内容，而如今的社交媒体平台则依靠复杂的推荐算法和个性化信息流来向用户推荐他们可能感兴趣的内容。本文将探讨早期平台的分发算法的特点以及其背后的原因，同时介绍现代平台采用的推荐算法，如协同过滤算法，并讨">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-12-26T17:47:38.000Z">
+<meta property="article:modified_time" content="2023-12-29T06:57:16.598Z">
+<meta property="article:author" content="hydropek">
+<meta property="article:tag" content="随笔">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://hydropek.github.io/2023/12/27/from-bbs-to-social-media/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>从BBS到社交媒体：UGC分发算法的演变与展望 | hydropek's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">hydropek's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hydropek.github.io/2023/12/27/from-bbs-to-social-media/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="hydropek">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hydropek's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          从BBS到社交媒体：UGC分发算法的演变与展望
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-12-27 01:47:38" itemprop="dateCreated datePublished" datetime="2023-12-27T01:47:38+08:00">2023-12-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-12-29 14:57:16" itemprop="dateModified" datetime="2023-12-29T14:57:16+08:00">2023-12-29</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong>摘要</strong></p>
+<p>互联网的快速发展使得信息的传播和交流变得更加便捷和广泛。从早期的BBS（电子布告栏系统）到现代的社交媒体平台，用户生成内容（UGC）的分发算法经历了巨大的演变。在过去，BBS通过简单的时间排序展示内容，而如今的社交媒体平台则依靠复杂的推荐算法和个性化信息流来向用户推荐他们可能感兴趣的内容。本文将探讨早期平台的分发算法的特点以及其背后的原因，同时介绍现代平台采用的推荐算法，如协同过滤算法，并讨论它们的工作原理和应用。通过深入了解这些算法的变革，我们可以更好地理解社交媒体平台上内容分发的机制，以及它们对用户体验和信息传播的影响。同时，本文将探讨可能的未来发展方向，以期为UGC平台的进一步改进和创新提供思路和启示。</p>
+<p><strong>关键词</strong></p>
+<p>UGC BBS 社交媒体 内容分发算法</p>
+<span id="more"></span>
+<hr />
+<h2 id="1-引言"><a class="markdownIt-Anchor" href="#1-引言"></a> 1 引言</h2>
+<p>在本文中，我们将深入探讨从早期的BBS平台到现代社交媒体平台的UGC分发算法的演变过程。本文将首先回顾早期平台的分发算法特点，了解BBS是如何展示内容的。这种算法的主要特点是将用户发布的内容按照最近修改时间进行排序，并在各个版面中展示相同的内容。本文将探讨这种算法的原因，包括当时服务器计算能力的限制和用户群体的特点，以及管理者对内容质量的维护。</p>
+<p>随着技术的发展、服务器计算能力逐渐提升，现代社交媒体平台引入了更复杂的推荐算法和个性化信息流。本文将介绍这些现代平台采用的推荐算法，如协同过滤算法，并详细讨论它们的工作原理和应用。这些算法通过分析用户的兴趣、行为和社交网络关系，能够向用户推荐他们可能感兴趣的内容，提供更加个性化的用户体验。</p>
+<p>本文还将探讨这些算法的变革对用户体验和信息传播的影响。复杂的推荐算法和个性化信息流使得用户可以更轻松地发现和获取感兴趣的内容，同时也增加了用户与平台之间的互动和粘性。然而，这种算法也引发了一些问题和挑战，如信息过滤的偏好、信息泡沫化以及算法的公正性和透明性等。本文将对这些问题进行讨论，并探讨可能的解决方案。</p>
+<p>最后，本文将展望未来的发展方向。随着技术的不断进步和用户需求的变化，UGC平台的分发算法将继续演化和创新，如使用基于机器学习和人工智能的更先进的算法、使服务器转为不受特定厂商控制的形式等。</p>
+<h2 id="2-早期平台的分发算法"><a class="markdownIt-Anchor" href="#2-早期平台的分发算法"></a> 2 早期平台的分发算法</h2>
+<p>二十世纪末，互联网初步发展，名为“电子布告栏系统”(Bulletin Board System, BBS) 的网站系统出现了，它能够提供布告栏、分类论坛、新闻阅读、软件下载与上传、游戏、与其它用户在线对话等功能。随着技术不断发展，使用Telnet协议的BBS开始取代拨号上网的BBS。在这一进程的同时，基于HTTP的网页BBS（即：网络论坛，Forum）也逐渐流行，其内容相比传统纯文字式BBS更加丰富多元，在此之后拨号BBS和Telnet BBS所以形成的BBS网络已经日渐凋零，因此在大多数国家或地区，BBS一词所指的多半已非传统的纯文字式接口，字义已相同或近似于“论坛”。<sup>[1]</sup></p>
+<p>然而，在连接方式进步的同时，平台对于用户生成内容的分发算法却没有大的改动。一个典型的BBS根据主题分为不同的版面，每个版面由版主进行管理，用户发布的内容根据时间顺序陈列于版面的列表中，若发布无关内容，版主会将其移动到相应版面或直接删除。</p>
+<p>这些版面使用的“算法”实际上只是简单地将内容按最近修改时间排序而已，而具体的主题内容分类是由上传者及管理员自行分配的。想要获取有关内容的使用者会先进入相关的版面进行浏览。每个特定的版面在同一时间对所有用户展示内容均相同。由于这种内容传播的广泛性，每个BBS及论坛都会设置相应的社区守则维护内容质量并不鼓励“灌水”（发布无意义内容）的行为。这种算法在BBS时代成为主流的原因有以下两方面：客观地，当时的站点服务器计算能力并不能承担为每一个用户生成独一无二的内容列表的开销，只能根据内容主题分为大概的几个版面；主观地，互联网并不普及，当时能够使用到网络的群体整体受教育程度较高，能够自发地维护社区环境，同时也因为管理者的高强度干涉造成违反社区公约的成本高昂，使得这种发布后偏向“全局展示”的算法仍然能够保持平台整体的内容质量维持在较高的水平，而不是充斥着各种低质量广告、诈骗信息。</p>
+<h2 id="3-现代平台的分发算法"><a class="markdownIt-Anchor" href="#3-现代平台的分发算法"></a> 3 现代平台的分发算法</h2>
+<p>随着技术发展，服务器计算能力突飞猛进，推出于1989年的处理器80486时钟频率仅为约30MHz左右，而仅10年后的处理器Pentium III主频便已达到500MHz。这使得更加复杂的内容推荐分发算法及个人化信息流的出现初具可能性。</p>
+<p>最初的推荐算法产生于电商平台。早在1998年，亚马逊平台就上线了基于物品的协同过滤（ItemCF, Item Collaborative Filtering）算法，将推荐系统推向服务千万级用户和处理百万级商品的规模。</p>
+<p><strong>3.1 协同过滤算法</strong></p>
+<p>协同过滤（CF）推荐算法通过在用户活动中寻找特定模式来为用户产生有效推荐。它依赖于系统中用户的惯用数据，例如通过用户对其阅读过书籍的评价可以推断出用户的阅读偏好。这种算法的核心思想就是：如果两个用户对于一些项的评分相似程度较高，那么一个用户对于一个新项的评分很有可能类似于另一个用户。值得注意的是，他们推荐的时候不依赖于项的任何附加信息（例如描述、元数据等等）或者用户的任何附加信息（例如喜好、人口统计相关数据等等）。CF 的方法大体可分为两类：分别为邻域和基于模型的方法。邻域方法（即基于内存的 CF）通过用户-项（User-Item）的评价矩阵寻找相似用户和相似项目之间的相似度，进而为新用户构建相似度矩阵，预测用户感兴趣的项目。通过寻找相似项目进行的推荐称为基于项目的推荐；通过寻找相似用户进行的推荐称为基于用户的推荐。<sup>[2]</sup></p>
+<p>ItemCF 算法的主要流程分为两步：计算物品之间的相似度与根据物品的相似度和用户的历史行为给用户生成推荐列表。</p>
+<p>计算物品之间的相似度：考虑如下公式定义的物品相似度：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>w</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo>=</mo><mstyle displaystyle="true" scriptlevel="0"><mfrac><mrow><mi mathvariant="normal">∣</mi><mi>N</mi><mo stretchy="false">(</mo><mi>i</mi><mo stretchy="false">)</mo><mo>∩</mo><mi>N</mi><mo stretchy="false">(</mo><mi>j</mi><mo stretchy="false">)</mo><mi mathvariant="normal">∣</mi></mrow><mrow><mi mathvariant="normal">∣</mi><mi>N</mi><mo stretchy="false">(</mo><mi>i</mi><mo stretchy="false">)</mo></mrow></mfrac></mstyle></mrow><annotation encoding="application/x-tex">w_{ij}=\dfrac{|N(i)\cap N(j)|}{|N(i)}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.363em;vertical-align:-0.936em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.427em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">∣</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mopen">(</span><span class="mord mathnormal">i</span><span class="mclose">)</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">∣</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mopen">(</span><span class="mord mathnormal">i</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∩</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mclose">)</span><span class="mord">∣</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.936em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span> ，其中分母<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">∣</mi><mi>N</mi><mo stretchy="false">(</mo><mi>i</mi><mo stretchy="false">)</mo><mi mathvariant="normal">∣</mi></mrow><annotation encoding="application/x-tex">|N(i)|</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">∣</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mopen">(</span><span class="mord mathnormal">i</span><span class="mclose">)</span><span class="mord">∣</span></span></span></span> 是喜欢物品 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathnormal">i</span></span></span></span> 的用户数，而分子<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">∣</mi><mi>N</mi><mo stretchy="false">(</mo><mi>i</mi><mo stretchy="false">)</mo><mo>∩</mo><mi>N</mi><mo stretchy="false">(</mo><mi>j</mi><mo stretchy="false">)</mo><mi mathvariant="normal">∣</mi></mrow><annotation encoding="application/x-tex">|N(i)\cap N(j)|</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">∣</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mopen">(</span><span class="mord mathnormal">i</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∩</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mclose">)</span><span class="mord">∣</span></span></span></span> 是同时喜欢物品 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathnormal">i</span></span></span></span> 和物品 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span></span></span></span> 的用户数。因此，上述公式可以理解为喜欢物品 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathnormal">i</span></span></span></span> 的用户中有多少比例的用户也喜欢物品 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span></span></span></span> 。 上述公式虽然看起来很有道理，但是却存在一个问题。如果物品 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span></span></span></span> 很热门，很多人都喜欢，那么 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>w</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub></mrow><annotation encoding="application/x-tex">w_{ij}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span> 就会很大，接近 1。因此，该公式会造成任何物品都会和热门的物品有很大的相似度，这显然不是一个好的特性。为了避免推荐出热门的物品，可以用这个公式：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>w</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo>=</mo><mstyle displaystyle="true" scriptlevel="0"><mfrac><mrow><mi mathvariant="normal">∣</mi><mi>N</mi><mi>i</mi><mo>∩</mo><mi>N</mi><mo stretchy="false">(</mo><mi>j</mi><mo stretchy="false">)</mo><mi mathvariant="normal">∣</mi></mrow><msqrt><mrow><mi mathvariant="normal">∣</mi><mi>N</mi><mo stretchy="false">(</mo><mi>i</mi><mo stretchy="false">)</mo><mi mathvariant="normal">∣</mi><mi mathvariant="normal">∣</mi><mi>N</mi><mo stretchy="false">(</mo><mi>j</mi><mo stretchy="false">)</mo><mi mathvariant="normal">∣</mi></mrow></msqrt></mfrac></mstyle></mrow><annotation encoding="application/x-tex">w_{ij}=\dfrac{|N{i}\cap N(j)|}{\sqrt{|N(i)||N(j)|}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.557em;vertical-align:-1.13em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.427em;"><span style="top:-2.175em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.935em;"><span class="svg-align" style="top:-3.2em;"><span class="pstrut" style="height:3.2em;"></span><span class="mord" style="padding-left:1em;"><span class="mord">∣</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mopen">(</span><span class="mord mathnormal">i</span><span class="mclose">)</span><span class="mord">∣</span><span class="mord">∣</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mclose">)</span><span class="mord">∣</span></span></span><span style="top:-2.8950000000000005em;"><span class="pstrut" style="height:3.2em;"></span><span class="hide-tail" style="min-width:1.02em;height:1.28em;"><svg width='400em' height='1.28em' viewBox='0 0 400000 1296' preserveAspectRatio='xMinYMin slice'><path d='M263,681c0.7,0,18,39.7,52,119
+c34,79.3,68.167,158.7,102.5,238c34.3,79.3,51.8,119.3,52.5,120
+c340,-704.7,510.7,-1060.3,512,-1067
+l0 -0
+c4.7,-7.3,11,-11,19,-11
+H40000v40H1012.3
+s-271.3,567,-271.3,567c-38.7,80.7,-84,175,-136,283c-52,108,-89.167,185.3,-111.5,232
+c-22.3,46.7,-33.8,70.3,-34.5,71c-4.7,4.7,-12.3,7,-23,7s-12,-1,-12,-1
+s-109,-253,-109,-253c-72.7,-168,-109.3,-252,-110,-252c-10.7,8,-22,16.7,-34,26
+c-22,17.3,-33.3,26,-34,26s-26,-26,-26,-26s76,-59,76,-59s76,-60,76,-60z
+M1001 80h400000v40h-400000z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.30499999999999994em;"><span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">∣</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mord"><span class="mord mathnormal">i</span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∩</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mclose">)</span><span class="mord">∣</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.13em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span> 这个公式惩罚了物品j的权重，因此减轻了热门物品会和很多物品相似的可能性。从上面的定义看出，在协同过滤中两个物品产生相似度是因为它们共同被很多用户喜欢，两个物品相似度越高，说明这两个物品共同被很多人喜欢。接着，算法首先建立用户—物品倒排表（即对每个用户建立一个包含他喜欢的物品的列表），然后对于每个用户，将他物品列表中的物品两两在共现矩阵C中加1。最后，将C矩阵归一化可以得到物品之间的余弦相似度矩阵W。</p>
+<p>生成推荐列表：ItemCF通过 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mrow><mi>u</mi><mi>j</mi></mrow></msub><mo>=</mo><munder><mo>∑</mo><mrow><mi>i</mi><mo>∈</mo><mi>N</mi><mo stretchy="false">(</mo><mi>j</mi><mo stretchy="false">)</mo><mo>∩</mo><mi>S</mi><mo stretchy="false">(</mo><mi>j</mi><mo separator="true">,</mo><mi>K</mi><mo stretchy="false">)</mo></mrow></munder><msub><mi>w</mi><mrow><mi>j</mi><mi>i</mi></mrow></msub><msub><mi>r</mi><mrow><mi>u</mi><mi>i</mi></mrow></msub></mrow><annotation encoding="application/x-tex">p_{uj}=\sum\limits_{i\in N(j)\cap S(j,K)}w_{ji}r_{ui}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">u</span><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.9660100000000003em;vertical-align:-1.216005em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.7500050000000001em;"><span style="top:-2.058995em;margin-left:0em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mrel mtight">∈</span><span class="mord mathnormal mtight" style="margin-right:0.10903em;">N</span><span class="mopen mtight">(</span><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span><span class="mclose mtight">)</span><span class="mbin mtight">∩</span><span class="mord mathnormal mtight" style="margin-right:0.05764em;">S</span><span class="mopen mtight">(</span><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight" style="margin-right:0.07153em;">K</span><span class="mclose mtight">)</span></span></span></span><span style="top:-3.0000050000000003em;"><span class="pstrut" style="height:3em;"></span><span><span class="mop op-symbol small-op">∑</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.216005em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span><span class="mord mathnormal mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">u</span><span class="mord mathnormal mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 计算出用户 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">u</span></span></span></span> 对物品 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span></span></span></span> 的兴趣，其中 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo stretchy="false">(</mo><mi>u</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">N(u)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mopen">(</span><span class="mord mathnormal">u</span><span class="mclose">)</span></span></span></span> 表示用户喜欢的物品集合，而 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo stretchy="false">(</mo><mi>i</mi><mo separator="true">,</mo><mi>k</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">S(i,k)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mopen">(</span><span class="mord mathnormal">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mclose">)</span></span></span></span> 表示和 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathnormal">i</span></span></span></span> 最相似的 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>K</mi></mrow><annotation encoding="application/x-tex">K</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span></span></span></span> 个物品（<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>j</mi><mo>∈</mo><mi>S</mi><mo stretchy="false">(</mo><mi>i</mi><mo separator="true">,</mo><mi>k</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">j\in S(i,k)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mopen">(</span><span class="mord mathnormal">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mclose">)</span></span></span></span>），<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>r</mi><mrow><mi>u</mi><mi>i</mi></mrow></msub></mrow><annotation encoding="application/x-tex">r_{ui}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">u</span><span class="mord mathnormal mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 是用户 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">u</span></span></span></span> 对物品 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathnormal">i</span></span></span></span> 的兴趣。该公式尽可能地保证和用户历史上感兴趣的物品越相似的物品，越有可能在用户的推荐列表中获得比较高的排名。<sup>[3]</sup></p>
+<p>对于拥有大量 UGC 内容的信息分发平台（a.k.a： 社交媒体）而言，类似的协同过滤算法能够应用于给每位用户个性化推荐感兴趣的内容。此时每一条用户生成内容即相当于上述电商平台中的“商品”。</p>
+<p>除 ItemCF 外，另一种协同过滤算法是 UserCF，即根据用户偏好筛选相似的用户群为当前用户进行推荐。这种推荐系统的优点在于推荐物品之间在内容上可能完全不相关，因此可以发现用户的潜在兴趣，并且针对每个用户生成其个性化的推荐结果。缺点在于一般的Web系统中，用户的增长速度都远远大于物品的增长速度，因此其计算量的增长巨大，系统性能容易成为瓶颈。因此在业界中单纯的使用基于用户的协同过滤系统较少<sup>[4]</sup>。</p>
+<p>基于模型的协同过滤方法可以帮助克服上述两种方法的局限性。不同于使用用户项或物品项评分直接预测新的项，基于模型的方法会在使用评分去学习预测模型的基础上，去预测新项。一般的想法是使用机器学习算法建立用户和项的相互作用模型，从而找出数据中的模式。矩阵因子分解将项和用户都转化成了相同的潜在空间，它所代表了用户和项之间的潜相互作用。矩阵分解背后的原理是潜在特征代表了用户如何给项进行评分。给定用户和项的潜在描述，我们可以预测用户将会给还未评价的项多少评分。在一般情况下，基于模型的 CF 被认为是建立 CF 推荐系统的更先进的算法。<sup>[5]</sup></p>
+<p><strong>3.2 其他广泛使用的算法</strong></p>
+<p>除协同过滤外，社交媒体平台常用的算法还有基于内容的推荐算法、流行度推荐算法、混合推荐算法及一些非传统的推荐算法。</p>
+<p>基于内容的推荐算法总是根据item内容比较item的相似度（而非之前的用户-内容选择过程）。在推荐过程中，算法会获取 item 的描述信息，将其作为一个特征向量，随即用于创建一个偏好模型，同时使用机器学习技术（e.g. 朴素贝叶斯、决策树等）为用户推荐内容。与协同过滤算法不同的是，这种算法不再需要用户与内容之间的历史交互记录，因而克服能够协同过滤的加入新物品时因缺乏记录导致的冷启动无法推荐问题。然而基于内容的推荐算法通常存在过度特化问题，用户可能得到过多的与某一主题相关的内容，而非相对不相关但用户确实感兴趣的东西。<sup>[5]</sup>因此，混合推荐算法应运而生。</p>
+<p>混合算法将用户和项目内容特征以及使用数据结合起来，从而结合两种类型的数据的优点。例如，CF 算法存在新项目冷启动，即它们无法推荐没有评级/使用的项目的问题。但这并不限制基于内容的算法，因为对新项目的预测是基于新项目进入系统时通常可用的内容（特征）。通过创建结合了协作过滤和基于内容的过滤的混合推荐器，我们可以克服单个算法的一些局限性，例如冷启动问题和流行度偏差。</p>
+<p>虽然混合方法解决协同过滤方法和基于内容方法存在的一些局限性，但它们同时也需要大量的工作来获取系统中的不同算法之间的平衡。组合单个的推荐算法的另一种技术是集成方法，它需要学习一个函数（即集成器）来确定不同推荐算法组合的权重。值得注意的是，通常集成方法不仅仅结合了不同的算法，同时也组合了基于相同算法的不同变种。<sup>[7]</sup></p>
+<h2 id="4-对比分析演变原因"><a class="markdownIt-Anchor" href="#4-对比分析演变原因"></a> 4 对比分析演变原因</h2>
+<p><strong>4.1 传统与现代的对比</strong></p>
+<p>由最初的按时间顺序排列的内容到各种算法推荐出的内容列表，我们不妨从一些角度对比分析此两种形式的区别。</p>
+<p>就用户习惯而言，在传统的BBS及论坛获取信息常常是主动的，用户需要自行进入与其想了解的主题相关的版面才能得到自己想要的信息。而现代的社交媒体通常会由平台组织好内容列表，而用户只需要简单的“刷”的行为。内容丰富度方面，社交媒体的信息广度无疑远超前互联网时代的诸多论坛，而这源于多方面原因：互联网普及度大大提高（截至2022年12月，我国网民规模达10.67亿，互联网普及率达75.6%<sup>[8]</sup>，而2000年我国网民仅890万人<sup>[9]</sup>）、基于热度的推荐方式造成了互联网热点内容的病毒式广泛传播、随机的推荐内容使得特定的用户能够较为简便地获得各类信息。</p>
+<p><strong>4.2 转变的原因</strong></p>
+<p>为何内容分发算法会出现由BBS的集中管理型到现代社交媒体的分散型的转变？</p>
+<p>对于平台而言，BBS的盈利手段不明确，要么只能通过在特定主题的内容列表下插入生硬的广告，要么只能靠将论坛的管理权卖出。百度贴吧的内容分发方式类似BBS，它曾经是中国互联网最大的在线社区，然而当百度公司寻求盈利加大商业化步伐时，百度选择了售卖贴吧管理员（吧主）的方式，遭受广大网民口诛笔伐，使得用户粘性下降，纷纷放弃这一平台。然而选择了个性化推荐的内容的一众社交媒体能够选择的盈利方式无疑更加体面。无论是算法隐性地推荐软广告，抑或是收取创作者的推广费进而微调展示比例，都不会直接地引起用户的反感。毕竟，算法计算于平台控制的服务器端上，用户没有兴趣也没有能力了解到算法在根据兴趣推荐之余还对自己的内容列表做了什么手脚。</p>
+<p>对于使用者而言，刷社交媒体的行为成瘾性远高于浏览内容相对固定的BBS页面，毕竟每一次刷新都能获得一个全新的列表，这是近乎零成本的探索行为，而且调教好的算法能够推荐用户感兴趣的内容。现代社交媒体设计好的算法同样可以促进内容的创作，当用户发现自己产出的内容能够被若干兴趣相似的人们关注时，大脑中的奖赏系统会被激活，释放多巴胺，产生愉悦的感觉，并驱动用户重复使用社交媒体。</p>
+<h2 id="5-未来发展方向"><a class="markdownIt-Anchor" href="#5-未来发展方向"></a> 5 未来发展方向</h2>
+<p><strong>5.1 现代内容分发算法的争议</strong></p>
+<p><strong>5.1.1 信息自然覆盖率降低</strong></p>
+<p>自然覆盖范围是指通过无偿分发（即无需花钱覆盖特定受众）看到某内容的人数。自然覆盖率降低是近几年社交媒体方面的热点话题。在BBS时代，任意一个用户发布的内容可以保证被所有访问该版面的用户看到。早期的社交媒体中，若某用户发布了一些内容，它就会出现在关注他的所有人的动态中，然而随着平台内容量呈指数级增长，用户无法看到所有关注了的人的动态，而内容自然覆盖率也就逐渐降低。这也体现了算法在内容覆盖方面的重要性。看似分散的内容分发，实际仍然受控于某个特定的服务商，这是一种极端的中心化，同时也造成了不同的网站、app争抢用户的使用时间，希望控制尽可能多的用户产出内容。对于内容生产者而言，想要维持曝光率意味着需要向服务厂商缴纳更多的推广费用，而这会使得普通用户在该平台的参与度下降，进而影响创作者的积极性与平台整体的内容质量。</p>
+<p><strong>5.1.2 信息茧房</strong></p>
+<p>为每个用户量身定制的同时意味着其实际获取信息的“窄化”。久而久之，个体面临信息获取“不公平”问题，即“信息茧房” (Information Cocoons)下的个体困境。</p>
+<p>Nicholas Negroponte 在互联网出现之初，就预言了“我的日报”（the Daily Me）现象，个体完全根据自己的兴趣选择内容进入报纸，删除自己不想看到的内容。“我的日报”本质是信息的私人订制，其核心问题就涉及了“信息茧房”。Cass R. Sunstein 在《信息乌托邦》一书中定义了“信息茧房”：“我们只听我们选择的东西和愉悦我们的东西的通信领域”。 在信息传播中，公众只关注自己感兴趣的内容，久而久之就像蚕吐丝一样，把自己包裹在茧房中，与外界其他信息隔绝。算法推荐下的个性化信息分发模式，通过基于关系和内容的推荐算法，不断过滤信息；个体所接受的信息被局限在狭窄的“茧房”中。这是科技的发展带来惊人的力量：“消费者过滤所读所看所听的力量随之越来越强大”。 “无限过滤”，这个听起来像是在科幻小说才会出现的概念，正在技术的加持下逐步变为现实。显而易见，算法推荐技术为“信息茧房”的形成提供了巨大的便利。</p>
+<p>选择性接触假说认为，在面对大众传播的信息时，受众更愿意接触与自己原有立场相近的内容，回避与自己观点相异的信息。“信息茧房”的出现与个体的选择性接触密不可分，个体有意识地接触某一类信息，同时规避其他信息，这种行为本来就会导致个人视域的狭窄化，而在人工智能下算法推荐的加持下，个体所能接触的信息更加固化，“信息茧房”被不断地加固。<sup>[10]</sup></p>
+<p><strong>5.1.3 过滤泡与回声室效应</strong></p>
+<p>上述的“信息茧房”是内容分发推荐算法对于个体的影响，而其对于群体同样有着社会性影响：回声室效应。</p>
+<p>回声室效应是指在一个相对封闭的环境上，一些意见相近的声音不断重复，并以夸张或其他扭曲形式重复，令处于相对封闭环境中的大多数人认为这些扭曲的故事就是事实的全部的效应。</p>
+<p>“过滤泡”（filter bubbles）的概念是以利·巴里瑟（Eli Pariser）于2011年在其著作《过滤泡：互联网没有告诉你的事》中提出的。他指出，以机器推荐算法为代表的互联网技术，正在使得用户获取的信息日益个人化；用户接收到的信息，往往会受到其检索历史、阅读记录等的影响，并受到机器算法的操控。<sup>[11]</sup>从这个意义上而言，用户接收的内容，都是由互联网平台上的机器算法用“过滤泡”过滤之后的产物。</p>
+<p>“过滤泡”的存在，会带来两个主要问题：一是通过“过滤泡”过滤的信息，会贴上用户个人的价值观偏好与阅读习惯，导致一定程度的信息偏向，带来用户信息接收的失衡；二是算法本身的运行方式及固有弊端，导致通过机器算法推荐得到的信息有可能不是用户真正需要的信息。</p>
+<p>信息茧房和过滤泡通过UGC平台的聚集将个体困境发展为了群体困境。个体接受信息的同质化使得其产出的信息同样具有类似的观点，而这样的过程在UGC产生与分发的进程中不断加剧，使得有争议的议题在同质性的群体中朝着极化的方向偏移，不利于社会共识的形成，加深社会价值观的对立。</p>
+<p><strong>5.1.4 隐私问题</strong></p>
+<p>UGC平台在进行内容推荐时会收集和利用用户个人数据：如姓名年龄兴趣等，用于提供服务或投放广告。然而，这些数据可能被不当共享出售或泄露给第三方，导致个人信息滥用。</p>
+<p><strong>5.2 内容分发算法展望</strong></p>
+<p>鉴于以上诸多弊端，人们开始对于未来的内容发布平台产生各种畅想。</p>
+<p><strong>5.2.1 基于现有算法的改进</strong></p>
+<p>Twitter (X) 以及 Facebook 开发了一种新算法，可以打破信息茧房，并将不同观点的用户联系起来。 该算法分析推文的内容和情绪，并识别可能彼此不同意但也有一些共同点的用户。 然后，它建议这些用户互相关注，并向他们展示辩论双方的推文。 目标是促进更具建设性和尊重的对话，并减少经常困扰在线讨论的两极分化和敌意，以及让他们接触到不同观点和体验的内容。 目的是创建一个更具包容性和多元化的平台，并支持边缘化和少数群体的声音。<sup>[12]</sup></p>
+<p>芬兰阿尔托大学计算机科学博士生安东尼斯·马塔科斯 (Antonis Matakos) 帮助开发了新算法。他和他的同事在 11 月发表在 IEEE Transactions on Knowledge and Data Engineering上的一项研究<sup>[13]</sup>中描述了这一工作。</p>
+<p>该方法涉及为社交媒体内容和用户分配数值。这些值代表意识形态谱上的位置，例如极左或极右。这些数字用于计算每个用户的多样性暴露得分。本质上，该算法正在识别那些愿意分享内容的社交媒体用户，从而最大限度地传播各种新闻和信息观点。然后，将多样化的内容呈现给具有给定多样性分数的选定人群，他们最有可能帮助内容在社交媒体网络上传播，从而最大化所有用户的多样性分数。在他们的研究中，研究人员在一系列模拟中将他们的新社交媒体算法与其他几个模型进行了比较。这些其他模型之一是一种更简单的方法，它选择联系最紧密的用户并推荐可最大化个人多样性暴露得分的内容。马塔科斯表示，他的团队的算法为社交媒体用户提供的信息流的多样性（根据研究人员的指标）至少是这种更简单方法的三倍，对于研究中用于比较的基线方法来说更是如此。</p>
+<p>这些结果表明，针对社交媒体用户的战略群体并向他们提供正确的内容对于通过社交媒体网络传播不同的观点比关注最有联系的用户更有效。重要的是，研究中完成的模拟还表明新模型是可扩展的。</p>
+<p><strong>5.2.2 去中心化内容发布平台</strong></p>
+<p>传统的论坛以及社交媒体都是“中心化”的：信息全权托管于特定平台的服务器中，由平台算法决定内容分发。</p>
+<p>近年来一种新型的“去中心化”社交媒体逐渐进入人们视野，并成为社交媒体新的发展方向。“去中心化”指一个服务器之间通过开放协议进行通信。ActivityPub是由万维网联盟 (World Wide Web Consortium, W3C) 发布的一个典型通信协议，该协议定义了客户端到服务器和服务器到服务器的交互，以构建社交媒体的去中心化框架。使用 ActivityPub 的平台中最有名的是 Mastodon。与 Twitter 类似，用户在 Mastodon 中可以发布文本、分享图像并关注他人。Mastodon 并不是作为单一服务托管，而是通过 ActivityPub 进行通信的独立服务器集合。<sup>[14]</sup>加入 Mastodon 意味着加入一个拥有自己社区和行为准则的服务器。用户可以与其他服务器上的用户交互，但他们的每个帐户都托管在他们选择的服务器上。每个人都可以选择加入他们认为最好的服务器，并且迁移到新服务器相对简单。服务器还可以阻止其他服务器，从而提供更多能力来应对骚扰或令人反感的内容。</p>
+<h2 id="6-结论"><a class="markdownIt-Anchor" href="#6-结论"></a> 6 结论</h2>
+<p>本文探讨了从早期的BBS到现代社交媒体平台的用户生成内容（UGC）分发算法的演变过程，并展望了未来的发展方向。在早期平台中，BBS通过简单的时间排序展示内容，主要依靠用户自行浏览不同版面获取感兴趣的内容。这种算法的特点是内容广泛传播，而内容的质量维护主要依赖于用户自我约束和管理者的干预。随着技术的进步和服务器计算能力的提升，现代社交媒体平台引入了更复杂的推荐算法和个性化信息流。这些算法通过分析用户的兴趣、行为和社交网络关系，向用户推荐他们可能感兴趣的内容，提供更加个性化的用户体验。其中，协同过滤算法是一种常见的推荐算法之一。这些算法的引入使用户能够更轻松地发现和获取感兴趣的内容，增加了用户与平台之间的互动和粘性。</p>
+<p>然而，现代平台的推荐算法也带来了一些问题和挑战，如信息过滤的偏好、信息泡沫化以及算法的公正性和透明性等。为解决此类问题，平台已有了一些发展方向，包括基于机器学习和人工智能的算法主动打破信息茧房、使用去中心化的服务器减少平台提供商对于内容传播的干预，而这些方法的可行性仍需要进一步的研究。</p>
+<p>总而言之，本文通过回顾早期平台的分发算法和介绍现代平台采用的推荐算法，深入探讨了UGC平台内容分发算法的演变过程及其对用户体验和信息传播的影响。同时，展望了未来的发展方向，为UGC平台的进一步改进和创新提供了启示。</p>
+<hr />
+<p><strong>参考文献</strong></p>
+<p>[1] BBS - 维基百科[DB/OL]. <a target="_blank" rel="noopener" href="http://zh.wikipedia.org/wiki/BBS">http://zh.wikipedia.org/wiki/BBS</a> (2023-09-14) [2023-12-26].</p>
+<p>[2]于蒙,何文涛,周绪川等.推荐系统综述[J].计算机应用,2022,42(06):1898-1913.</p>
+<p>[3] ItemCF算法解析[EB/OL]. <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/625449148">https://zhuanlan.zhihu.com/p/625449148</a>, 2023-06-11.</p>
+<p>[4] 章华燕.系列学习——推荐算法综述[EB/OL]. <a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1052817">https://cloud.tencent.com/developer/article/1052817</a>, 2018-03-06.</p>
+<p>[5] 百占辉.推荐算法综述（二）[EB/OL]. <a target="_blank" rel="noopener" href="https://www.infoq.cn/article/recommendation-algorithm-overview-part02">https://www.infoq.cn/article/recommendation-algorithm-overview-part02</a>, 2015-12-29</p>
+<p>[6] Hristakeva, M. Overview of Recommender Algorithms – Part 3[EB/OL]. // A Practical Guide to Building Recommender Systems: From Algorithm to Product. <a target="_blank" rel="noopener" href="https://buildingrecommenders.wordpress.com/2015/11/19/overview-of-recommender-algorithms-part-3/">https://buildingrecommenders.wordpress.com/2015/11/19/overview-of-recommender-algorithms-part-3/</a>, 2015-11-19</p>
+<p>[7] 张天雷.推荐算法综述（四）[EB/OL]. <a target="_blank" rel="noopener" href="https://www.infoq.cn/article/recommendation-algorithm-overview-part04">https://www.infoq.cn/article/recommendation-algorithm-overview-part04</a>, 2016-01-24</p>
+<p>[8] 中国互联网络信息中心.第51次中国互联网络发展状况统计报告[R].北京:CNNIC,2022</p>
+<p>[9] 中国互联网络信息中心.中国互联网络发展状况统计报告(2000/1)[R].北京:CNNIC,2001</p>
+<p>[10] 胡青山.基于算法推荐的社会性反思：个体困境、群体极化与媒体公共性[EB/OL]. <a target="_blank" rel="noopener" href="http://media.people.com.cn/n1/2019/1225/c431262-31522701.html">http://media.people.com.cn/n1/2019/1225/c431262-31522701.html</a>, 2019-12-25</p>
+<p>[11] 李雪松. 今日头条APP用户体验及优化策略研究[D].河北大学,2018.</p>
+<p>[12] Hampson, M. Smart Algorithm Bursts Social Networks’ “Filter Bubbles”[EB/OL]. <a target="_blank" rel="noopener" href="https://spectrum.ieee.org/finally-a-means-for-bursting-social-media-bubbles">https://spectrum.ieee.org/finally-a-means-for-bursting-social-media-bubbles</a>, 2021-01-21</p>
+<p>[13] Matakos, A. , Aslay, C. , Galbrun, E.  and Gionis, A. Maximizing the Diversity of Exposure in a Social Network[J] IEEE Transactions on Knowledge and Data Engineering, 2022, 34(9), 4357-4370</p>
+<p>[14] Smith, M, S. Decentralized Social Media Rises as Twitter Melts Down: Mastodon is just the start—here comes the Fediverse[EB/OL]. <a target="_blank" rel="noopener" href="https://spectrum.ieee.org/mastodon-social-media">https://spectrum.ieee.org/mastodon-social-media</a>, 2023-03-18</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%9A%8F%E7%AC%94/" rel="tag"># 随笔</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/12/26/mac-trash-cli/" rel="prev" title="在 mac 终端中使用废纸篓功能">
+      <i class="fa fa-chevron-left"></i> 在 mac 终端中使用废纸篓功能
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%BC%95%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text"> 1 引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E6%97%A9%E6%9C%9F%E5%B9%B3%E5%8F%B0%E7%9A%84%E5%88%86%E5%8F%91%E7%AE%97%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text"> 2 早期平台的分发算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E7%8E%B0%E4%BB%A3%E5%B9%B3%E5%8F%B0%E7%9A%84%E5%88%86%E5%8F%91%E7%AE%97%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text"> 3 现代平台的分发算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%AF%B9%E6%AF%94%E5%88%86%E6%9E%90%E6%BC%94%E5%8F%98%E5%8E%9F%E5%9B%A0"><span class="nav-number">4.</span> <span class="nav-text"> 4 对比分析演变原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E6%9C%AA%E6%9D%A5%E5%8F%91%E5%B1%95%E6%96%B9%E5%90%91"><span class="nav-number">5.</span> <span class="nav-text"> 5 未来发展方向</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E7%BB%93%E8%AE%BA"><span class="nav-number">6.</span> <span class="nav-text"> 6 结论</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">hydropek</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">59</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">hydropek</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/katex.min.css">
+  <script src="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.js"></script>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.css">
+
+
+  
+
+</body>
+</html>
