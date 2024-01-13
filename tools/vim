@@ -10,9 +10,8 @@ else
     echo -e "${fg[red]}no such file!${reset_color}"
     exit 1
 fi
-cp "$target" "$temp"
-echo "vim $target"
-vim $target
+target=$file
+cp "$target" "$temp" && vim $target
 if ! diff "$target" "$temp"; then
     echo -ne "\nupload? [y/n] "
     read a

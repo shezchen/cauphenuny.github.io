@@ -1,5 +1,5 @@
 #!/bin/zsh
-msg="$date +\"%F %T\"$*"
+msg="$(date +'%F %T')$*"
 echo -e "${fg[green]}$0${reset_color} --> git add $hexo_path${reset_color}" &&
 git add $hexo_path &&
 git commit -m "$msg" &&
