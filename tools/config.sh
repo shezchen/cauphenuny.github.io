@@ -1,4 +1,4 @@
-export hexo_path="$HOME/Workspace/hexo"
+export hexo_path="$HOME/Blog/data.hydropek.github.io"
 h() {
     cur_path=$(pwd);
     builtin cd $hexo_path
@@ -11,4 +11,3 @@ h() {
         builtin cd $cur_path
     fi
 }
-
