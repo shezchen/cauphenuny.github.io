@@ -340,6 +340,11 @@ r_{n-1}&amp;=r_{n}x_{n+1}\\
 <td>牙</td>
 </tr>
 <tr>
+<td>l</td>
+<td><code>l</code></td>
+<td>拿</td>
+</tr>
+<tr>
 <td>f</td>
 <td><code>f</code></td>
 <td>花</td>
@@ -636,11 +641,12 @@ r_{n-1}&amp;=r_{n}x_{n+1}\\
 </li>
 </ul>
 <h2 id="易错字"><a class="markdownIt-Anchor" href="#易错字"></a> 易错字</h2>
-<p>乙 <code>ï</code> 卜 <code>pü</code> 乞 <code>qï</code> 勺 <code>sö</code> 义 <code>njî</code><br />
+<p>乙 <code>ië</code> 卜 <code>pü</code> 乞 <code>qï</code> 勺 <code>sö</code> 义 <code>njî</code><br />
 拖 <code>tō</code> 托 <code>tö</code><br />
-忘 <code>uán2</code> 常 <code>sán</code> 详 <code>zján</code> 像 <code>zjǎn</code><br />
+常 <code>sán</code> 详 <code>zján</code> 像 <code>zjǎn</code><br />
 系 <code>sjî</code><br />
-弱 <code>njö</code> 币 <code>bêi</code></p>
+弱 <code>njö</code> 币 <code>bêi</code><br />
+艺术 <code>njî sjü</code></p>
 <hr />
 <p>refer:<br />
 <a href="https://ambar.li/xiangyin/">湘音：长沙话发音字典</a><br />
@@ -3902,5 +3908,21 @@ c100.7 8.3 195.3 44 280 108 55.3 42 101.7 93 139 153l9 14c2.7-4 5.7-8.7 9-14
       <tags>
         <tag>dp</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>月度总结</title>
+    <url>/2024/04/02/monthly-review/</url>
+    <content><![CDATA[<p>2024 年 3 月</p>
+<p>屁事没干，破防了</p>
+<hr />
+]]></content>
+  </entry>
+  <entry>
+    <title>构造函数继承问题</title>
+    <url>/2024/03/22/inherit-constructor/</url>
+    <content><![CDATA[<p>试看下例：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="keyword">class</span> <span class="title class_">Vector</span> &#123;</span><br><span class="line">  <span class="keyword">protected</span>:</span><br><span class="line">    T *_data;</span><br><span class="line">    <span class="type">size_t</span> _n;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Vector</span>() : _data(<span class="literal">nullptr</span>) &#123;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">Vector</span>(<span class="type">size_t</span> n) &#123;</span><br><span class="line">        _n = n;</span><br><span class="line">        _data = <span class="keyword">new</span> T[n];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">Vector</span>(<span class="type">size_t</span> n, <span class="type">const</span> T t) &#123;</span><br><span class="line">        _n = n;</span><br><span class="line">        _data = <span class="keyword">new</span> T[_n];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; _n; i++) &#123;</span><br><span class="line">            _data[i] = <span class="built_in">T</span>(t);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">Vector</span>(<span class="type">const</span> Vector&lt;T&gt; &amp;v) &#123;</span><br><span class="line">        _n = v._n;</span><br><span class="line">        _data = <span class="keyword">new</span> T[_n];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; _n; i++) &#123;</span><br><span class="line">            _data[i] = <span class="built_in">T</span>(v._data[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">Vector</span>(Vector&lt;T&gt; &amp;&amp;v) &#123;</span><br><span class="line">        _n = v._n;</span><br><span class="line">        _data = v._data;</span><br><span class="line">        v._data = <span class="literal">nullptr</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">Vector</span>(std::initializer_list&lt;T&gt; content) &#123;</span><br><span class="line">        _n = content.<span class="built_in">size</span>();</span><br><span class="line">        _data = <span class="keyword">new</span> T[_n];</span><br><span class="line">        <span class="keyword">auto</span> it = content.<span class="built_in">begin</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; _n; i++, it++) &#123;</span><br><span class="line">            _data[i] = <span class="built_in">T</span>(*(it));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ~<span class="built_in">Vector</span>() &#123;</span><br><span class="line">        <span class="keyword">delete</span>[] _data;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="keyword">class</span> <span class="title class_">colVector</span> : <span class="keyword">public</span> Vector&lt;T&gt; &#123;</span><br><span class="line">    <span class="keyword">using</span> Vector&lt;T&gt;::Vector;</span><br><span class="line">    <span class="keyword">friend</span> std::ostream &amp;<span class="keyword">operator</span>&lt;&lt;(std::ostream &amp;os, <span class="type">const</span> colVector&lt;T&gt; &amp;vec);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
   </entry>
 </search>

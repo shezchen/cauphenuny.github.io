@@ -135,7 +135,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">59</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">61</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -184,6 +184,156 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hydropek.github.io/2024/04/02/monthly-review/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="hydropek">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hydropek's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/04/02/monthly-review/" class="post-title-link" itemprop="url">月度总结</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-04-02 16:59:02 / 修改时间：16:59:38" itemprop="dateCreated datePublished" datetime="2024-04-02T16:59:02+08:00">2024-04-02</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2024/04/02/monthly-review/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/04/02/monthly-review/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>2024 年 3 月</p>
+<p>屁事没干，破防了</p>
+<hr />
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hydropek.github.io/2024/03/22/inherit-constructor/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="hydropek">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hydropek's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/03/22/inherit-constructor/" class="post-title-link" itemprop="url">构造函数继承问题</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-03-22 15:06:24 / 修改时间：15:18:52" itemprop="dateCreated datePublished" datetime="2024-03-22T15:06:24+08:00">2024-03-22</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2024/03/22/inherit-constructor/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/03/22/inherit-constructor/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>试看下例：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="keyword">class</span> <span class="title class_">Vector</span> &#123;</span><br><span class="line">  <span class="keyword">protected</span>:</span><br><span class="line">    T *_data;</span><br><span class="line">    <span class="type">size_t</span> _n;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Vector</span>() : _data(<span class="literal">nullptr</span>) &#123;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">Vector</span>(<span class="type">size_t</span> n) &#123;</span><br><span class="line">        _n = n;</span><br><span class="line">        _data = <span class="keyword">new</span> T[n];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">Vector</span>(<span class="type">size_t</span> n, <span class="type">const</span> T t) &#123;</span><br><span class="line">        _n = n;</span><br><span class="line">        _data = <span class="keyword">new</span> T[_n];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; _n; i++) &#123;</span><br><span class="line">            _data[i] = <span class="built_in">T</span>(t);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">Vector</span>(<span class="type">const</span> Vector&lt;T&gt; &amp;v) &#123;</span><br><span class="line">        _n = v._n;</span><br><span class="line">        _data = <span class="keyword">new</span> T[_n];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; _n; i++) &#123;</span><br><span class="line">            _data[i] = <span class="built_in">T</span>(v._data[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">Vector</span>(Vector&lt;T&gt; &amp;&amp;v) &#123;</span><br><span class="line">        _n = v._n;</span><br><span class="line">        _data = v._data;</span><br><span class="line">        v._data = <span class="literal">nullptr</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">Vector</span>(std::initializer_list&lt;T&gt; content) &#123;</span><br><span class="line">        _n = content.<span class="built_in">size</span>();</span><br><span class="line">        _data = <span class="keyword">new</span> T[_n];</span><br><span class="line">        <span class="keyword">auto</span> it = content.<span class="built_in">begin</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; _n; i++, it++) &#123;</span><br><span class="line">            _data[i] = <span class="built_in">T</span>(*(it));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ~<span class="built_in">Vector</span>() &#123;</span><br><span class="line">        <span class="keyword">delete</span>[] _data;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="keyword">class</span> <span class="title class_">colVector</span> : <span class="keyword">public</span> Vector&lt;T&gt; &#123;</span><br><span class="line">    <span class="keyword">using</span> Vector&lt;T&gt;::Vector;</span><br><span class="line">    <span class="keyword">friend</span> std::ostream &amp;<span class="keyword">operator</span>&lt;&lt;(std::ostream &amp;os, <span class="type">const</span> colVector&lt;T&gt; &amp;vec);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -703,7 +853,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-24 14:26:01" itemprop="dateModified" datetime="2024-01-24T14:26:01+08:00">2024-01-24</time>
+                <time title="修改时间：2024-03-31 12:34:23" itemprop="dateModified" datetime="2024-03-31T12:34:23+08:00">2024-03-31</time>
               </span>
 
           
@@ -955,218 +1105,10 @@ h(x)&amp;=\sum_{d\mid x}f(d)g(\frac{x}{d})
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://hydropek.github.io/2021/04/17/review-hnoi2021/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="hydropek">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="hydropek's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/17/review-hnoi2021/" class="post-title-link" itemprop="url">HNOI2021总结</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-04-17 08:24:40" itemprop="dateCreated datePublished" datetime="2021-04-17T08:24:40+08:00">2021-04-17</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-08-02 23:38:28" itemprop="dateModified" datetime="2023-08-02T23:38:28+08:00">2023-08-02</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/oi/" itemprop="url" rel="index"><span itemprop="name">oi</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/oi/%E8%80%83%E8%AF%95%E6%80%BB%E7%BB%93/" itemprop="url" rel="index"><span itemprop="name">考试总结</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/04/17/review-hnoi2021/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/04/17/review-hnoi2021/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h2>
-<h3 id="day1"><a class="markdownIt-Anchor" href="#day1"></a> Day1</h3>
-<p>开考先看看三个题，发现 T2 是个构造，T3 不像是会做的题目，然后就开始想第一题。</p>
-<p>正好昨天看了一眼 wqs 二分，这个题目也有一个只能选 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span> 个的限制，于是思路逐渐跑偏，也把模型转换了一下，大概就花了一两个小时的时间，然后发现我不太会做没有限制 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span> 个的情况，但是我还是觉得只是自己最后一步思考得不够深入，画了一堆图，就一直想，甚至把手推 wqs 二分，把昨天没看懂的部分想明白了，最后还是放弃了这个思路，然后很快就想出了一个二分加双指针的做法，也没有什么细节，很快就码完了，但是调了一小会儿，过了几个样例然后就已经十一点半还是十二点了​。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/04/17/review-hnoi2021/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://hydropek.github.io/2021/03/30/git-roll-back/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="hydropek">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="hydropek's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/30/git-roll-back/" class="post-title-link" itemprop="url">git 回滚</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-03-30 21:21:47" itemprop="dateCreated datePublished" datetime="2021-03-30T21:21:47+08:00">2021-03-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-14 11:59:04" itemprop="dateModified" datetime="2024-01-14T11:59:04+08:00">2024-01-14</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/03/30/git-roll-back/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/03/30/git-roll-back/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>git 还是很方便的</p>
-<ol>
-<li>
-<p><code>git log</code> 查看提交信息</p>
-<p><img src="git-roll-back/01.png" alt="" /></p>
-</li>
-<li>
-<p><code>git reset --hard ...</code> 回退版本</p>
-<p><img src="git-roll-back/02.png" alt="" /></p>
-</li>
-<li>
-<p><code>git push origin HEAD --force</code> 推送到远端（其实不建议用这种方法）</p>
-<p><img src="git-roll-back/05.png" alt="" /></p>
-</li>
-<li>
-<p><code>git reflog</code> 查看命令历史（可以用来撤销回滚）</p>
-<p><img src="git-roll-back/04.png" alt="" /></p>
-</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1232,7 +1174,7 @@ h(x)&amp;=\sum_{d\mid x}f(d)g(\frac{x}{d})
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">61</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
