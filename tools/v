@@ -13,10 +13,10 @@ fi
 target=$file
 cp "$target" "$temp" && vim $target
 if ! diff "$target" "$temp"; then
-    echo -ne "\nupload? [y/n] "
+    echo -ne "\nrelease? [y/n] "
     read a
     if ! [ "$a" = "y" ]; then return 0; fi
-    echo -e "${fg[green]}uploading...${reset_color}"
+    echo -e "${fg[green]}releasing...${reset_color}"
     sleep 1
-    $hexo_path/source/tools/upload " (update ${target#*${hexo_path}})"
+    $hexo_path/source/tools/release
 fi
