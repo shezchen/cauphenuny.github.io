@@ -17,24 +17,24 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"hydropek.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":300,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"cauphenuny.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":300,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="防止过了几个月就忘了 单位复根 ωn&#x3D;e2πin&#x3D;cos⁡(2πn)+i⋅sin⁡(2πn)\omega_n&#x3D;e^{\frac{2\pi i}{n}}&#x3D;\cos\left(\dfrac{2\pi}{n}\right)+i\cdot \sin\left(\dfrac{2\pi}{n}\right)ωn​&#x3D;en2πi​&#x3D;cos(n2π​)+i⋅sin(n2π​) 性质 ωnn&#x3D;1ωnk&#x3D;ω2n2kω2">
 <meta property="og:type" content="article">
 <meta property="og:title" content="FFT 笔记">
-<meta property="og:url" content="https://hydropek.github.io/2021/02/08/poly-fft/index.html">
-<meta property="og:site_name" content="hydropek&#39;s blog">
+<meta property="og:url" content="https://cauphenuny.github.io/2021/02/08/poly-fft/index.html">
+<meta property="og:site_name" content="Cauphenuny&#39;s blog">
 <meta property="og:description" content="防止过了几个月就忘了 单位复根 ωn&#x3D;e2πin&#x3D;cos⁡(2πn)+i⋅sin⁡(2πn)\omega_n&#x3D;e^{\frac{2\pi i}{n}}&#x3D;\cos\left(\dfrac{2\pi}{n}\right)+i\cdot \sin\left(\dfrac{2\pi}{n}\right)ωn​&#x3D;en2πi​&#x3D;cos(n2π​)+i⋅sin(n2π​) 性质 ωnn&#x3D;1ωnk&#x3D;ω2n2kω2">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-02-08T08:37:59.000Z">
 <meta property="article:modified_time" content="2023-08-02T15:38:28.658Z">
-<meta property="article:author" content="hydropek">
+<meta property="article:author" content="Cauphenuny">
 <meta property="article:tag" content="FFT">
 <meta property="article:tag" content="多项式">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://hydropek.github.io/2021/02/08/poly-fft/">
+<link rel="canonical" href="https://cauphenuny.github.io/2021/02/08/poly-fft/">
 
 
 <script id="page-configurations">
@@ -47,7 +47,7 @@
   };
 </script>
 
-  <title>FFT 笔记 | hydropek's blog</title>
+  <title>FFT 笔记 | Cauphenuny's blog</title>
   
 
 
@@ -102,7 +102,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">hydropek's blog</h1>
+      <h1 class="site-title">Cauphenuny's blog</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -195,16 +195,16 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://hydropek.github.io/2021/02/08/poly-fft/">
+    <link itemprop="mainEntityOfPage" href="https://cauphenuny.github.io/2021/02/08/poly-fft/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="hydropek">
+      <meta itemprop="name" content="Cauphenuny">
       <meta itemprop="description" content="">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="hydropek's blog">
+      <meta itemprop="name" content="Cauphenuny's blog">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -386,7 +386,7 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">hydropek</p>
+  <p class="site-author-name" itemprop="name">Cauphenuny</p>
   <div class="site-description" itemprop="description"></div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -442,7 +442,7 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">hydropek</span>
+  <span class="author" itemprop="copyrightHolder">Cauphenuny</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>

@@ -3949,7 +3949,7 @@ c100.7 8.3 195.3 44 280 108 55.3 42 101.7 93 139 153l9 14c2.7-4 5.7-8.7 9-14
     <title>C++20 新特性试玩：concept</title>
     <url>/2024/04/19/cpp20-feature-concept/</url>
     <content><![CDATA[<p>定义 concept</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">concept</span> c = (<span class="type">bool</span> expression);</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">concept</span> c = (bool_expression);</span><br></pre></td></tr></table></figure>
 <p><code>requires(args) &#123;...&#125;</code> 可以作为一个 bool 表达式，检查大括号中内容是否编译通过</p>
 <p>e.g.</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">concept</span> printable = <span class="built_in">requires</span>(std::ostream&amp; os, T a) &#123; os &lt;&lt; a; &#125;;</span><br></pre></td></tr></table></figure>
