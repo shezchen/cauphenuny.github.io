@@ -3,18 +3,28 @@
   <head>
     <meta charset="UTF-8" >
     <title>原琴模拟器</title>
+    <h2>原琴模拟器</h2>
     <link rel="icon" type="image/x-icon" href="./icon.jpg">
   </head>
   <body>
-    <p id="bpm"></p>
-    <p id="vel"></p>
-    <p id="key_offset"></p>
-    <p><label for="input">输入谱子：</label></p>
-    <p><textarea id="input" name="input" rows="20" cols="100"></textarea></p>
-    <p><button id="start">演奏</button></p>
-    <br>
+    <form>
+      <p id="status" style="color: red;"><b>加载中，请稍候……</b></p>
+      <p id="vel"></p>
+      <label for="bpm">bpm：</label>
+      <input type="text" id="bpm" size=8><br>
+      <label for="key_offset">移调：</label>
+      <input type="text" id="key_offset" size=8><br>
+      <label for="time_sign1">拍号：</label>
+      <input type="text" id="time_sign1" size=2>/<input type="text" id="time_sign2" size=2><br>
+      <input type="submit" value="确定" onclick="getAttribute()">
+    </form>
+      <p><label for="input">输入谱子：</label></p>
+      <p><textarea id="input" name="input" rows="16" cols="60"></textarea></p>
+      <p><button id="start">演奏</button> <button id="stop">停止</button></p>
     <p>预设：</p>
-    <p><button id="haruhikage">春日影</button></p>
+    <p><button id="haruhikage">春日影</button> 
+       <button id="reset">复原</button>
+    </p>
   </body>
   <script type="module">
     import { Soundfont2Sampler } from "https://unpkg.com/smplr/dist/index.mjs";
@@ -31,14 +41,37 @@
     }
     const context = new AudioContext();
     const piano = new SplendidGrandPiano(context);
-    var vel = velocites[4];
-    var offset = 0;
-    var bpm = 60;
-    document.getElementById("bpm").innerHTML = "bpm: " + bpm;
-    document.getElementById("vel").innerHTML = "力度: " + vel;
-    document.getElementById("key_offset").innerHTML = "移调: " + offset;
-    function stroke(code) {
-        piano.start({ note: code + offset, velocity: Math.round(vel - (C3 - code) / 2) });
+    piano.load.then(() => {
+        document.getElementById("status").style = "color: green;";
+        document.getElementById("status").innerHTML = "准备就绪";
+        init();
+        refresh();
+    });
+    var vel, offset, bpm, time1, time2;
+    function init() {
+        vel = velocites[4];
+        offset = 0;
+        bpm = 60;
+        time1 = 4, time2 = 8;
+        document.getElementById("input").innerHTML = "";
+        refresh();
+    }
+    function getAttribute() {
+        bpm = parseInt(document.getElementById("bpm").value);
+        offset = parseInt(document.getElementById("key_offset").value);
+        time1 = parseInt(document.getElementById("time_sign1").value);
+        time2 = parseInt(document.getElementById("time_sign2").value);
+        console.log(bpm, offset, time1, time2);
+    }
+    function refresh() {
+        document.getElementById("bpm").value = bpm;
+        document.getElementById("vel").textContent = "力度：" + vel;
+        document.getElementById("key_offset").value = offset;
+        document.getElementById("time_sign1").value = time1;
+        document.getElementById("time_sign2").value = time2;
+    }
+    function stroke(code, tim) {
+        piano.start({ note: code + offset, velocity: Math.round(vel - (C3 - code) / 2), time: tim });
     }
     document.addEventListener("keydown", function(event) {
         var code = event.keyCode;
@@ -48,15 +81,15 @@
         }
         if (code >= 48 && code <= 57) {
             vel = velocites[code - 48];
-            document.getElementById("vel").innerHTML = "力度: " + vel;
+            refresh();
         }
         if (code == 189) {
             offset--;
-            document.getElementById("key_offset").innerHTML = "移调: " + offset;
+            refresh();
         }
         if (code == 187) {
             offset++;
-            document.getElementById("key_offset").innerHTML = "移调: " + offset;
+            refresh();
         }
     });
     function sleep(milliseconds) {
@@ -64,31 +97,33 @@
         setTimeout(resolve, milliseconds);
       });
     }
-    async function play(music) {
-        var interval = 60 * 1000 / bpm / 6;
-        var cnt = 0;
+    document.getElementById("stop").onclick = () => {
+        console.log("stop");
+        piano.stop();
+    }
+    function play(music) {
+        var interval = 60 * 4 / bpm / time2;
+        var cnt = 0, sum = 0;
+        const now = context.currentTime;
         for (var i = 0; i < music.length; i++) {
             var key = music.charCodeAt(i);
             //console.log(i, music[i], key);
             if (key2note.has(key)) {
                 //console.log("note", music[i]);
-                stroke(key2note.get(key));
-                cnt++;
-                await sleep(interval);
+                stroke(key2note.get(key), now + sum * interval);
+                cnt++, sum++;
             } else if (music[i] == '(') {
                 //console.log("chord", music[i + 1]);
                 while (music[++i] != ')') {
-                    stroke(key2note.get(music.charCodeAt(i)));
+                    stroke(key2note.get(music.charCodeAt(i)), now + sum * interval);
                 }
-                cnt++;
-                await sleep(interval);
+                cnt++, sum++;
             } else if (music[i] == ' ' || music[i] == ' ') {
                 //console.log("interval on ", i);
                 if (music[i] == ' ') {
                     console.log("special space");
                 }
-                cnt++;
-                await sleep(interval);
+                cnt++, sum++;
             } else if (music[i] == '/') {
                 console.log(cnt);
                 cnt = 0;
@@ -98,17 +133,23 @@
         }
     }
     document.getElementById("haruhikage").onclick = () => {
-        //stroke();
+        bpm = 90;
+        time1 = 3;
+        time2 = 16;
         offset = -1;
-        document.getElementById("key_offset").innerHTML = "移调: " + offset;
         document.getElementById("input").innerHTML = haruhikage;
+        refresh();
         //play(haruhikage);
         //console.log(sampler.instrumentNames);
         //context.resume(); // enable audio context after a user interaction
     };
+    document.getElementById("reset").onclick = () => {
+        init();
+    };
     document.getElementById("start").onclick = () => {
-        var music = document.getElementById("input").value;
-        play(music);
+        console.log("click");
+        //getAttribute();
+        play(document.getElementById("input").value);
     };
 
     var haruhikage = `前奏：
@@ -219,90 +260,13 @@
 
 (AGQE)   W /Q   W /(VAE)  RE /W N M /(AGE) S W /
 (GQ)   (AW) /(VADE)  RE /(FW)     /      /(ZBDQ)      / 
-`
-    var komorebi = `
-(VH) AE/D W /(BDJT)   /(JE)   /
-(NGW) AE/D (GQ) /(CGJ) M /(SG)  /
-(VH) (AE) /D JQ/(BJ) XG/B S /
-(NAD) C /N A /(BM) C /B X /
 
-(VH) AE/D (AW) /(BT) M /(SE) M /
-(NW) AE/D (GQ) /(CJ) M /(DG) M /
-(VH) (AE) /D JQ/(BJ) XG/B S /
-(NAD) C /N A /(BM)  /    /
-
-a1段：
-
-(VH) AE/D (AW) /(BT) M /(SE) M /
-(NW) AE/D (GQ) /(CJ) M /(DG) M /
-(VDH) (AHE) /D SD/(BSG) (MGE) /S (MG)J/
-(NDH) (AHE) /D (AH)E/(CDH) (MHE) /D (MH)E/
-
-(VH) AE/D (AW) /(BT) M /(SE) M /
-(NW) AE/D (GQ) /(CJ) M /(DG) M /
-(VDH) (AHE) /FGHQ /(BSGJ) X /MSGJ /
-(NDQ) A /(DH)J(GQ)T /(CJET) M /(DH)J(MW)T /
-
-b段：
-
-(VQ) A(GQ) /D (AQ) /(BJ) MJ/SHM /
-(NHQ) A(HQ) /D(GQ) (GJ)/C M /(DG)J(MW)T /
-(VGQ) A(QY)/ Q W /(BWTU) XQ/UTWE /
-(NW) AQ/DWGE /C MG/(DJ)W(MT)J /
-
-(VGQ) A(QT)/DQA /(BJW) M /(SH)J(MW)T /
-(NGQ) A(GQ)/D Q(QT)/CU(MQ)W /(DU)T(MW)T /
-(VQEY) AQ/ FGQ /(BGJ) X(JT)/ JWQ /
-(NQT) (AD)G/DG(AH)Q /(CD)G(MH)J /(DQ)T(MG)J /
-
-(VQ) A(QT)/DQA /(BW) M /SH(MG)H /
-(NQ) A(HQ)/D GQ/(CGJ) M /(DG)J(MW)T /
-(VGQ) A(QY)/ Q W/(BWTU) XQ/UTWE /
-(NW) AQ/DWGE /C MG/(DJ)W(MT)J /
-
-(VGQ) A(QT)/DQA /(BJW) M /(SH)J(MW)T /
-(NGQ) A(GQ)/D Q(QT)/CU(MQ)W /(DU)T(MW)T /
-(VQEY) AQ/ FGQ/(BGJ) X(JT)/ JWQ/
-(NQT) (AD)G/DG(AH)Q /(CGJ) M /HJ(MW)T /
-
-a1段：
-
-(VH) AE/D (AW) /(BT) M /(SE) M /
-(NW) AE/D (GQ) /(CJ) M /(DG) M /
-(VDH) (AHE) /D SD/(BSG) (MGE) /S (MG)J/
-(NDH) (AHE) /D (AH)E/(CDH) (MHE) /D (MH)E/
-
-(VH) AE/D (AW) /(BT) M /(SE) M /
-(NW) AE/D (GQ) /(CJ) M /(DG) M /
-(VDH) (AHE) /FGHQ /(BSGJ) X /MSGJ /
-(NDQ) A /(DH)J(GQ)T /(CJET) M /(DH)J(MW)T /
-
-c段：
-
-(VWY) (AWY)(QT) /D(WT)(AE)Q /(BHE)WMW /(SGQ) (MGQ)J /
-NJ(AG) /D AG/(CSG) (MSG)A/D(AG)M /
-(VWY) (AWY)(QT) /D(WT)(AE)Q /(BHE)WMW /(SGQ) (MGQ)J /
-N(GJ)(AHQ) /DQ(GU)Q /CU(MT)W /(DQ)J(MG)S /
-
-(VQT) (AQT)Q /DWA /(BG)JM(JT) /(SGQ) (MGW) /
-(NHE) (AHE)W /DQA /C(GJ)M(GJ) /(DGQ) (MGW) /
-(VQT) A(QT) /D A /(BJT) M(JT) /S M /
-(NQT) A(QT) /D G /(CJT) M(JT) /(DG)J(MW)T /
-
-a1段：
-
-(VH) AE/D (AW) /(BT) M /(SE) M /
-(NW) AE/D (GQ) /(CJ) M /(DG) (MH)G /
-(VDH) (AHE) /D SD/(BSG) (MGE) /S (MG)J/
-(NDH) (AHE) /D (AH)E/(CDH) (MHE) /D (MH)E/
-
-(VH) AE/D (AW) /(BT) M /(SE) M /
-(NW) AE/D (GQ) /(CJ) M /(DG) (MH)G /
-(VDH) (AHE) /FGHQ /(BSGJ) X /MSGJ /
-(NDQ) A /(DH)J(GQ)T /(CJET) M /(DH)J(MW)T /
+---
+来源：https://www.bilibili.com/read/cv27118373/
+略有修改，使节奏正确。
 `
   </script>
 
-<br>
-<a href="https://cauphenuny.github.io/2024/06/14/build-a-windsonglyre-simulator/">development log</a>
+v1.0.0<br>
+<a href="https://cauphenuny.github.io/2024/06/14/build-a-windsonglyre-simulator/">开发日志</a>
 </html>
