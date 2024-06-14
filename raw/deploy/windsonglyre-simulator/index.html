@@ -6,7 +6,15 @@
     <link rel="icon" type="image/x-icon" href="./icon.jpg">
   </head>
   <body>
-    <button id="btn">play</button>
+    <p id="bpm"></p>
+    <p id="vel"></p>
+    <p id="key_offset"></p>
+    <p><label for="input">输入自动演奏内容：</label></p>
+    <p><textarea id="input" name="input" rows="10" cols="80"></textarea></p>
+    <p><button id="start">开始</button></p>
+    <br>
+    <p>预设：</p>
+    <p><button id="haruhikage">春日影</button></p>
   </body>
   <script type="module">
     import { Soundfont2Sampler } from "https://unpkg.com/smplr/dist/index.mjs";
@@ -26,6 +34,9 @@
     var vel = velocites[4];
     var offset = 0;
     var bpm = 90;
+    document.getElementById("bpm").innerHTML = "bpm: " + bpm;
+    document.getElementById("vel").innerHTML = "力度: " + vel;
+    document.getElementById("key_offset").innerHTML = "移调: " + offset;
     function stroke(code) {
         piano.start({ note: code + offset, velocity: Math.round(vel - (C3 - code) / 2) });
     }
@@ -37,12 +48,15 @@
         }
         if (code >= 48 && code <= 57) {
             vel = velocites[code - 48];
+            document.getElementById("vel").innerHTML = "力度: " + vel;
         }
         if (code == 189) {
             offset--;
+            document.getElementById("key_offset").innerHTML = "移调: " + offset;
         }
         if (code == 187) {
             offset++;
+            document.getElementById("key_offset").innerHTML = "移调: " + offset;
         }
     });
     function sleep(milliseconds) {
@@ -83,6 +97,18 @@
             }
         }
     }
+    document.getElementById("haruhikage").onclick = () => {
+        //stroke();
+        document.getElementById("input").innerHTML = haruhikage;
+        //play(haruhikage);
+        //console.log(sampler.instrumentNames);
+        //context.resume(); // enable audio context after a user interaction
+    };
+    document.getElementById("start").onclick = () => {
+        var music = document.getElementById("input").value;
+        play(music);
+    };
+
     var haruhikage = `
 前奏：
 
@@ -274,13 +300,6 @@ a1段：
 (VDH) (AHE) /FGHQ /(BSGJ) X /MSGJ /
 (NDQ) A /(DH)J(GQ)T /(CJET) M /(DH)J(MW)T /
 `
-    document.getElementById("btn").onclick = () => {
-        //stroke();
-        play(haruhikage);
-        //console.log(sampler.instrumentNames);
-        context.resume(); // enable audio context after a user interaction
-    };
-
   </script>
 
 <a href="https://cauphenuny.github.io/2024/06/14/build-a-windsonglyre-simulator/">development log</a>
