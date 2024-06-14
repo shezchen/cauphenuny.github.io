@@ -1,0 +1,159 @@
+<!DOCTYPE HTML>
+<html>
+  <body>
+    <button id="btn">play</button>
+  </body>
+  <script type="module">
+    import { Soundfont2Sampler } from "https://unpkg.com/smplr/dist/index.mjs";
+    import { SplendidGrandPiano } from "https://unpkg.com/smplr/dist/index.mjs";
+
+    const key = 'ZXCVBNMASDFGHJQWERTYU'; // 键位
+    const diff = [2, 2, 1, 2, 2, 2, 1]; // 自然大调音阶
+    const velocites = [120, 32, 48, 56, 64, 72, 80, 88, 96, 108]; // 力度分级
+    const key2note = new Map();
+    const C1 = 48, C2 = 60, C3 = 72;
+    for (var i = 0, note = C1; i < key.length; i++) {
+        key2note.set(key.charCodeAt(i), note);
+        note += diff[i % 7];
+    }
+    const context = new AudioContext();
+    const piano = new SplendidGrandPiano(context); // create and load the instrument
+    var vel = velocites[4];
+    var offset = 0;
+    var bpm = 90;
+    function stroke(code) {
+        piano.start({ note: code + offset, velocity: Math.round(vel - (C3 - code) / 2) }); // play the note
+    }
+    document.addEventListener("keydown", function(event) {
+        var code = event.keyCode;
+        console.log(code, key2note.get(code));
+        if (key2note.has(code)) {
+            stroke(code);
+        }
+        if (code >= 48 && code <= 57) {
+            vel = velocites[code - 48];
+        }
+        if (code == 189) {
+            offset--;
+        }
+        if (code == 187) {
+            offset++;
+        }
+    });
+    function sleep(milliseconds) {
+      return new Promise(resolve => {
+        setTimeout(resolve, milliseconds);
+      });
+    }
+    async function play(music) {
+        var interval = 60 * 1000 / bpm / 4;
+        for (var i = 0; i < music.length; i++) {
+            var key = music.charCodeAt(i);
+            console.log(key);
+            if (key2note.has(key)) {
+                console.log("note");
+                stroke(key2note.get(key));
+                await sleep(interval);
+            } else if (music[i] == '(') {
+                console.log("chord");
+                while (music[++i] != ')') {
+                    stroke(key2note.get(music.charCodeAt(i)));
+                }
+                await sleep(interval);
+            } else if (music[i] == ' ') {
+                console.log("interval");
+                await sleep(interval);
+            }
+        }
+    }
+    //var demo = "(ADG)"
+    var demo = `
+(VH) AE/D W /(BDJT)   /(JE)   /
+(NGW) AE/D (GQ) /(CGJ) M /(SG)  /
+(VH) (AE) /D JQ/(BJ) XG/B S /
+(NAD) C /N A /(BM) C /B X /
+
+(VH) AE/D (AW) /(BT) M /(SE) M /
+(NW) AE/D (GQ) /(CJ) M /(DG) M /
+(VH) (AE) /D JQ/(BJ) XG/B S /
+(NAD) C /N A /(BM)  /    /
+
+a1段：
+
+(VH) AE/D (AW) /(BT) M /(SE) M /
+(NW) AE/D (GQ) /(CJ) M /(DG) M /
+(VDH) (AHE) /D SD/(BSG) (MGE) /S (MG)J/
+(NDH) (AHE) /D (AH)E/(CDH) (MHE) /D (MH)E/
+
+(VH) AE/D (AW) /(BT) M /(SE) M /
+(NW) AE/D (GQ) /(CJ) M /(DG) M /
+(VDH) (AHE) /FGHQ /(BSGJ) X /MSGJ /
+(NDQ) A /(DH)J(GQ)T /(CJET) M /(DH)J(MW)T /
+
+b段：
+
+(VQ) A(GQ) /D (AQ) /(BJ) MJ/SHM /
+(NHQ) A(HQ) /D(GQ) (GJ)/C M /(DG)J(MW)T /
+(VGQ) A(QY)/ Q W /(BWTU) XQ/UTWE /
+(NW) AQ/DWGE /C MG/(DJ)W(MT)J /
+
+(VGQ) A(QT)/DQA /(BJW) M /(SH)J(MW)T /
+(NGQ) A(GQ)/D Q(QT)/CU(MQ)W /(DU)T(MW)T /
+(VQEY) AQ/ FGQ /(BGJ) X(JT)/ JWQ /
+(NQT) (AD)G/DG(AH)Q /(CD)G(MH)J /(DQ)T(MG)J /
+
+(VQ) A(QT)/DQA /(BW) M /SH(MG)H /
+(NQ) A(HQ)/D GQ/(CGJ) M /(DG)J(MW)T /
+(VGQ) A(QY)/ Q W/(BWTU) XQ/UTWE /
+(NW) AQ/DWGE /C MG/(DJ)W(MT)J /
+
+(VGQ) A(QT)/DQA /(BJW) M /(SH)J(MW)T /
+(NGQ) A(GQ)/D Q(QT)/CU(MQ)W /(DU)T(MW)T /
+(VQEY) AQ/ FGQ/(BGJ) X(JT)/ JWQ/
+(NQT) (AD)G/DG(AH)Q /(CGJ) M /HJ(MW)T /
+
+a1段：
+
+(VH) AE/D (AW) /(BT) M /(SE) M /
+(NW) AE/D (GQ) /(CJ) M /(DG) M /
+(VDH) (AHE) /D SD/(BSG) (MGE) /S (MG)J/
+(NDH) (AHE) /D (AH)E/(CDH) (MHE) /D (MH)E/
+
+(VH) AE/D (AW) /(BT) M /(SE) M /
+(NW) AE/D (GQ) /(CJ) M /(DG) M /
+(VDH) (AHE) /FGHQ /(BSGJ) X /MSGJ /
+(NDQ) A /(DH)J(GQ)T /(CJET) M /(DH)J(MW)T /
+
+c段：
+
+(VWY) (AWY)(QT) /D(WT)(AE)Q /(BHE)WMW /(SGQ) (MGQ)J /
+NJ(AG) /D AG/(CSG) (MSG)A/D(AG)M /
+(VWY) (AWY)(QT) /D(WT)(AE)Q /(BHE)WMW /(SGQ) (MGQ)J /
+N(GJ)(AHQ) /DQ(GU)Q /CU(MT)W /(DQ)J(MG)S /
+
+(VQT) (AQT)Q /DWA /(BG)JM(JT) /(SGQ) (MGW) /
+(NHE) (AHE)W /DQA /C(GJ)M(GJ) /(DGQ) (MGW) /
+(VQT) A(QT) /D A /(BJT) M(JT) /S M /
+(NQT) A(QT) /D G /(CJT) M(JT) /(DG)J(MW)T /
+
+a1段：
+
+(VH) AE/D (AW) /(BT) M /(SE) M /
+(NW) AE/D (GQ) /(CJ) M /(DG) (MH)G /
+(VDH) (AHE) /D SD/(BSG) (MGE) /S (MG)J/
+(NDH) (AHE) /D (AH)E/(CDH) (MHE) /D (MH)E/
+
+(VH) AE/D (AW) /(BT) M /(SE) M /
+(NW) AE/D (GQ) /(CJ) M /(DG) (MH)G /
+(VDH) (AHE) /FGHQ /(BSGJ) X /MSGJ /
+(NDQ) A /(DH)J(GQ)T /(CJET) M /(DH)J(MW)T /
+`
+    document.getElementById("btn").onclick = () => {
+        //stroke();
+        play(demo);
+        //console.log(sampler.instrumentNames);
+        context.resume(); // enable audio context after a user interaction
+    };
+
+  </script>
+</html>

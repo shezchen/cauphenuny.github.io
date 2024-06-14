@@ -3968,9 +3968,12 @@ c100.7 8.3 195.3 44 280 108 55.3 42 101.7 93 139 153l9 14c2.7-4 5.7-8.7 9-14
   <entry>
     <title>从零开始打造一个原琴模拟器</title>
     <url>/2024/06/14/build-a-windsonglyre-simulator/</url>
-    <content><![CDATA[<p>音色库来源：<a href="https://space.bilibili.com/243664595">@Colalala_冰阔落落落</a></p>
-<p>将 .sf2 文件转换为 <a href="https://github.com/eagsalazar/midi.js">midi.js</a> 可读取的 js 文件：<a href="https://github.com/eagsalazar/sf2_to_js">eagsalazar/sf2_to_js</a></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">brew install fluidsynth vorbis-tools # oggenc 已经被整合进vorbis-tools包中</span><br><span class="line">gem install midilib fileutils colorize base64</span><br><span class="line">sf2_to_js to_js &quot;$(pwd)/WindsongLyre.sf2&quot; -o &quot;$(pwd)/js/&quot;</span><br></pre></td></tr></table></figure>
+    <content><![CDATA[<p>试玩链接: <a href="/raw/deploy/windsonglyre-simulator">原琴模拟器</a></p>
+<p>音色库来源：<a href="https://space.bilibili.com/243664595">@Colalala_冰阔落落落</a></p>
+<hr />
+<p>6.14</p>
+<p>试了半天，发现没法正常播放这个 sf2 音源，决定先用默认钢琴音源把别的写了。</p>
+<p>写好了键盘演奏部分的函数。</p>
 ]]></content>
       <categories>
         <category>CS</category>
