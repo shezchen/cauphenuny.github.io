@@ -9,9 +9,9 @@
     <p id="bpm"></p>
     <p id="vel"></p>
     <p id="key_offset"></p>
-    <p><label for="input">输入自动演奏内容：</label></p>
-    <p><textarea id="input" name="input" rows="10" cols="80"></textarea></p>
-    <p><button id="start">开始</button></p>
+    <p><label for="input">输入谱子：</label></p>
+    <p><textarea id="input" name="input" rows="20" cols="100"></textarea></p>
+    <p><button id="start">演奏</button></p>
     <br>
     <p>预设：</p>
     <p><button id="haruhikage">春日影</button></p>
@@ -33,7 +33,7 @@
     const piano = new SplendidGrandPiano(context);
     var vel = velocites[4];
     var offset = 0;
-    var bpm = 90;
+    var bpm = 60;
     document.getElementById("bpm").innerHTML = "bpm: " + bpm;
     document.getElementById("vel").innerHTML = "力度: " + vel;
     document.getElementById("key_offset").innerHTML = "移调: " + offset;
@@ -65,7 +65,7 @@
       });
     }
     async function play(music) {
-        var interval = 60 * 1000 / bpm / 4;
+        var interval = 60 * 1000 / bpm / 6;
         var cnt = 0;
         for (var i = 0; i < music.length; i++) {
             var key = music.charCodeAt(i);
@@ -99,6 +99,8 @@
     }
     document.getElementById("haruhikage").onclick = () => {
         //stroke();
+        offset = -1;
+        document.getElementById("key_offset").innerHTML = "移调: " + offset;
         document.getElementById("input").innerHTML = haruhikage;
         //play(haruhikage);
         //console.log(sampler.instrumentNames);
@@ -109,8 +111,7 @@
         play(music);
     };
 
-    var haruhikage = `
-前奏：
+    var haruhikage = `前奏：
 
 (AGE)   W /Q   W /(VAE)  RE /W N M /
 (AGE) S W /(GQ)   (AW) /(VADE)  R(AE) /(FW)     /
