@@ -28,7 +28,7 @@
         var code = event.keyCode;
         console.log(code, key2note.get(code));
         if (key2note.has(code)) {
-            stroke(code);
+            stroke(key2note.get(code));
         }
         if (code >= 48 && code <= 57) {
             vel = velocites[code - 48];
