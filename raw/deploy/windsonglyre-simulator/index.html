@@ -13,10 +13,10 @@
       <label for="bpm">bpm：</label>
       <input type="text" id="bpm" size=8><br>
       <label for="key_offset">移调：</label>
-      <input type="text" id="key_offset" size=8><br>
+      <input type="text" id="key_offset" size=2><span id="key_name"></span><br>
       <label for="time_sign1">拍号：</label>
       <input type="text" id="time_sign1" size=2>/<input type="text" id="time_sign2" size=2><br>
-      <input type="submit" value="确定" onclick="getAttribute()">
+      <input type="button" value="确定" id="submit">
     </form>
       <p><label for="input">输入谱子：</label></p>
       <p><textarea id="input" name="input" rows="16" cols="60"></textarea></p>
@@ -31,8 +31,9 @@
     import { SplendidGrandPiano } from "https://unpkg.com/smplr/dist/index.mjs";
 
     const key = 'ZXCVBNMASDFGHJQWERTYU'; // 键位
+    const note_name = ["C", "C<sup>♯</sup>/D<sup>♭</sup>", "D", "D<sup>♯</sup>/E<sup>♭</sup>", "E", "F", "F<sup>♯</sup>/G<sup>♭</sup>", "G", "G<sup>♯</sup>/A<sup>♭</sup>", "A", "A<sup>♯</sup>/B<sup>♭</sup>", "B"];
     const diff = [2, 2, 1, 2, 2, 2, 1]; // 自然大调音阶
-    const velocites = [120, 32, 48, 56, 64, 72, 80, 88, 96, 108]; // 力度分级
+    const velocites = [32, 48, 56, 64, 72, 80, 88, 96, 108, 120]; // 力度分级
     const key2note = new Map();
     const C1 = 48, C2 = 60, C3 = 72;
     for (var i = 0, note = C1; i < key.length; i++) {
@@ -49,29 +50,31 @@
     });
     var vel, offset, bpm, time1, time2;
     function init() {
-        vel = velocites[4];
+        vel = 3;
         offset = 0;
         bpm = 120;
         time1 = 4, time2 = 8;
         document.getElementById("input").innerHTML = "";
         refresh();
     }
-    function getAttribute() {
+    document.getElementById("submit").onclick = () => {
         bpm = parseInt(document.getElementById("bpm").value);
         offset = parseInt(document.getElementById("key_offset").value);
         time1 = parseInt(document.getElementById("time_sign1").value);
         time2 = parseInt(document.getElementById("time_sign2").value);
         console.log(bpm, offset, time1, time2);
+        refresh();
     }
     function refresh() {
         document.getElementById("bpm").value = bpm;
-        document.getElementById("vel").textContent = "力度：" + vel;
+        document.getElementById("vel").textContent = "力度：" + velocites[vel];
         document.getElementById("key_offset").value = offset;
+        document.getElementById("key_name").innerHTML = " (" + note_name[(offset + 120) % 12] + ")";
         document.getElementById("time_sign1").value = time1;
         document.getElementById("time_sign2").value = time2;
     }
     function stroke(code, tim) {
-        piano.start({ note: code + offset, velocity: Math.round(vel - (C3 - code) / 2), time: tim });
+        piano.start({ note: code + offset, velocity: Math.round(velocites[vel] - (C3 - code) / 2), time: tim });
     }
     document.addEventListener("keydown", function(event) {
         var code = event.keyCode;
@@ -79,16 +82,12 @@
         if (key2note.has(code)) {
             stroke(key2note.get(code));
         }
-        if (code >= 48 && code <= 57) {
-            vel = velocites[code - 48];
-            refresh();
-        }
         if (code == 189) {
-            offset--;
+            if (vel > 0) vel--; 
             refresh();
         }
         if (code == 187) {
-            offset++;
+            if (vel < 9) vel++;
             refresh();
         }
     });
@@ -127,7 +126,7 @@
             } else if (music[i] == '/') {
                 console.log(cnt);
                 cnt = 0;
-            } else {
+            } else if (key >= 48 && key <= 57){
                 //console.log("ignore ", music[i]);
             }
         }
@@ -184,7 +183,7 @@
 (ZVJ) (ZH) (VH) /(DH) A V /(ZV) Z (VH) /(DH) (AG) (VF)F/
 
 副歌：
-
+5
 (ZD)S(BD)SDF/(ADG) S (BF)G/(ZVH) Z HJ/(AFQ) N (VW)Q/
 (CBG) C B /(MSG) (BF) (CF) /(CND) C (NF)D/(ADG) S B /
 
@@ -200,7 +199,7 @@
 (ZBA) AZB /(ZBS)   (ZA) /(ZB) AZB /F D AS/
 
 主歌：
-
+4
 (ZBD) D S /F D S /(ZVS) S AA/(SF) (AD) (VS) /
 (ZS) B AS/(AD)   B /(CA)   A /(BD) G (DQ) /
 (VJ) Z (AQ) /(GJ)   (DQ) /(BJ)H(XG) M /(DG) S (SF) /
