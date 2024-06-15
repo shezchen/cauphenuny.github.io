@@ -18,7 +18,7 @@
       <input type="text" id="time_sign1" size=2>/<input type="text" id="time_sign2" size=2><br>
       <input type="button" value="确定" id="submit">
     </form>
-      <p><label for="input">谱子：<br>输入音对应键位的大写字母，空格表示休止符<br> []内音符时值减半，{}内音符时值变为原来的1/3，()内音符同时发声，可嵌套<br>忽略其他字符</label></p>
+      <p><label for="input">谱子：<br>输入音对应键位的大写字母，空格表示休止符<br> []内音符时值减半，{}内时值变为原来的1/3，()内同时发声，可嵌套<br>忽略其他字符</label></p>
       <p><textarea id="input" name="input" rows="16" cols="60"></textarea></p>
       <p><button id="start">演奏</button> <button id="stop">停止</button></p>
     <p>预设：</p>
@@ -187,6 +187,10 @@
     };
 
     var haruhikage = `[
+#注意拍号是6/8，而这里加了个中括号时值减半
+#所以以下每一位表示一个16分音符
+#斜杠是小节线，仅起到视觉上的效果
+
 前奏：
 
 (AGE)   W Q   W /(VAE)  RE W N M /
@@ -304,7 +308,6 @@
 `
   </script>
 
-v0.1.0<br>
 风物之诗琴的音源没搞好，先用钢琴代替了<br>
-<a href="https://cauphenuny.github.io/2024/06/14/build-a-windsonglyre-simulator/">开发日志</a>
+当前版本 v0.2.0， <a href="https://cauphenuny.github.io/2024/06/14/build-a-windsonglyre-simulator/">开发日志</a>
 </html>
