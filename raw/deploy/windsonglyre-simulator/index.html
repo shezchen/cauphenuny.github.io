@@ -20,13 +20,17 @@
       <input type="button" value="确定" id="submit">
     </form>
       <p><label for="input">使用键盘（键位见教程），或在下框中输入谱子以自动演奏：<br>输入每个音对应键位的大写字母，英文句号表示休止符<br> </label></p>
-      <p><textarea id="input" name="input" rows="16" cols="60"></textarea></p>
+      <p><textarea id="input" name="input" rows="12" cols="60"></textarea></p>
       <p><button id="start">演奏</button> <button id="stop">停止</button></p>
     <p>预设：</p>
     <p>
-       <button id="tutorial">教程：键位与记谱</button><br>
+       <button id="tutorial">教程：键位与记谱</button>
+    </p>
+    <p>
        <button id="haruhikage">乐曲：春日影</button> 
        <button id="bwv846">乐曲：巴赫 C 大调前奏曲 BWV846</button> 
+    </p>
+    <p>
        <button id="reset">复原</button>
     </p>
   </body>
@@ -268,8 +272,8 @@
 +/- 表示升/降半音，仅影响其后紧跟着的一个音
 [AAAA-AAA-A][AAAA+AAA+A]/..../(ADG).(A-DG)./..../
 临时高/低八度记号：
-^^内的音高八度 例：[AAGGHHG ][^AAGGHHG ^]
-%%内的音低八度 例：[AAGGHHG ][%AAGGHHG %]..../ （不可嵌套使用）
+^^内的音高八度 例：[AAGGHHG ]....[^AAGGHHG ^]..../
+%%内的音低八度 例：[AAGGHHG ]....[%AAGGHHG %]..../ （不可嵌套使用）
 
 注意：此类变化音无法通过直接通过按键盘奏出
 
@@ -280,25 +284,25 @@
 
 `
     var bwv846 = `[[
-ADGQEGQEADGQEGQE/ASHWRHWRASHWRHWR/
+>>ADGQEGQEADGQEGQE/ASHWRHWRASHWRHWR/
 MSGWRGWRMSGWRGWR/ADGQEGQEADGQEGQE/
-ADHEYHEYADHEYHEY/AS+FHW+FHWAS+FHW+FHW/
+<<ADHEYHEYADHEYHEY/>>AS+FHW+FHWAS+FHW+FHW/
 MSGWTGWTMSGWTGWT/MADGQDGQMADGQDGQ/
 NADGQDGQNADGQDGQ/XNS+FQS+FQXNS+FQS+FQ/
 BMSGJSGJBMSGJSGJ/B-MDG+QDG+QB-MDG+QDG+Q/
 VNSHWSHWVNSHWSHW/V-NSFJSFJV-NSFJSFJ/
 CBAGQAGQCBAGQAGQ/CVNAFNAFCVNAFNAF/
-XVNAFNAFXVNAFNAF/%BSGKJRGJBSGKJRGJ/
+XVNAFNAFXVNAFNAF/%BSGJRGJRBSGJRGJR/
 ADGQEGQEADGQEGQE/AG-JQE-JQEAG-JQE-JQE/
 VFHQEHQEVFHQEHQE/+VAHQ-EHQ-E+VAHQ-EHQ-E/
--NFJQWJQWNFJQWJQW/BFGJWGJWBFGJWGJW/
+-NFJQWJQW-NFJQWJQW/BFGJWGJWBFGJWGJW/
 BDGQEGQEBDGQEGQE/BSGQRGQRBSGQRGQR/
 BDGQEGQEBDGQEGQE/BSGQRGQRBSGQRGQR/
 BSGJRGJRBSGJRGJR/B-DHQ+RHQ+RB-DHQ+RHQ+R/
 BDGQTGQTBDGQTGQT/BSGQRGQRBSGQRGQR/
 BSGJRGJRBSGJRGJR/ZAG-JEG-JEZAG-JEG-JE/
 ZAFHQRQHQHFHFSFS/ZM%GJWRWJWJGJSFDS/
-(Z^DGQ^)
+(%ZA%DGQ)
 ]]
 `
     var haruhikage = `[
