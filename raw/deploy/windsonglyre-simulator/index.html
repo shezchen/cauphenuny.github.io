@@ -19,13 +19,14 @@
       <input type="text" id="time_sign1" size=2>/<input type="text" id="time_sign2" size=2><br>
       <input type="button" value="确定" id="submit">
     </form>
-      <p><label for="input">使用键盘（键位见教程），或在下框中输入谱子以自动演奏：<br>输入每个音对应键位的大写字母，空格表示休止符<br> []内两个音占一拍，{}内三个音占两拍，()内所有音同时发声，可嵌套，如：[A[ A]]<br>忽略其他字符</label></p>
+      <p><label for="input">使用键盘（键位见教程），或在下框中输入谱子以自动演奏：<br>输入每个音对应键位的大写字母，英文句号表示休止符<br> </label></p>
       <p><textarea id="input" name="input" rows="16" cols="60"></textarea></p>
       <p><button id="start">演奏</button> <button id="stop">停止</button></p>
     <p>预设：</p>
     <p>
        <button id="tutorial">教程：键位与记谱</button> 
        <button id="haruhikage">乐曲：春日影</button> 
+       <button id="bwv846">乐曲：巴赫 C 大调前奏曲 BWV846</button> 
        <button id="reset">复原</button>
     </p>
   </body>
@@ -112,6 +113,7 @@
         var sum = 0;
         var now = context.currentTime;
         var getTop = arr => arr[arr.length - 1];
+        var tmpoffset = 0, octoffset = 0;
         for (var i = 0; i < music.length; i++) {
             var key = music.charCodeAt(i);
             //console.log(i, music[i], key);
@@ -138,21 +140,32 @@
                 case '}':
                     stack.pop();
                     break;
-                case '-':
+                case '>':
                     if (velc > 0) velc--;
                     break;
-                case '+':
+                case '<':
                     if (velc < 9) velc++;
                     break;
-
+                case '-':
+                    tmpoffset--;
+                    break;
+                case '+':
+                    tmpoffset++;
+                    break;
                 case '/':
                     //console.log(cnt);
                     cnt = 0;
                     break;
+                case '^':
+                    if (octoffset == 0) octoffset = 1;
+                    else                octoffset = 0;
+                    break;
+                case '%':
+                    if (octoffset == 0) octoffset = -1;
+                    else                octoffset = 0;
+                    break;
 
-                case ' ':
-                    //console.log("special space");
-                case ' ':
+                case '.':
                     //console.log("interval", interval, sum);
                     cnt += getTop(stack);
                     sum += getTop(stack);
@@ -160,7 +173,8 @@
 
                 default:
                     if (key2note.has(key)) {
-                        stroke(key2note.get(key), now + sum * interval, velc);
+                        stroke(key2note.get(key) + tmpoffset + octoffset * 12, now + sum * interval, velc);
+                        tmpoffset = 0;
                         cnt += getTop(stack);
                         sum += getTop(stack);
                         //cnt++, sum++;
@@ -173,6 +187,16 @@
         init();
         document.getElementById("input").value = tutorial;
         refresh();
+    };
+    document.getElementById("bwv846").onclick = () => {
+        bpm = 70;
+        time1 = 4;
+        time2 = 4;
+        offset = 0;
+        document.getElementById("input").value = bwv846;
+        refresh();
+        //console.log(sampler.instrumentNames);
+        //context.resume(); // enable audio context after a user interaction
     };
     document.getElementById("haruhikage").onclick = () => {
         bpm = 90;
@@ -196,145 +220,200 @@
 
     var tutorial = `教程
 教程中拍号4/4，此时一位表示一个四分音符：
-/AAAA/    /（用斜杠标记一下小节线，方便阅读）
+/AAAA/..../
+（斜杠是小节线标记，方便阅读，播放时会忽略）
 
-空格表示休止符：
-/AA A/    /
+英文句号表示休止符：
+/AA.A/..../
 
-三个八度音阶：ZXCV/BNM /ASDF/GHJ /QWER/TYU /    /
+三个八度音阶：ZXCV/BNM./ASDF/GHJ./QWER/TYU./..../
 （即键盘上三排从左到右每排七个音分别对应do至si）
 
-力度调整：按下键盘加号或减号
+全局力度调整：按下键盘加号/减号使力度调高/低一档
 
-时值减半：[ZCBADGQET]/    /
-柱式和弦：(ZCB) (CBA) (BAD) (ADG) (ZCBADGQET)   /
-三连音：
-[    bpm*2 => 180
-[{ASD}QGWGET][ QEQREQ ]
-[{ASD}QGWGET][ QEQREQ ]
-[{ASD}QGWGET][ QEQREQ ]
-[[WETE]WQWGQ ]{(GQET)(GQET)(GQET)(GQET)(GQET)(GQET)}
+[]内两个音占一拍（括号内时值为括号外的 1/2）
+[ZCBADGQET]/..../
+
+()内所有音同时发声
+柱式和弦：(ZCB).(CBA).(BAD).(ADG).(ZCBADGQET)......./
+
+{}内三个音占两拍（括号内时值为括号外的 2/3）
+
+以上的括号均能多层嵌套
+
+例如：
+[B[BN]MS][F[.D]S[SA]][M[MA]SM.BV.]..../
+
+自动播放时力度临时调整：</>
+
+渐强：A < A < A < A < A < A....
+渐弱：A > A > A > A > A > A > A > A > A > A > A ....
+渐强：A < A < A < A < A < A....
+是不是很像一个渐强/渐弱符号 （笑
+
+三连音试例：
+[ # 整体套了个中括号，相当于 bpm 翻倍变成180
+>[{ASD}QGWGET][.QEQREQ.]
+[{ASD}QGWGET][.QEQREQ.]
+[{ASD}QGWGET][.QEQREQ.]
+[[WETE]WQWGQ.]{(GQET)(GQET)(GQET)(GQET)(GQET)(GQET)}
 [{ASD}QGWGEG][RGEGTGQG]
 [{ASD}QGWGEG][RGEGWGEG]
 [{ASD}QGWGEG][RGEGTGQG]
-[[WETE]WQWGQ ](ADGQET)  B/
-[A  S]A / B{FDS}/A   /  AS/[DSDFDSAS][DSDFD SA]
-]
+[[WETE]WQWGQ.](ADGQET)..B/
+<<[A..S]A./.B{FDS}/A.../..AS/[DSDFDSAS][DSDFD.SA]
+]..../..../
+
+临时升降记号：
++/- 表示升/降半音，仅影响其后紧跟着的一个音
+[AAAA-AAA-A][AAAA+AAA+A]/..../(ADG).(A-DG)./..../
+临时高/低八度记号：
+^^内的音高八度 例：[AAGGHHG ][^AAGGHHG ^]
+%%内的音低八度 例：[AAGGHHG ][%AAGGHHG %]..../ （不可嵌套使用）
+
+注意：此类变化音无法通过直接通过按键盘奏出
+
+总结：
+有效字符：
+.()<>{[UYTREWQJHGFDSAMNBVCXZ]}
+其他字符在自动播放时均忽略
+
+`
+    var bwv846 = `[[
+ADGQEGQEADGQEGQE/ASHWRHWRASHWRHWR/
+MSGWRGWRMSGWRGWR/ADGQEGQEADGQEGQE/
+ADHEYHEYADHEYHEY/AS+FHW+FHWAS+FHW+FHW/
+MSGWTGWTMSGWTGWT/MADGQDGQMADGQDGQ/
+NADGQDGQNADGQDGQ/XNS+FQS+FQXNS+FQS+FQ/
+BMSGJSGJBMSGJSGJ/B-MDG+QDG+QB-MDG+QDG+Q/
+VNSHWSHWVNSHWSHW/V-NSFJSFJV-NSFJSFJ/
+CBAGQAGQCBAGQAGQ/CVNAFNAFCVNAFNAF/
+XVNAFNAFXVNAFNAF/%BSGKJRGJBSGKJRGJ/
+ADGQEGQEADGQEGQE/AG-JQE-JQEAG-JQE-JQE/
+VFHQEHQEVFHQEHQE/+VAHQ-EHQ-E+VAHQ-EHQ-E/
+-NFJQWJQWNFJQWJQW/BFGJWGJWBFGJWGJW/
+BDGQEGQEBDGQEGQE/BSGQRGQRBSGQRGQR/
+BDGQEGQEBDGQEGQE/BSGQRGQRBSGQRGQR/
+BSGJRGJRBSGJRGJR/B-DHQ+RHQ+RB-DHQ+RHQ+R/
+BDGQTGQTBDGQTGQT/BSGQRGQRBSGQRGQR/
+BSGJRGJRBSGJRGJR/ZAG-JEG-JEZAG-JEG-JE/
+ZAFHQRQHQHFHFSFS/ZM%GJWRWJWJGJSFDS/
+(Z^DGQ^)
+]]
 `
     var haruhikage = `[
-#注意拍号是6/8，而这里加了个中括号时值减半
-#所以以下每一位表示一个16分音符
-#斜杠是小节线，仅起到视觉上的效果
+# 注意拍号是6/8，而这里加了个中括号时值减半
+# 所以以下每一位表示一个16分音符
 
 前奏：
 
-(AGE)   W Q   W /(VAE)  RE W N M /
-(AGE) S W (GQ)   (AW) /(VADE)  R(AE) (FW)     /
-(ZE) B (AW) (SQ)   (AW) /(VE) ZR(AE) (SW)   A /
-(ZE) B (AW) (SQ)   (AW) /(VE) ZR(AE) (SW)   (VA)A/
+(AGE)...W.Q...W./(VAE)..RE.W.N.M./
+(AGE).S.W.(GQ)...(AW)./(VADE)..R(AE).(FW)...../
+(ZE).B.(AW).(SQ)...(AW)./(VE).ZR(AE).(SW)...A./
+(ZE).B.(AW).(SQ)...(AW)./(VE).ZR(AE).(SW)...(VA)A/
 
 主歌：
 
-(ZD) (BD) S (AF) D (BS) /(VS) (ZS) AA(SF) D (VS) /
-(ZS) B AS(AD)   B /(CA)   A (BD) G (DQ) /
-(VJ) Z (AQ) (GJ)   (DQ) /(BJ)H(XG) M (DG) S (SF) /
-(CAF) Z (BD) (AD)   (ZB) /(CAF) D (ZS) (BD)   (DG) /
+(ZD).(BD).S.(AF).D.(BS)./(VS).(ZS).AA(SF).D.(VS)./
+(ZS).B.AS(AD)...B./(CA)...A.(BD).G.(DQ)./
+(VJ).Z.(AQ).(GJ)...(DQ)./(BJ)H(XG).M.(DG).S.(SF)./
+(CAF).Z.(BD).(AD)...(ZB)./(CAF).D.(ZS).(BD)...(DG)./
 
-(VA) Z N (BM) X A /(CNS) A  M(XBA) G (BA) /
-(VF) Z (AD) (BS) (XA) A /(ZA) B A S A (BA)S/
-(ZD) (BD) S (AF) D (BS) /(VS) (ZS) A (SF) D (VS) /
-(ZS) B AS(AD)   B /(CA)   A (BD) G (DQ) /
+(VA).Z.N.(BM).X.A./(CNS).A..M(XBA).G.(BA)./
+(VF).Z.(AD).(BS).(XA).A./(ZA).B.A.S.A.(BA)S/
+(ZD).(BD).S.(AF).D.(BS)./(VS).(ZS).A.(SF).D.(VS)./
+(ZS).B.AS(AD)...B./(CA)...A.(BD).G.(DQ)./
 
-(VJ) Z (AQ) (GJ)   (DQ) /(BJ)H(XG) M (DG) S (SF) /
-(CAF) (ZD) (BD) (AD)   (ZB) /(CAF) D (ZS) (BD)   (DG) /
-(VA) Z N (BM) X AA/(CNS) A   (XBA) G (BA) /
-(VF) (ZF)F(AD)S(BS) (XA) A /(ZA) B A D     /
+(VJ).Z.(AQ).(GJ)...(DQ)./(BJ)H(XG).M.(DG).S.(SF)./
+(CAF).(ZD).(BD).(AD)...(ZB)./(CAF).D.(ZS).(BD)...(DG)./
+(VA).Z.N.(BM).X.AA/(CNS).A...(XBA).G.(BA)./
+(VF).(ZF)F(AD)S(BS).(XA).A./(ZA).B.A.D...../
 
-(VAH) G G G F F /(BD) S S S   G /
-(CSG) FFF F D S /(CNS) A AMA     /
-(VAH) G G G F F /(BD) S S S   D /
-(CSF) DDDDD S D /(NGW) D (AQ) (BSQ) A (BQ) /
+(VAH).G.G.G.F.F./(BD).S.S.S...G./
+(CSG).FFF.F.D.S./(CNS).A.AMA...../
+(VAH).G.G.G.F.F./(BD).S.S.S...D./
+(CSF).DDDDD.S.D./(NGW).D.(AQ).(BSQ).A.(BQ)./
 
-(ZVJ) (ZH) (VH) (DH) A V /(ZV) Z (VH) (DH) (AG) (VF)F/
-(XBF) X (BD) (SD)F(BG) X /(XB) X B (MS) B (XB) /
+(ZVJ).(ZH).(VH).(DH).A.V./(ZV).Z.(VH).(DH).(AG).(VF)F/
+(XBF).X.(BD).(SD)F(BG).X./(XB).X.B.(MS).B.(XB)./
 
 副歌：
 
-(ZD)S(BD)SDF(ADG) S (BF)G/(ZVH) Z HJ(AFQ) N (VW)Q/
-(CBG) C B (MSG) (BF) (CF) /(CND) C (NF)D(ADG) S B /
+(ZD)S(BD)SDF(ADG).S.(BF)G/(ZVH).Z.HJ(AFQ).N.(VW)Q/
+(CBG).C.B.(MSG).(BF).(CF)./(CND).C.(NF)D(ADG).S.B./
 
-(ZD)S(BD)SD (ADG) S (BF)G/(ZVH) Z AH(CMJ) C DD/
-(CBE) (CE) ME(DGR) E (MW) /(CNW) C QJ(ADQ) S (XBG)Q/
+(ZD)S(BD)SD.(ADG).S.(BF)G/(ZVH).Z.AH(CMJ).C.DD/
+(CBE).(CE).ME(DGR).E.(MW)./(CNW).C.QJ(ADQ).S.(XBG)Q/
 
-(ZVW) (ZQ) (AQ) (FQ) A (VG) /(XBW) (XQ) (SQ) (GQ) S (BG)Q/
-(ZBW) (ZQ) (BQ) (ADQ) A (BG)Q/(ZBW) AE(DW) (GQ) A (BQ) /
+(ZVW).(ZQ).(AQ).(FQ).A.(VG)./(XBW).(XQ).(SQ).(GQ).S.(BG)Q/
+(ZBW).(ZQ).(BQ).(ADQ).A.(BG)Q/(ZBW).AE(DW).(GQ).A.(BQ)./
 
-(ZVJ) (ZH) (AH) (FH) A (VG) /(XBG) X (MF) (SF) (MD) (BS) /
-(ZBD) B A S A B /(ZVD) (NF) (AD) (XBF) (XD) (MS) /
+(ZVJ).(ZH).(AH).(FH).A.(VG)./(XBG).X.(MF).(SF).(MD).(BS)./
+(ZBD).B.A.S.A.B./(ZVD).(NF).(AD).(XBF).(XD).(MS)./
 
-(ZBA) AZB (ZBS)   (ZA) /(ZB) AZB F D AS/
+(ZBA).AZB.(ZBS)...(ZA)./(ZB).AZB.F.D.AS/
 
 主歌：
 
-(ZBD) D S F D S /(ZVS) S AA(SF) (AD) (VS) /
-(ZS) B AS(AD)   B /(CA)   A (BD) G (DQ) /
-(VJ) Z (AQ) (GJ)   (DQ) /(BJ)H(XG) M (DG) S (SF) /
-(CAF) (ZD) (BD) (AD)   Z /(CAF) D (ZS) (BD)   (DG) /
+(ZBD).D.S.F.D.S./(ZVS).S.AA(SF).(AD).(VS)./
+(ZS).B.AS(AD)...B./(CA)...A.(BD).G.(DQ)./
+(VJ).Z.(AQ).(GJ)...(DQ)./(BJ)H(XG).M.(DG).S.(SF)./
+(CAF).(ZD).(BD).(AD)...Z./(CAF).D.(ZS).(BD)...(DG)./
 
-(VA) Z N (BM) X AA/(CNS) A   (XBA) G (BA) /
-(VF) Z (AD) (BS) X A /(ZA) B A S A B /
+(VA).Z.N.(BM).X.AA/(CNS).A...(XBA).G.(BA)./
+(VF).Z.(AD).(BS).X.A./(ZA).B.A.S.A.B./
 
-(VAH) G G G F F /(BD) S S S   G /
-(CSG) FFF F D S /(CNS)   AMA     /
-(VAH) G G G F F /(BD) S S S   D /
-(CSF) DDDDD S D /(NGW) D (AQ) (BSQ) A (BQ) /
+(VAH).G.G.G.F.F./(BD).S.S.S...G./
+(CSG).FFF.F.D.S./(CNS)...AMA...../
+(VAH).G.G.G.F.F./(BD).S.S.S...D./
+(CSF).DDDDD.S.D./(NGW).D.(AQ).(BSQ).A.(BQ)./
 
-(ZVJ) Z (VH) (DH) A V /(ZV) Z (VH) (DH) (AG) (VF)F/
-(XBF) X (BD) (SD)F(BG) X /(XB) X B (MS) B (XB) /
+(ZVJ).Z.(VH).(DH).A.V./(ZV).Z.(VH).(DH).(AG).(VF)F/
+(XBF).X.(BD).(SD)F(BG).X./(XB).X.B.(MS).B.(XB)./
 
 间奏：
 
-(ZVF) (ZH)Q(VE) (AD) (AQ) (VF) /(ZVF) (ZH) (VE) (AD) (AH) (VF) /
-(ZBQ) Z (BQ)W(ADW) A (BW)Q/(ZBQ) Z (BQ) (ADQ) (AQ) (BQ) /
-(ZVF) (ZH)Q(VE) (AD) (AQ) (VF) /(ZVF) (ZH) (VE) (AD) (AH) (VF) /
-(ZBQ) Z (BQ)W(ADW) A (BW)Q/(ZBQ) Z (BQ)E(ADE) A (BE)W/
+(ZVF).(ZH)Q(VE).(AD).(AQ).(VF)./(ZVF).(ZH).(VE).(AD).(AH).(VF)./
+(ZBQ).Z.(BQ)W(ADW).A.(BW)Q/(ZBQ).Z.(BQ).(ADQ).(AQ).(BQ)./
+(ZVF).(ZH)Q(VE).(AD).(AQ).(VF)./(ZVF).(ZH).(VE).(AD).(AH).(VF)./
+(ZBQ).Z.(BQ)W(ADW).A.(BW)Q/(ZBQ).Z.(BQ)E(ADE).A.(BE)W/
 
 桥段：
 
-(ZVW)Q(ZQ)Q(VQ)Q(ADE) (AQ) V /(ZVW)Q(ZQ)Q(VQ)Q(ADW) (AQ) (VQ)H/
-(ZBG) (ZE) B (AD) A B /(ZB) Z B (AD) A B /
-(ZVW)Q(ZQ)Q(VQ)Q(ADE) (AQ) V /(ZVW)Q(ZQ)Q(VQ)Q(ADW) (AQ) (VQ)H/
-(ZBG) (ZE) (BW) (ADW) A B /(XBW)W(XW) (BG)G(ADW) A (BQ) /
+(ZVW)Q(ZQ)Q(VQ)Q(ADE).(AQ).V./(ZVW)Q(ZQ)Q(VQ)Q(ADW).(AQ).(VQ)H/
+(ZBG).(ZE).B.(AD).A.B./(ZB).Z.B.(AD).A.B./
+(ZVW)Q(ZQ)Q(VQ)Q(ADE).(AQ).V./(ZVW)Q(ZQ)Q(VQ)Q(ADW).(AQ).(VQ)H/
+(ZBG).(ZE).(BW).(ADW).A.B./(XBW)W(XW).(BG)G(ADW).A.(BQ)./
 
-(VAQ)     Q Q Q /(AQ)QW Q WWQ   /
-(BS)     (JW) (JW)(HQ)(JW) /(BSW) (BSE) (BSW) (XBE) (XB) (BR) /
+(VAQ).....Q.Q.Q./(AQ)QW.Q.WWQ.../
+(BS).....(JW).(JW)(HQ)(JW)./(BSW).(BSE).(BSW).(XBE).(XB).(BR)./
 
 间奏：
 
-(ZBGE) Z B (AD) A B /(ZV) Z V (AD) A V /
-(CBT) (CT) (MT) (DGT) (ME) (CW) /(CNQ) (CJ) (NJ) (ADJ) (NJ) (CJ) /
-(ZBE) Z (BW) (ADW) (AQ) (BG) /(ZVH) Z V (CM) C M /
-(MD) M C (MJ) (CJ) (MJ) /(MDQ) (MDJ) (MD)G(CMG) (CS) (CD) /
+(ZBGE).Z.B.(AD).A.B./(ZV).Z.V.(AD).A.V./
+(CBT).(CT).(MT).(DGT).(ME).(CW)./(CNQ).(CJ).(NJ).(ADJ).(NJ).(CJ)./
+(ZBE).Z.(BW).(ADW).(AQ).(BG)./(ZVH).Z.V.(CM).C.M./
+(MD).M.C.(MJ).(CJ).(MJ)./(MDQ).(MDJ).(MD)G(CMG).(CS).(CD)./
 
 副歌：
 
-(ZD)S(BD)SDF(ADG) S (BF)G/(ZVH) Z HJ(AFQ) N (VW)Q/
-(CBG) C B (MSG) (BF) (CF) /(CND) C (NF)D(ADG) S B /
+(ZD)S(BD)SDF(ADG).S.(BF)G/(ZVH).Z.HJ(AFQ).N.(VW)Q/
+(CBG).C.B.(MSG).(BF).(CF)./(CND).C.(NF)D(ADG).S.B./
 
-(ZD)S(BD)SD (ADG) S (BF)G/(ZVH) Z AH(CMJ) C DD/
-(CBE) (CE) ME(DGR) E (MW) /(CNW) C QJ(ADQ) S (XBG)Q/
+(ZD)S(BD)SD.(ADG).S.(BF)G/(ZVH).Z.AH(CMJ).C.DD/
+(CBE).(CE).ME(DGR).E.(MW)./(CNW).C.QJ(ADQ).S.(XBG)Q/
 
-(ZVW) Z (AQ) (FQ) A (VG) /(ZBW) Z (BQ) (ADQ) A (BG)Q/
-(ZVW) (ZQ) (VQ) (ADQ) A (VG)Q/(ZBW) AE(DW) (GQ) A (BQ) /
+(ZVW).Z.(AQ).(FQ).A.(VG)./(ZBW).Z.(BQ).(ADQ).A.(BG)Q/
+(ZVW).(ZQ).(VQ).(ADQ).A.(VG)Q/(ZBW).AE(DW).(GQ).A.(BQ)./
 
-(ZVJ) (ZH) (AH) (FH) A (VG) /(XBG) X (MF) (SF) (MD) (BS) /
-(ZBD) B A S A B /(ZVD) (NF) (AD) (XBF) (XD) (MS) /
+(ZVJ).(ZH).(AH).(FH).A.(VG)./(XBG).X.(MF).(SF).(MD).(BS)./
+(ZBD).B.A.S.A.B./(ZVD).(NF).(AD).(XBF).(XD).(MS)./
 
-(ZBA) AZB (ZBS)   (ZA) /(ZVF) (NF) A (XBG) X (MQ) /
-(ZBQ) AZB (ZBS)   (ZA) /(ZVQ) (NW) (AQ) (XBW) (XQ) (MW) /
+(ZBA).AZB.(ZBS)...(ZA)./(ZVF).(NF).A.(XBG).X.(MQ)./
+(ZBQ).AZB.(ZBS)...(ZA)./(ZVQ).(NW).(AQ).(XBW).(XQ).(MW)./
 
-(AGQE)   W Q   W /(VAE)  RE W N M /(AGE) S W 
-(GQ)   (AW) /(VADE)  RE (FW)     /      (ZBDQ)      /
+(AGQE)...W.Q...W./(VAE)..RE.W.N.M./(AGE).S.W.
+(GQ)...(AW)./(VADE)..RE.(FW)...../......(ZBDQ)....../
 ]
 
 ---
