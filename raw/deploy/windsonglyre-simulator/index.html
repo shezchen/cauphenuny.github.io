@@ -52,8 +52,8 @@
     function init() {
         vel = 4;
         offset = 0;
-        bpm = 120;
-        time1 = 4, time2 = 8;
+        bpm = 90;
+        time1 = 4, time2 = 4;
         document.getElementById("input").innerHTML = "";
         refresh();
     }
@@ -80,7 +80,7 @@
         var code = event.keyCode;
         console.log(code, key2note.get(code));
         if (key2note.has(code)) {
-            stroke(key2note.get(code));
+            stroke(key2note.get(code), context.currentTime, vel);
         }
         if (code == 189) {
             if (vel > 0) vel--; 
@@ -102,34 +102,67 @@
     }
     function play(music) {
         var interval = 60 * 4 / bpm / time2;
-        var cnt = 0, sum = 0, velc = vel;
-        const now = context.currentTime;
+        var velc = vel;
+        var stack = [];
+        stack.push(1);
+        var cnt = 0;
+        var sum = 0;
+        var now = context.currentTime;
+        var getTop = arr => arr[arr.length - 1];
         for (var i = 0; i < music.length; i++) {
             var key = music.charCodeAt(i);
             //console.log(i, music[i], key);
-            if (key2note.has(key)) {
-                //console.log("note", music[i]);
-                stroke(key2note.get(key), now + sum * interval, velc);
-                cnt++, sum++;
-            } else if (music[i] == '(') {
-                //console.log("chord", music[i + 1]);
-                while (music[++i] != ')') {
-                    stroke(key2note.get(music.charCodeAt(i)), now + sum * interval, velc);
-                }
-                cnt++, sum++;
-            } else if (music[i] == ' ' || music[i] == ' ') {
-                //console.log("interval on ", i);
-                if (music[i] == ' ') {
-                    console.log("special space");
-                }
-                cnt++, sum++;
-            } else if (music[i] == '/') {
-                console.log(cnt);
-                cnt = 0;
-            } else if (music[i] == '-'){
-                if (velc > 0) velc--;
-            } else if (music[i] == '+'){
-                if (velc < 9) velc++;
+            switch (music[i]) {
+                case '(':
+                    //console.log("chord start", music[i + 1]);
+                    stack.push(0);
+                    break;
+                case ')':
+                    stack.pop();
+                    cnt += getTop(stack);
+                    sum += getTop(stack);
+                    //console.log("chord end");
+                    break;
+                case '[':
+                    stack.push(getTop(stack) / 2);
+                    break;
+                case ']':
+                    stack.pop();
+                    break;
+                case '{':
+                    stack.push(getTop(stack) / 4);
+                    break;
+                case '}':
+                    stack.pop();
+                    break;
+                case '-':
+                    if (velc > 0) velc--;
+                    break;
+                case '+':
+                    if (velc < 9) velc++;
+                    break;
+
+                case '/':
+                    //console.log(cnt);
+                    cnt = 0;
+                    break;
+
+                case ' ':
+                    //console.log("special space");
+                case ' ':
+                    //console.log("interval", interval, sum);
+                    cnt += getTop(stack);
+                    sum += getTop(stack);
+                    break;
+
+                default:
+                    if (key2note.has(key)) {
+                        stroke(key2note.get(key), now + sum * interval, velc);
+                        cnt += getTop(stack);
+                        sum += getTop(stack);
+                        //cnt++, sum++;
+                    }
+                    break;
             }
         }
     }
@@ -138,7 +171,7 @@
         time1 = 3;
         time2 = 16;
         offset = -1;
-        document.getElementById("input").innerHTML = haruhikage;
+        document.getElementById("input").value = haruhikage;
         refresh();
         //play(haruhikage);
         //console.log(sampler.instrumentNames);
