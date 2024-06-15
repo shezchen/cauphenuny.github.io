@@ -5,6 +5,7 @@
     <link rel="icon" type="image/x-icon" href="./icon.jpg">
     <title>原琴模拟器</title>
     <h2>原琴模拟器</h2>
+    <p></p>
   </head>
   <body>
     <form>
@@ -18,12 +19,12 @@
       <input type="text" id="time_sign1" size=2>/<input type="text" id="time_sign2" size=2><br>
       <input type="button" value="确定" id="submit">
     </form>
-      <p><label for="input">谱子：<br>输入每个音对应键位的大写字母，空格表示休止符<br> []内音符时值减半，{}内时值变为原来的1/3，()内同时发声，可嵌套<br>忽略其他字符</label></p>
+      <p><label for="input">使用键盘（键位见教程），或在下框中输入谱子以自动演奏：<br>输入每个音对应键位的大写字母，空格表示休止符<br> []内两个音占一拍，{}内三个音占两拍，()内所有音同时发声，可嵌套，如：[A[ A]]<br>忽略其他字符</label></p>
       <p><textarea id="input" name="input" rows="16" cols="60"></textarea></p>
       <p><button id="start">演奏</button> <button id="stop">停止</button></p>
     <p>预设：</p>
     <p>
-       <button id="haruhikage">教程：基础键位</button> 
+       <button id="tutorial">教程：键位与记谱</button> 
        <button id="haruhikage">乐曲：春日影</button> 
        <button id="reset">复原</button>
     </p>
@@ -132,7 +133,7 @@
                     stack.pop();
                     break;
                 case '{':
-                    stack.push(getTop(stack) / 3);
+                    stack.push(getTop(stack) * 2 / 3);
                     break;
                 case '}':
                     stack.pop();
@@ -168,6 +169,11 @@
             }
         }
     }
+    document.getElementById("tutorial").onclick = () => {
+        init();
+        document.getElementById("input").value = tutorial;
+        refresh();
+    };
     document.getElementById("haruhikage").onclick = () => {
         bpm = 90;
         time1 = 6;
@@ -188,10 +194,22 @@
         play(document.getElementById("input").value);
     };
 
-    var tutorial = `教程：
-三个八度音阶：ZXCVBNM/ASDFGHJ/QWERTYU（即键盘上三排从左到右每排七个音分别对应do至si）
-琶音：[ZCBADGQET]
-柱式和弦：(ZCB) (CBA) (BAD) (ADG) (ZCBADGQET)
+    var tutorial = `教程
+三个八度音阶：ZXCVBNM/ASDFGHJ/QWERTYU   （即键盘上三排从左到右每排七个音分别对应do至si）
+时值减半：[ZCBADGQET]    
+柱式和弦：(ZCB) (CBA) (BAD) (ADG) (ZCBADGQET)  
+三连音：
+[    bpm*2 => 180
+[{ASD}QGWGET][ QEQREQ ]
+[{ASD}QGWGET][ QEQREQ ]
+[{ASD}QGWGET][ QEQREQ ]
+[[WETE]WQWGQ ]{(GQET)(GQET)(GQET)(GQET)(GQET)(GQET)}
+[{ASD}QGWGEG][RGEGTGQG]
+[{ASD}QGWGEG][RGEGWGEG]
+[{ASD}QGWGEG][RGEGTGQG]
+[[WETE]WQWGQ ](ADGQET)  B/
+[A  S]A / B{FDS}/A   /  AS/[DSDFDSAS][DSDFD SA]
+]
 `
     var haruhikage = `[
 #注意拍号是6/8，而这里加了个中括号时值减半
