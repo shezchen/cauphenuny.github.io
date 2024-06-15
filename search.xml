@@ -190,8 +190,10 @@ r_{n-1}&amp;=r_{n}x_{n+1}\\
 <p>写好了键盘演奏函数、谱子 parser 以及自动播放功能。</p>
 <p>version 0.1.0</p>
 <p>6.15</p>
-<p>加入 <code>[]</code> <code>&#123;&#125;</code> 表示时值变化，完善了操作说明。</p>
-<p>version 0.2.0</p>
+<p>加入 <code>[]</code> <code>&#123;&#125;</code> 表示时值变化。</p>
+<p>添加临时升降记号 <code>-/+</code> 以及临时高/低八度记号。</p>
+<p>重写了教程</p>
+<p>version 0.3.0</p>
 ]]></content>
       <categories>
         <category>CS</category>
