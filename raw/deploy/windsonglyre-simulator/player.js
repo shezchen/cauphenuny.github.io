@@ -1,17 +1,13 @@
-const key = 'ZXCVBNMASDFGHJQWERTYU'; // 键位
+const key = 'ZXCVBNMASDFGHJQWERTYU';
 const note_name = ["C", "C<sup>♯</sup>/D<sup>♭</sup>", "D", "D<sup>♯</sup>/E<sup>♭</sup>", "E", "F", "F<sup>♯</sup>/G<sup>♭</sup>", "G", "G<sup>♯</sup>/A<sup>♭</sup>", "A", "A<sup>♯</sup>/B<sup>♭</sup>", "B"];
-const diff = [2, 2, 1, 2, 2, 2, 1]; // 自然大调音阶
-const velocites = [32, 48, 56, 64, 68, 72, 80, 88, 96, 108]; // 力度分级
+const diff = [2, 2, 1, 2, 2, 2, 1];
+const velocites = [32, 48, 56, 64, 68, 72, 80, 88, 96, 108];
 const key2note = new Map();
 const C1 = 48, C2 = 60, C3 = 72;
 for (var i = 0, note = C1; i < key.length; i++) {
     key2note.set(key.charCodeAt(i), note);
     note += diff[i % 7];
 }
-import { Soundfont2Sampler } from "https://unpkg.com/smplr/dist/index.mjs";
-import { SplendidGrandPiano } from "https://unpkg.com/smplr/dist/index.mjs";
-const context = new AudioContext();
-const piano = new SplendidGrandPiano(context);
 var vel, offset, bpm, time1, time2;
 export { vel, offset, bpm, time1, time2 };
 export function refresh() {
@@ -30,6 +26,10 @@ export function init() {
     document.getElementById("input").value = "";
     refresh();
 }
+import { Soundfont2Sampler } from "https://unpkg.com/smplr/dist/index.mjs";
+import { SplendidGrandPiano } from "https://unpkg.com/smplr/dist/index.mjs";
+const context = new AudioContext();
+const piano = new SplendidGrandPiano(context);
 piano.load.then(() => {
     document.getElementById("status").style = "color: green;";
     document.getElementById("status").innerHTML = "准备就绪";
@@ -45,7 +45,7 @@ document.getElementById("submit").onclick = () => {
     refresh();
 }
 function stroke(code, tim, velc) {
-    piano.start({ note: code + offset, velocity: Math.round(velocites[velc] - (C3 - code) / 2), time: tim }); // 使高音强，低音弱
+    piano.start({ note: code + offset, velocity: Math.round(velocites[velc] - (C3 - code) / 2), time: tim });
 }
 document.addEventListener("keydown", function(event) {
     var code = event.keyCode;
@@ -164,7 +164,7 @@ document.getElementById("bwv846").onclick = () => {
     document.getElementById("input").value = bwv846;
     refresh();
     //console.log(sampler.instrumentNames);
-    //context.resume(); // enable audio context after a user interaction
+    //context.resume();
 };
 document.getElementById("haruhikage").onclick = () => {
     bpm = 90;

@@ -31,7 +31,7 @@ var tutorial = `教程
 渐强：A < A < A < A < A < A....
 是不是很像一个渐强/渐弱符号 （笑
 
-三连音试例：
+三连音示例：
 [ # 整体套了个中括号，相当于 bpm 翻倍变成180
 >[{ASD}QGWGET][.QEQREQ.]
 [{ASD}QGWGET][.QEQREQ.]
