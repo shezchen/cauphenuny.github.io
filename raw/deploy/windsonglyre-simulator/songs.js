@@ -41,23 +41,22 @@ var tutorial = `教程
 [{ASD}QGWGEG][RGEGWGEG]
 [{ASD}QGWGEG][RGEGTGQG]
 [[WETE]WQWGQ.](ADGQET)..B/
-<<[A..S]A./.B{FDS}/A.../..AS/[DSDFDSAS][DSDFD.SA]
+<[A..S]<A./.B{FDS}/A.../..AS/[DSDFDSAS][DSDFD.SA]
 ]..../..../
 
 临时升降记号：
 +/- 表示升/降半音，仅影响其后紧跟着的一个音
-[AAAA-AAA-A][AAAA+AAA+A]/..../(ADG).(A-DG)./..../
+[AAAA-AAA-A][AAAA+AAA+A]/..../(ADG).../(A-DG).../..../
 临时高/低八度记号：
-^^内的音高八度 例：[AAGGHHG ]....[^AAGGHHG ^]..../
-%%内的音低八度 例：[AAGGHHG ]....[%AAGGHHG %]..../ （不可嵌套使用）
+^^内的音高八度 例：[AAGGHHG.FFDDSSA.][^AAGGHHG.FFDDSSA.^]..../
+%%内的音低八度 例：[AAGGHHG.FFDDSSA.][%AAGGHHG.FFDDSSA.%]..../ （不可嵌套使用）
 
 注意：此类变化音无法通过直接通过按键盘奏出
 
 总结：
 有效字符：
-.()<>{[UYTREWQJHGFDSAMNBVCXZ]}
+.()<>{[UYTREWQJHGFDSAMNBVCXZ]}-+%^
 其他字符在自动播放时均忽略
-
 `
 var bwv846 = 
 `[[>>ADGQEGQEADGQEGQE/ASHWRHWRASHWRHWR/
@@ -81,7 +80,7 @@ ZAFHQRQHQHFHFSFS][ZM%GJWRWJW]{JGJSF}DS
 (%ZA%DGQ)]
 `
 var haruhikage = `[
-# 注意拍号是6/8，而这里加了个中括号时值减半
+# 注意拍号是6/8，而这里外层套了个中括号时值减半
 # 所以以下每一位表示一个16分音符
 
 前奏：
