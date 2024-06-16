@@ -54,6 +54,7 @@ export function init() {
     global_offset = 0;
     bpm = 90;
     time1 = 4, time2 = 4;
+    document.getElementById('offset_option').selectedIndex = 0;
     document.getElementById("key_offset").value = "0";
     document.getElementById("input").value = "";
     refresh();
@@ -86,7 +87,7 @@ document.getElementById("submit").onclick = () => {
             }
         } else if (cnt < 0) {
             for (var i = 0; i < (-cnt); i++) {
-                fixed_offset[flat[i]] = 1;
+                fixed_offset[flat[i]] = -1;
             }
         }
         console.log(fixed_offset);
