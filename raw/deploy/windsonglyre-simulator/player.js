@@ -1,28 +1,54 @@
 const key = 'ZXCVBNMASDFGHJQWERTYU';
 const note_name = ["C", "C<sup>♯</sup>/D<sup>♭</sup>", "D", "D<sup>♯</sup>/E<sup>♭</sup>", "E", "F", "F<sup>♯</sup>/G<sup>♭</sup>", "G", "G<sup>♯</sup>/A<sup>♭</sup>", "A", "A<sup>♯</sup>/B<sup>♭</sup>", "B"];
+const vocal_name = ["do", "", "re", "", "mi", "fa", "", "sol", "", "la", "", "si"];
+const major_scale = "CDEFGAB";
+const sharp = [5, 0, 7, 2, 9, 4];
+const flat = [11, 4, 9, 2, 7, 0];
 const diff = [2, 2, 1, 2, 2, 2, 1];
 const velocites = [32, 48, 56, 64, 68, 72, 80, 88, 96, 108];
 const key2note = new Map();
 const C1 = 48, C2 = 60, C3 = 72;
+var fixed_offset = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 for (var i = 0, note = C1; i < key.length; i++) {
     key2note.set(key.charCodeAt(i), note);
     note += diff[i % 7];
 }
-var vel, offset, bpm, time1, time2;
-export { vel, offset, bpm, time1, time2 };
+var vel, global_offset, bpm, time1, time2;
+export { vel, global_offset, bpm, time1, time2 };
 export function refresh() {
     document.getElementById("bpm").value = bpm;
     document.getElementById("vel").textContent = "力度：" + velocites[vel];
-    document.getElementById("key_offset").value = offset;
-    document.getElementById("key_name").innerHTML = " (" + note_name[(offset + 120) % 12] + ")";
+    const selectElement = document.getElementById('offset_option');
+    const selectedOption = selectElement.options[selectElement.selectedIndex];
+    if (selectedOption.value == "flex") {
+        document.getElementById("key_name").innerHTML = " (1=" + note_name[(global_offset + 120) % 12] + ")";
+    } else { 
+        var cnt = parseInt(document.getElementById("key_offset").value);
+        if (cnt > 0) {
+            var str = "fa";
+            for (var i = 1; i < cnt; i++) {
+                str += ", " + vocal_name[sharp[i]];
+            }
+            console.log(str);
+            document.getElementById("key_name").innerHTML = " （升 " + str + "）";
+        } else if (cnt < 0) {
+            var str = "si";
+            for (var i = 1; i < cnt; i++) {
+                str += ", " + vocal_name[flat[i]];
+            }
+            console.log(str);
+            document.getElementById("key_name").innerHTML = " （降 " + str + "）";
+        }
+    }
     document.getElementById("time_sign1").value = time1;
     document.getElementById("time_sign2").value = time2;
 }
 export function init() {
     vel = 4;
-    offset = 0;
+    global_offset = 0;
     bpm = 90;
     time1 = 4, time2 = 4;
+    document.getElementById("key_offset").value = "0";
     document.getElementById("input").value = "";
     refresh();
 }
@@ -38,14 +64,36 @@ piano.load.then(() => {
 });
 document.getElementById("submit").onclick = () => {
     bpm = parseInt(document.getElementById("bpm").value);
-    offset = parseInt(document.getElementById("key_offset").value);
+    const selectElement = document.getElementById('offset_option');
+    const selectedOption = selectElement.options[selectElement.selectedIndex];
+    if (selectedOption.value == "flex") {
+        global_offset = parseInt(document.getElementById("key_offset").value);
+        fixed_offset.fill(0);
+    } else {
+        global_offset = 0;
+        fixed_offset.fill(0);
+        var cnt = parseInt(document.getElementById("key_offset").value);
+        console.log(cnt);
+        if (cnt > 0) {
+            for (var i = 0; i < cnt; i++) {
+                fixed_offset[sharp[i]] = 1;
+            }
+        } else if (cnt < 0) {
+            for (var i = 0; i < (-cnt); i++) {
+                fixed_offset[flat[i]] = 1;
+            }
+        }
+        console.log(fixed_offset);
+    }
     time1 = parseInt(document.getElementById("time_sign1").value);
     time2 = parseInt(document.getElementById("time_sign2").value);
-    console.log(bpm, offset, time1, time2);
+    console.log(bpm, global_offset, time1, time2);
     refresh();
 }
 function stroke(code, tim, velc) {
-    piano.start({ note: code + offset, velocity: Math.round(velocites[velc] - (C3 - code) / 2), time: tim });
+    piano.start({ note: code + global_offset + fixed_offset[code % 12], 
+                  velocity: Math.round(velocites[velc] - (C3 - code) / 2), 
+                  time: tim });
 }
 document.addEventListener("keydown", function(event) {
     var code = event.keyCode;

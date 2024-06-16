@@ -194,6 +194,9 @@ r_{n-1}&amp;=r_{n}x_{n+1}\\
 <p>添加临时升降记号 <code>-/+</code> 以及临时高/低八度记号。</p>
 <p>重写了教程</p>
 <p>version 0.3.0</p>
+<p>6.16</p>
+<p>添加了固定调转调方式，更适合对着五线谱演奏。</p>
+<p>version 0.4.0</p>
 ]]></content>
       <categories>
         <category>CS</category>

@@ -5,6 +5,7 @@
     <link rel="icon" type="image/x-icon" href="./icon.jpg">
     <title>钢琴模拟器 - 自制谱面音游</title>
     <h2>钢琴模拟器 - 自制谱面音游</h2>
+    <p>请使用电脑网页打开</p>
     <p>本来是想写个原神里面风物之诗琴的模拟器的，但是音源没搞好，干脆就写个钢琴的得了</p>
     <link rel="stylesheet" href="./style.css">
   </head>
@@ -15,10 +16,14 @@
       <p id="vel"></p>
       <label for="bpm">bpm：</label>
       <input type="number" id="bpm" size=10><br>
-      <label for="key_offset">移调：</label>
-      <input type="number" id="key_offset" size=5><span id="key_name"></span><br>
       <label for="time_sign1">拍号：</label>
       <input type="number" id="time_sign1" size=5>/<input type="number" id="time_sign2" size=5><br>
+      移调选项：
+      <select id="offset_option">
+        <option value="flex">首调（整体平移key数）</option>
+        <option value="fixed">固定调（升降号个数）</option>
+      </select>
+      <input type="number" id="key_offset" size=5><span id="key_name"></span><br>
       <input type="button" value="确定" id="submit">
     </form>
       <p><label for="input">使用键盘（键位见教程），或在下框中输入谱子以自动演奏：<br>输入每个音对应键位的大写字母，英文句号表示休止符<br> </label></p>
@@ -56,5 +61,5 @@
   </body>
 
 <hr>
-开发中，当前版本 v0.3.1， <a href="https://cauphenuny.github.io/2024/06/14/build-a-windsonglyre-simulator/">开发日志</a>
+开发中，当前版本 v0.4.0， <a href="https://cauphenuny.github.io/2024/06/14/build-a-windsonglyre-simulator/">开发日志</a>
 </html>
