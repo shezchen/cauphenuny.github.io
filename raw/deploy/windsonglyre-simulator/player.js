@@ -5,7 +5,9 @@ const flat_name  = ["C", "D<sup>♭</sup>", "D", "E<sup>♭</sup>", "E", "F", "G
 const vocal_name = ["do", "", "re", "", "mi", "fa", "", "sol", "", "la", "", "si"];
 const major_scale = "CDEFGAB";
 const sharp = [5, 0, 7, 2, 9, 4, 11];
+const sharp_scale_name = ["C", "G", "D", "A", "E", "B", "F<sup>♯</sup>"];
 const flat = [11, 4, 9, 2, 7, 0, 5];
+const flat_scale_name = ["F", "B<sup>♭</sup>", "E<sup>♭</sup>", "A<sup>♭</sup>", "D<sup>♭</sup>", "G<sup>♭</sup>"];
 const diff = [2, 2, 1, 2, 2, 2, 1];
 const velocites = [32, 48, 56, 64, 68, 72, 80, 88, 96, 108];
 const key2note = new Map();
@@ -23,7 +25,7 @@ export function refresh() {
     const selectElement = document.getElementById('offset_option');
     const selectedOption = selectElement.options[selectElement.selectedIndex];
     if (selectedOption.value == "flex") {
-        document.getElementById("key_name").innerHTML = " (1=" + note_name[(global_offset + 120) % 12] + ")";
+        document.getElementById("key_name").innerHTML = "(1=" + note_name[(global_offset + 120) % 12] + ")";
     } else { 
         var cnt = parseInt(document.getElementById("key_offset").value);
         if (cnt > 0) {
@@ -33,7 +35,7 @@ export function refresh() {
                 str += ", " + vocal_name[sharp[i]];
             }
             console.log(str);
-            document.getElementById("key_name").innerHTML = " （升 " + str + "）";
+            document.getElementById("key_name").innerHTML = sharp_scale_name[cnt] + "大调（升 " + str + "）";
         } else if (cnt < 0) {
             if (cnt < -6) cnt = -6;
             var str = "si";
@@ -41,9 +43,9 @@ export function refresh() {
                 str += ", " + vocal_name[flat[i]];
             }
             console.log(str);
-            document.getElementById("key_name").innerHTML = " （降 " + str + "）";
+            document.getElementById("key_name").innerHTML = flat_scale_name[-cnt] + "大调（降 " + str + "）";
         } else {
-            document.getElementById("key_name").innerHTML = "";
+            document.getElementById("key_name").innerHTML = "C大调";
         }
     }
     document.getElementById("time_sign1").value = time1;
@@ -99,7 +101,7 @@ document.getElementById("submit").onclick = () => {
 }
 function stroke(code, tim, velc) {
     piano.start({ note: code + global_offset + fixed_offset[code % 12], 
-                  velocity: Math.round(velocites[velc] - (C3 - code) / 2), 
+                  velocity: Math.round(velocites[velc] - (C3 - code) / 3), 
                   time: tim });
 }
 document.addEventListener("keydown", function(event) {
