@@ -2,8 +2,8 @@ const key = 'ZXCVBNMASDFGHJQWERTYU';
 const note_name = ["C", "C<sup>♯</sup>/D<sup>♭</sup>", "D", "D<sup>♯</sup>/E<sup>♭</sup>", "E", "F", "F<sup>♯</sup>/G<sup>♭</sup>", "G", "G<sup>♯</sup>/A<sup>♭</sup>", "A", "A<sup>♯</sup>/B<sup>♭</sup>", "B"];
 const vocal_name = ["do", "", "re", "", "mi", "fa", "", "sol", "", "la", "", "si"];
 const major_scale = "CDEFGAB";
-const sharp = [5, 0, 7, 2, 9, 4];
-const flat = [11, 4, 9, 2, 7, 0];
+const sharp = [5, 0, 7, 2, 9, 4, 11];
+const flat = [11, 4, 9, 2, 7, 0, 5];
 const diff = [2, 2, 1, 2, 2, 2, 1];
 const velocites = [32, 48, 56, 64, 68, 72, 80, 88, 96, 108];
 const key2note = new Map();
@@ -25,6 +25,7 @@ export function refresh() {
     } else { 
         var cnt = parseInt(document.getElementById("key_offset").value);
         if (cnt > 0) {
+            if (cnt > 6) cnt = 6;
             var str = "fa";
             for (var i = 1; i < cnt; i++) {
                 str += ", " + vocal_name[sharp[i]];
@@ -32,8 +33,9 @@ export function refresh() {
             console.log(str);
             document.getElementById("key_name").innerHTML = " （升 " + str + "）";
         } else if (cnt < 0) {
+            if (cnt < -6) cnt = -6;
             var str = "si";
-            for (var i = 1; i < cnt; i++) {
+            for (var i = 1; i < (-cnt); i++) {
                 str += ", " + vocal_name[flat[i]];
             }
             console.log(str);
