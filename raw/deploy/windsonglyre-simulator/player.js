@@ -210,7 +210,8 @@ document.getElementById("bwv846").onclick = () => {
     bpm = 70;
     time1 = 4;
     time2 = 4;
-    offset = 0;
+    document.getElementById('offset_option').selectedIndex = 0;
+    global_offset = 0;
     document.getElementById("input").value = bwv846;
     refresh();
     //console.log(sampler.instrumentNames);
@@ -220,7 +221,8 @@ document.getElementById("haruhikage").onclick = () => {
     bpm = 90;
     time1 = 6;
     time2 = 8;
-    offset = -1;
+    document.getElementById('offset_option').selectedIndex = 0;
+    global_offset = -1;
     document.getElementById("input").value = haruhikage;
     refresh();
     //play(haruhikage);
