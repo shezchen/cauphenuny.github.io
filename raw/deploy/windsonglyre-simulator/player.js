@@ -101,7 +101,7 @@ document.getElementById("submit").onclick = () => {
 }
 function stroke(code, tim, velc) {
     piano.start({ note: code + global_offset + fixed_offset[code % 12], 
-                  velocity: Math.round(velocites[velc] - (C3 - code) / 3), 
+                  velocity: Math.round(velocites[velc] - (C3 - code) / 2), 
                   time: tim });
 }
 document.addEventListener("keydown", function(event) {
