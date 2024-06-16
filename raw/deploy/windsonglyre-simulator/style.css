@@ -4,3 +4,6 @@ input[type='number']{
 textarea {
   font-family: "Consolas", Monospace;
 }
+sup {
+    font-size: xx-small
+}
