@@ -1,5 +1,7 @@
 const key = 'ZXCVBNMASDFGHJQWERTYU';
 const note_name = ["C", "C<sup>♯</sup>/D<sup>♭</sup>", "D", "D<sup>♯</sup>/E<sup>♭</sup>", "E", "F", "F<sup>♯</sup>/G<sup>♭</sup>", "G", "G<sup>♯</sup>/A<sup>♭</sup>", "A", "A<sup>♯</sup>/B<sup>♭</sup>", "B"];
+const sharp_name = ["C", "C<sup>♯</sup>", "D", "D<sup>♯</sup>", "E", "F", "F<sup>♯</sup>", "G", "G<sup>♯</sup>", "A", "A<sup>♯</sup>", "B"];
+const flat_name  = ["C", "D<sup>♭</sup>", "D", "E<sup>♭</sup>", "E", "F", "G<sup>♭</sup>", "G", "A<sup>♭</sup>", "A", "B<sup>♭</sup>", "B"];
 const vocal_name = ["do", "", "re", "", "mi", "fa", "", "sol", "", "la", "", "si"];
 const major_scale = "CDEFGAB";
 const sharp = [5, 0, 7, 2, 9, 4, 11];
@@ -40,6 +42,8 @@ export function refresh() {
             }
             console.log(str);
             document.getElementById("key_name").innerHTML = " （降 " + str + "）";
+        } else {
+            document.getElementById("key_name").innerHTML = "";
         }
     }
     document.getElementById("time_sign1").value = time1;
