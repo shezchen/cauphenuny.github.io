@@ -96,7 +96,7 @@ function notedown(key) {
     const img = document.getElementById("key" + String.fromCharCode(key));
     console.log(img);
     img.style.filter = 'brightness(0.7)';
-    img.style.transform = 'scale(0.9)';
+    img.style.transform = 'scale(0.85)';
 }
 function noteup(key) {
     const img = document.getElementById("key" + String.fromCharCode(key));
