@@ -13,10 +13,6 @@ const velocites = [32, 48, 56, 64, 68, 72, 80, 88, 96, 108];
 const key2note = new Map();
 const C1 = 48, C2 = 60, C3 = 72;
 var fixed_offset = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-for (var i = 0, note = C1; i < key.length; i++) {
-    key2note.set(key.charCodeAt(i), note);
-    note += diff[i % 7];
-}
 var vel, global_offset, bpm, time1, time2;
 export { vel, global_offset, bpm, time1, time2 };
 export function refresh() {
@@ -30,13 +26,13 @@ export function refresh() {
         var cnt = parseInt(document.getElementById("key_offset").value);
         if (cnt >= 0) {
             if (cnt > 6) cnt = 6;
-            document.getElementById("key_name").innerHTML = sharp_scale_name[cnt] + "大调 <img alt=\"调号\" " + 
+            document.getElementById("key_name").innerHTML = sharp_scale_name[cnt] + "大调 <img alt=\"调号\" class=\"keysgn-img\"" + 
                                                                                               "align=\"center\" " + 
                                                                                               "src=\"./keysignature/" + cnt + ".png\"" + 
                                                                                          ">";
         } else if (cnt < 0) {
             if (cnt < -6) cnt = -6;
-            document.getElementById("key_name").innerHTML = flat_scale_name[-cnt] + "大调 <img alt=\"调号\" " + 
+            document.getElementById("key_name").innerHTML = flat_scale_name[-cnt] + "大调 <img alt=\"调号\" class=\"keysgn-img\"" + 
                                                                                               "align=\"center\" " + 
                                                                                               "src=\"./keysignature/" + cnt + ".png\"" + 
                                                                                          ">";
@@ -52,6 +48,7 @@ export function init() {
     bpm = 90;
     time1 = 4, time2 = 4;
     document.getElementById('offset_option').selectedIndex = 0;
+    fixed_offset.fill(0);
     document.getElementById("key_offset").value = "0";
     document.getElementById("input").value = "";
     refresh();
@@ -94,24 +91,60 @@ document.getElementById("submit").onclick = () => {
     console.log(bpm, global_offset, time1, time2);
     refresh();
 }
+function notedown(key) {
+    stroke(key2note.get(key), context.currentTime, vel);
+    const img = document.getElementById("key" + String.fromCharCode(key));
+    img.style.filter = 'brightness(0.7)';
+    img.style.transform = 'scale(0.9)';
+}
+function noteup(key) {
+    const img = document.getElementById("key" + String.fromCharCode(key));
+    img.style.filter = 'brightness(1)';
+    img.style.transform = 'scale(1)';
+}
+window.onload = function() {
+    //var str = "";
+    for (var i = 0, note = C1; i < key.length; i++) {
+        key2note.set(key.charCodeAt(i), note);
+        note += diff[i % 7];
+        //str += "<img id=\"key" + key[i] + "\" class=\"keyboard-img\" src=\"./keyboard/" + key[i] + ".png\" alt=\"key" + key[i] + "\">\n"
+    }
+    //console.log(str);
+    const key_buttons = document.getElementsByClassName("keyboard-img");
+    for (var i = 0; i < key_buttons.length; i++) {
+        key_buttons[i].addEventListener('mouseover', function() {
+            this.style.filter = 'brightness(0.95)';
+        });
+        key_buttons[i].addEventListener('mouseout', function() {
+            this.style.filter = 'brightness(1)';
+        });
+    }
+}
 function stroke(code, tim, velc) {
     piano.start({ note: code + global_offset + fixed_offset[code % 12], 
                   velocity: Math.round(velocites[velc] - (C3 - code) / 2), 
                   time: tim });
 }
 document.addEventListener("keydown", function(event) {
-    var code = event.keyCode;
-    console.log(code, key2note.get(code));
-    if (key2note.has(code)) {
-        stroke(key2note.get(code), context.currentTime, vel);
+    var key = event.keyCode;
+    console.log(key, key2note.get(key));
+    if (key2note.has(key)) {
+        notedown(key);
     }
-    if (code == 189) {
+    if (key == 189) {
         if (vel > 0) vel--; 
         refresh();
     }
-    if (code == 187) {
+    if (key == 187) {
         if (vel < 9) vel++;
         refresh();
+    }
+});
+document.addEventListener("keyup", function(event) {
+    var key = event.keyCode;
+    console.log(key, key2note.get(key));
+    if (key2note.has(key)) {
+        noteup(key);
     }
 });
 function sleep(milliseconds) {

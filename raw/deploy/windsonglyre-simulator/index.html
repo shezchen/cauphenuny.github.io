@@ -1,67 +1,101 @@
 <!DOCTYPE HTML>
 <html>
-  <head>
-    <meta charset="UTF-8" >
-    <link rel="icon" type="image/x-icon" href="./icon.jpg">
-    <title>钢琴模拟器 - 自制谱面音游</title>
-    <h2>钢琴模拟器 - 自制谱面音游</h2>
-    <p>请使用电脑网页打开</p>
-    <p>本来是想写个原神里面风物之诗琴的模拟器的，但是音源没搞好，干脆就写个钢琴的得了</p>
-    <link rel="stylesheet" href="./style.css">
-  </head>
-  <body>
-    <hr>
-    <div class="image-container">
-      <form>
-        <p id="status" style="color: red;"><b>加载中，请稍候……</b></p>
-        <p id="vel"></p>
-        <label for="bpm">bpm：</label>
-        <input type="number" id="bpm" size=10><br>
-        <label for="time_sign1">拍号：</label>
-        <input type="number" id="time_sign1" size=5>/<input type="number" id="time_sign2" size=5><br>
-        移调选项：
-        <select id="offset_option">
-          <option value="flex">首调（整体平移key数）</option>
-          <option value="fixed">固定调（升降号个数）</option>
-        </select>
-        <input type="number" id="key_offset" size=5>&nbsp;<span id="key_name"></span><br>
-        <input type="button" value="确定" id="submit">
-      </form>
-    </div>
-      <p><label for="input">使用键盘（键位见教程），或在下框中输入谱子以自动演奏：<br>输入每个音对应键位的大写字母，英文句号表示休止符<br> </label></p>
-      <p><textarea id="input" name="input" rows="12" cols="60"></textarea></p>
-      <p><button id="start">演奏</button> <button id="stop">停止</button></p>
-    <p>预设：</p>
-    <p>
-       <button id="tutorial">教程：键位与记谱</button>
-    </p>
-    <p>
-       <button id="haruhikage">乐曲：春日影</button> 
-       <button id="bwv846">乐曲：巴赫 C 大调前奏曲 BWV846</button> 
-    </p>
-    <p>
-       <button id="reset">复原</button>
-    </p>
-  <script type="module" src="player.js"> </script>
-  <script src="songs.js"> </script>
-  <hr>
-  <p>
-    音游模式选项：<br><br>
-    判定延迟：<input type="number" id="delay" value="0">ms<br>
-    选择难度：<select id="my-select">
-      <option value="normal">普通</option>
-      <option value="hard">困难</option>
-    </select></span><br>
-  </p>
-  <button id="gamestart" onclick="gamestart()">开始！</button><br><br>
-  <script>
-    function gamestart() {
-        alert('还没写呢');
-    }
-  </script>
+    <head>
+        <meta charset="UTF-8" >
+        <link rel="icon" type="image/x-icon" href="./icon.jpg">
+        <title>钢琴模拟器 - 自制谱面音游</title>
+        <h2>钢琴模拟器 - 自制谱面音游</h2>
+        <p>请使用电脑网页打开</p>
+        <p>本来是想写个原神里面风物之诗琴的模拟器的，但是音源没搞好，干脆就写个钢琴的得了</p>
+        <link rel="stylesheet" href="./index.css">
+    </head>
+    <body>
+        <hr>
+        <div class="container">
+            <div class="column">
+                <div class="image-container">
+                    <form>
+                        <p id="status" style="color: red;"><b>加载中，请稍候……</b></p>
+                        <span id="vel">力度：</span><br>
+                        <label for="bpm">bpm：</label>
+                        <input type="number" id="bpm" size=10><br>
+                        <label for="time_sign1">拍号：</label>
+                        <input type="number" id="time_sign1" size=5>/<input type="number" id="time_sign2" size=5><br>
+                        移调：
+                        <select id="offset_option">
+                            <option value="flex">整体平移key数</option>
+                            <option value="fixed">升降号个数</option>
+                        </select>
+                        <input type="number" id="key_offset" size=5>&nbsp;<span id="key_name"></span><br>
+                        <input type="button" value="确定" id="submit">
+                    </form>
+                </div>
+                    <p><label for="input">使用键盘（键位见教程），或在下框中输入谱子以自动演奏：<br>
+                        输入每个音对应键位的大写字母，英文句号表示休止符<br> </label></p>
+                    <p><textarea id="input" name="input" rows="12" cols="60"></textarea></p>
+                    <p><button id="start">演奏</button> <button id="stop">停止</button></p>
+                <p>预设：</p>
+                <p>
+                    <button id="tutorial">教程：键位与记谱</button>
+                </p>
+                <p>
+                    <button id="haruhikage">乐曲：春日影</button> 
+                    <button id="bwv846">乐曲：巴赫 C 大调前奏曲 BWV846</button> 
+                </p>
+                <p>
+                    <button id="reset">复原</button>
+                </p>
+            </div>
+            <div class="column">
+                <div class="displayer">
+                    <img id="keyQ" class="keyboard-img" src="./keyboard/Q.png" alt="keyQ" onmouseover="mouseover(\"Q\")">
+                    <img id="keyW" class="keyboard-img" src="./keyboard/W.png" alt="keyW">
+                    <img id="keyE" class="keyboard-img" src="./keyboard/E.png" alt="keyE">
+                    <img id="keyR" class="keyboard-img" src="./keyboard/R.png" alt="keyR">
+                    <img id="keyT" class="keyboard-img" src="./keyboard/T.png" alt="keyT">
+                    <img id="keyY" class="keyboard-img" src="./keyboard/Y.png" alt="keyY">
+                    <img id="keyU" class="keyboard-img" src="./keyboard/U.png" alt="keyU"><br>
 
-  </body>
+                    <img id="keyA" class="keyboard-img" src="./keyboard/A.png" alt="keyA">
+                    <img id="keyS" class="keyboard-img" src="./keyboard/S.png" alt="keyS">
+                    <img id="keyD" class="keyboard-img" src="./keyboard/D.png" alt="keyD">
+                    <img id="keyF" class="keyboard-img" src="./keyboard/F.png" alt="keyF">
+                    <img id="keyG" class="keyboard-img" src="./keyboard/G.png" alt="keyG">
+                    <img id="keyH" class="keyboard-img" src="./keyboard/H.png" alt="keyH">
+                    <img id="keyJ" class="keyboard-img" src="./keyboard/J.png" alt="keyJ"><br>
+
+                    <img id="keyZ" class="keyboard-img" src="./keyboard/Z.png" alt="keyZ">
+                    <img id="keyX" class="keyboard-img" src="./keyboard/X.png" alt="keyX">
+                    <img id="keyC" class="keyboard-img" src="./keyboard/C.png" alt="keyC">
+                    <img id="keyV" class="keyboard-img" src="./keyboard/V.png" alt="keyV">
+                    <img id="keyB" class="keyboard-img" src="./keyboard/B.png" alt="keyB">
+                    <img id="keyN" class="keyboard-img" src="./keyboard/N.png" alt="keyN">
+                    <img id="keyM" class="keyboard-img" src="./keyboard/M.png" alt="keyM"><br>
+                </div>
+            </div>
+        </div>
+    <script type="module" src="player.js"> </script>
+    <script src="songs.js"> </script>
+    <hr>
+    <p>
+        音游模式选项：<br><br>
+        判定延迟：<input type="number" id="delay" value="0">ms<br>
+        选择难度：<select id="my-select">
+            <option value="easy">简单</option>
+            <option value="normal">普通</option>
+            <option value="hard">困难</option>
+        </select></span><br>
+    </p>
+    <button id="gamestart" onclick="gamestart()">开始！</button><br><br>
+    <script>
+        function gamestart() {
+            alert('测试中');
+            window.location.href = './game.html'
+        }
+    </script>
+
+    </body>
 
 <hr>
-开发中，当前版本 v0.4.4， <a href="https://cauphenuny.github.io/2024/06/14/build-a-windsonglyre-simulator/">开发日志</a>
+开发中，当前版本 v0.5.0 beta， <a href="https://cauphenuny.github.io/2024/06/14/build-a-windsonglyre-simulator/">开发日志</a>
 </html>

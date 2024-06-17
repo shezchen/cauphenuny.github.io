@@ -1,0 +1,41 @@
+input[type='number']{
+    width: 40px;
+}
+textarea {
+  font-family: "Consolas", Monospace;
+}
+sup {
+    font-size: xx-small
+}
+img {
+}
+.image-container {
+    display: inline-flex;
+    align-items: center;
+}
+
+.keysgn-img{
+    height: 2.2em;
+    margin-right: 0.5em;
+}
+
+.container p span {
+    line-height: 1;
+}
+
+.container {
+    display: flex;
+}
+.column {
+    flex: 1; /* 两列等宽 */
+}
+.displayer {
+    justify-content: center; /* 水平居中 */
+    align-items: center;
+}
+
+.keyboard-img{
+    transition: transform 0.1s, filter 0.1s;
+    height: 5em;
+    margin: 0.5em;
+}
