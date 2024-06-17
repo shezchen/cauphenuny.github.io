@@ -207,6 +207,8 @@ r_{n-1}&amp;=r_{n}x_{n+1}\\
 <p>version 0.5.4</p>
 <p>把自动演奏和按键动画连接了起来。</p>
 <p>version 0.6.0</p>
+<p>加了个加载时的提示悬浮窗</p>
+<p>version 0.6.1</p>
 <hr />
 ]]></content>
       <categories>

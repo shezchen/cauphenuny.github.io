@@ -129,10 +129,10 @@ window.onload = function() {
     for (var i = 0, note = C1; i < key.length; i++) {
         key2note.set(key.charCodeAt(i), note);
         note += diff[i % 7];
-        //str += "<span id=hover" + key[i] + "><img id=\"key" + key[i] + "\" class=\"keyboard-img\" src=\"./keyboard/" + key[i] + ".png\" alt=\"key" + key[i] + "\"></span>\n"
+        //str += "<span id=hover" + key[i] + "><img id=\"key" + key[i] + "\" class=\"kb-img\" src=\"./keyboard/" + key[i] + ".png\" alt=\"key" + key[i] + "\"></span>\n"
     }
     //console.log(str);
-    const key_buttons = document.getElementsByClassName("keyboard-img");
+    const key_buttons = document.getElementsByClassName("kb-img");
     for (var i = 0; i < key_buttons.length; i++) {
         key_buttons[i].draggable = false; // 设置不可拖动
         key_buttons[i].addEventListener('mouseover', function() {
@@ -147,10 +147,14 @@ window.onload = function() {
 piano.load.then(() => {
     document.getElementById("status").style = "color: green;";
     document.getElementById("status").innerHTML = "准备就绪";
+    const hovers = document.getElementsByClassName("hvinfo");
+    for (var i = 0; i < hovers.length; i++) {
+        hovers[i].style.display = "none";
+    }
     init();
     refresh();
 
-    const key_buttons = document.getElementsByClassName("keyboard-img");
+    const key_buttons = document.getElementsByClassName("kb-img");
     for (var i = 0; i < key_buttons.length; i++) {
         key_buttons[i].addEventListener('mousedown', function() {
             var keyCode = this.id.charCodeAt("key".length);
