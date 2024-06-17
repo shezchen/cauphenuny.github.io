@@ -95,7 +95,6 @@ function animated_down(key) {
     const img = document.getElementById("key" + String.fromCharCode(key));
     img.style.filter = 'brightness(0.7)';
     img.style.transform = 'scale(0.85)';
-    setTimeout(function() {animated_up(key);}, 1000);
 }
 function animated_press(key) {
     //console.log("a_p ", key);
