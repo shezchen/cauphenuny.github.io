@@ -189,17 +189,25 @@ r_{n-1}&amp;=r_{n}x_{n+1}\\
 <p>试了半天，发现没法正常播放这个 sf2 音源，决定先用 smplr 默认的钢琴音源把别的写了。</p>
 <p>写好了键盘演奏函数、谱子 parser 以及自动播放功能。</p>
 <p>version 0.1.0</p>
+<hr />
 <p>6.15</p>
 <p>加入 <code>[]</code> <code>&#123;&#125;</code> 表示时值变化。</p>
 <p>添加临时升降记号 <code>-/+</code> 以及临时高/低八度记号。</p>
 <p>重写了教程</p>
 <p>version 0.3.0</p>
+<hr />
 <p>6.16</p>
 <p>添加了固定调转调方式，更适合对着五线谱演奏。</p>
 <p>version 0.4.0</p>
+<hr />
 <p>6.17</p>
 <p>优化了调号显示。</p>
 <p>version 0.4.4</p>
+<p>加了个键盘，可以看到哪些音被按下了。</p>
+<p>version 0.5.4</p>
+<p>把自动演奏和按键动画连接了起来。</p>
+<p>version 0.6.0</p>
+<hr />
 ]]></content>
       <categories>
         <category>CS</category>

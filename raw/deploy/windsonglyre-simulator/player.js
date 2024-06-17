@@ -85,35 +85,57 @@ document.getElementById("submit").onclick = () => {
     console.log(bpm, global_offset, time1, time2);
     refresh();
 }
+function animated_down(key) {
+    console.log("a_d ", key);
+    console.log(key);
+    const img = document.getElementById("key" + String.fromCharCode(key));
+    img.style.filter = 'brightness(0.7)';
+    img.style.transform = 'scale(0.85)';
+}
+function animated_up(key) {
+    const img = document.getElementById("key" + String.fromCharCode(key));
+    img.style.filter = 'brightness(1)';
+    img.style.transform = 'scale(1)';
+}
+function animated_press(key) {
+    console.log("a_p ", key);
+    animated_down(key);
+    setTimeout(function() {animated_up(key);}, 70);
+}
+var timers = [];
 function stroke(code, tim, velc) {
     piano.start({ note: code + global_offset + fixed_offset[code % 12], 
                   velocity: Math.round(velocites[velc] - (C3 - code) / 2), 
                   time: tim });
 }
+function animated_stroke(code, tim, velc, key, delay) {
+    stroke(code, tim, velc);
+    console.log("push: ", delay);
+    timers.push(setTimeout(function() { animated_press(key); }, delay));
+}
 function notedown(key) {
-    console.log(key);
     stroke(key2note.get(key), context.currentTime, vel);
-    const img = document.getElementById("key" + String.fromCharCode(key));
-    console.log(img);
-    img.style.filter = 'brightness(0.7)';
-    img.style.transform = 'scale(0.85)';
+    animated_down(key);
 }
 function noteup(key) {
-    const img = document.getElementById("key" + String.fromCharCode(key));
-    img.style.filter = 'brightness(1)';
-    img.style.transform = 'scale(1)';
+    animated_up(key);
+}
+function notepress(key) {
+    notedown(key);
+    setTimeout(function() {noteup(key);}, 50);
 }
 
 window.onload = function() {
-    var str = "";
+    //var str = "";
     for (var i = 0, note = C1; i < key.length; i++) {
         key2note.set(key.charCodeAt(i), note);
         note += diff[i % 7];
-        str += "<span id=hover" + key[i] + "><img id=\"key" + key[i] + "\" class=\"keyboard-img\" src=\"./keyboard/" + key[i] + ".png\" alt=\"key" + key[i] + "\"></span>\n"
+        //str += "<span id=hover" + key[i] + "><img id=\"key" + key[i] + "\" class=\"keyboard-img\" src=\"./keyboard/" + key[i] + ".png\" alt=\"key" + key[i] + "\"></span>\n"
     }
-    console.log(str);
+    //console.log(str);
     const key_buttons = document.getElementsByClassName("keyboard-img");
     for (var i = 0; i < key_buttons.length; i++) {
+        key_buttons[i].draggable = false; // 设置不可拖动
         key_buttons[i].addEventListener('mouseover', function() {
             this.parentNode.style.filter = 'brightness(0.9)';
         });
@@ -133,11 +155,7 @@ piano.load.then(() => {
     for (var i = 0; i < key_buttons.length; i++) {
         key_buttons[i].addEventListener('mousedown', function() {
             var keyCode = this.id.charCodeAt("key".length);
-            notedown(keyCode);
-        });
-        key_buttons[i].addEventListener('mouseup', function() {
-            var keyCode = this.id.charCodeAt("key".length);
-            noteup(keyCode);
+            notepress(keyCode);
         });
     }
     document.addEventListener("keydown", function(event) {
@@ -169,8 +187,15 @@ function sleep(milliseconds) {
     setTimeout(resolve, milliseconds);
   });
 }
-export function play(music) {
+function stop() {
+    for (var i = 0; i < timers.length; i++) {
+        clearTimeout(timers[i]);
+    }
+    timers.length = 0;
     piano.stop();
+}
+export function play(music) {
+    stop();
     var interval = 60 * 4 / bpm / time2;
     var velc = vel;
     var stack = [];
@@ -239,7 +264,7 @@ export function play(music) {
 
             default:
                 if (key2note.has(key)) {
-                    stroke(key2note.get(key) + tmpoffset + octoffset * 12, now + sum * interval, velc);
+                    animated_stroke(key2note.get(key) + tmpoffset + octoffset * 12, now + sum * interval, velc, key, sum * interval * 1000);
                     tmpoffset = 0;
                     cnt += getTop(stack);
                     sum += getTop(stack);
@@ -251,7 +276,7 @@ export function play(music) {
 }
 document.getElementById("stop").onclick = () => {
     console.log("stop");
-    piano.stop();
+    stop();
 }
 document.getElementById("tutorial").onclick = () => {
     init();
