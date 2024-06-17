@@ -37,5 +37,5 @@ img {
 .keyboard-img{
     transition: transform 0.1s, filter 0.1s;
     height: 5em;
-    margin: 0.5em;
+    margin: 0.2em;
 }

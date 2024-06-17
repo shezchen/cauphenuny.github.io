@@ -57,12 +57,6 @@ import { Soundfont2Sampler } from "https://unpkg.com/smplr/dist/index.mjs";
 import { SplendidGrandPiano } from "https://unpkg.com/smplr/dist/index.mjs";
 const context = new AudioContext();
 const piano = new SplendidGrandPiano(context);
-piano.load.then(() => {
-    document.getElementById("status").style = "color: green;";
-    document.getElementById("status").innerHTML = "准备就绪";
-    init();
-    refresh();
-});
 document.getElementById("submit").onclick = () => {
     bpm = parseInt(document.getElementById("bpm").value);
     const selectElement = document.getElementById('offset_option');
@@ -91,9 +85,16 @@ document.getElementById("submit").onclick = () => {
     console.log(bpm, global_offset, time1, time2);
     refresh();
 }
+function stroke(code, tim, velc) {
+    piano.start({ note: code + global_offset + fixed_offset[code % 12], 
+                  velocity: Math.round(velocites[velc] - (C3 - code) / 2), 
+                  time: tim });
+}
 function notedown(key) {
+    console.log(key);
     stroke(key2note.get(key), context.currentTime, vel);
     const img = document.getElementById("key" + String.fromCharCode(key));
+    console.log(img);
     img.style.filter = 'brightness(0.7)';
     img.style.transform = 'scale(0.9)';
 }
@@ -102,51 +103,64 @@ function noteup(key) {
     img.style.filter = 'brightness(1)';
     img.style.transform = 'scale(1)';
 }
+
 window.onload = function() {
-    //var str = "";
+    var str = "";
     for (var i = 0, note = C1; i < key.length; i++) {
         key2note.set(key.charCodeAt(i), note);
         note += diff[i % 7];
-        //str += "<img id=\"key" + key[i] + "\" class=\"keyboard-img\" src=\"./keyboard/" + key[i] + ".png\" alt=\"key" + key[i] + "\">\n"
+        str += "<span id=hover" + key[i] + "><img id=\"key" + key[i] + "\" class=\"keyboard-img\" src=\"./keyboard/" + key[i] + ".png\" alt=\"key" + key[i] + "\"></span>\n"
     }
-    //console.log(str);
+    console.log(str);
+}
+
+piano.load.then(() => {
+    document.getElementById("status").style = "color: green;";
+    document.getElementById("status").innerHTML = "准备就绪";
+    init();
+    refresh();
+
     const key_buttons = document.getElementsByClassName("keyboard-img");
     for (var i = 0; i < key_buttons.length; i++) {
         key_buttons[i].addEventListener('mouseover', function() {
-            this.style.filter = 'brightness(0.95)';
+            this.parentNode.style.filter = 'brightness(0.9)';
         });
         key_buttons[i].addEventListener('mouseout', function() {
-            this.style.filter = 'brightness(1)';
+            this.parentNode.style.filter = 'brightness(1)';
+        });
+        key_buttons[i].addEventListener('mousedown', function() {
+            var keyCode = this.id.charCodeAt("key".length);
+            notedown(keyCode);
+        });
+        key_buttons[i].addEventListener('mouseup', function() {
+            var keyCode = this.id.charCodeAt("key".length);
+            noteup(keyCode);
         });
     }
-}
-function stroke(code, tim, velc) {
-    piano.start({ note: code + global_offset + fixed_offset[code % 12], 
-                  velocity: Math.round(velocites[velc] - (C3 - code) / 2), 
-                  time: tim });
-}
-document.addEventListener("keydown", function(event) {
-    var key = event.keyCode;
-    console.log(key, key2note.get(key));
-    if (key2note.has(key)) {
-        notedown(key);
-    }
-    if (key == 189) {
-        if (vel > 0) vel--; 
-        refresh();
-    }
-    if (key == 187) {
-        if (vel < 9) vel++;
-        refresh();
-    }
+    document.addEventListener("keydown", function(event) {
+        var key = event.keyCode;
+        console.log(key, key2note.get(key));
+        if (key2note.has(key)) {
+            notedown(key);
+        }
+        if (key == 189) {
+            if (vel > 0) vel--; 
+            refresh();
+        }
+        if (key == 187) {
+            if (vel < 9) vel++;
+            refresh();
+        }
+    });
+    document.addEventListener("keyup", function(event) {
+        var key = event.keyCode;
+        console.log(key, key2note.get(key));
+        if (key2note.has(key)) {
+            noteup(key);
+        }
+    });
 });
-document.addEventListener("keyup", function(event) {
-    var key = event.keyCode;
-    console.log(key, key2note.get(key));
-    if (key2note.has(key)) {
-        noteup(key);
-    }
-});
+
 function sleep(milliseconds) {
   return new Promise(resolve => {
     setTimeout(resolve, milliseconds);
