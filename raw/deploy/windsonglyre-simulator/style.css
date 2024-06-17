@@ -7,3 +7,18 @@ textarea {
 sup {
     font-size: xx-small
 }
+img {
+}
+.image-container {
+display: inline-flex;
+align-items: center;
+}
+
+.image-container img {
+height: 2.5em;
+margin-right: 0.5em;
+}
+
+.image-container p span {
+line-height: 1;
+}

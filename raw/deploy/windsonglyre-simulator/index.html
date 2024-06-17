@@ -10,22 +10,24 @@
     <link rel="stylesheet" href="./style.css">
   </head>
   <body>
-    <form>
-      <hr>
-      <p id="status" style="color: red;"><b>加载中，请稍候……</b></p>
-      <p id="vel"></p>
-      <label for="bpm">bpm：</label>
-      <input type="number" id="bpm" size=10><br>
-      <label for="time_sign1">拍号：</label>
-      <input type="number" id="time_sign1" size=5>/<input type="number" id="time_sign2" size=5><br>
-      移调选项：
-      <select id="offset_option">
-        <option value="flex">首调（整体平移key数）</option>
-        <option value="fixed">固定调（升降号个数）</option>
-      </select>
-      <input type="number" id="key_offset" size=5>&nbsp;<span id="key_name"></span><br>
-      <input type="button" value="确定" id="submit">
-    </form>
+    <hr>
+    <div class="image-container">
+      <form>
+        <p id="status" style="color: red;"><b>加载中，请稍候……</b></p>
+        <p id="vel"></p>
+        <label for="bpm">bpm：</label>
+        <input type="number" id="bpm" size=10><br>
+        <label for="time_sign1">拍号：</label>
+        <input type="number" id="time_sign1" size=5>/<input type="number" id="time_sign2" size=5><br>
+        移调选项：
+        <select id="offset_option">
+          <option value="flex">首调（整体平移key数）</option>
+          <option value="fixed">固定调（升降号个数）</option>
+        </select>
+        <input type="number" id="key_offset" size=5>&nbsp;<span id="key_name"></span><br>
+        <input type="button" value="确定" id="submit">
+      </form>
+    </div>
       <p><label for="input">使用键盘（键位见教程），或在下框中输入谱子以自动演奏：<br>输入每个音对应键位的大写字母，英文句号表示休止符<br> </label></p>
       <p><textarea id="input" name="input" rows="12" cols="60"></textarea></p>
       <p><button id="start">演奏</button> <button id="stop">停止</button></p>
@@ -61,5 +63,5 @@
   </body>
 
 <hr>
-开发中，当前版本 v0.4.3， <a href="https://cauphenuny.github.io/2024/06/14/build-a-windsonglyre-simulator/">开发日志</a>
+开发中，当前版本 v0.4.4， <a href="https://cauphenuny.github.io/2024/06/14/build-a-windsonglyre-simulator/">开发日志</a>
 </html>

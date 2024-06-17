@@ -7,7 +7,7 @@ const major_scale = "CDEFGAB";
 const sharp = [5, 0, 7, 2, 9, 4, 11];
 const sharp_scale_name = ["C", "G", "D", "A", "E", "B", "F<sup>♯</sup>"];
 const flat = [11, 4, 9, 2, 7, 0, 5];
-const flat_scale_name = ["F", "B<sup>♭</sup>", "E<sup>♭</sup>", "A<sup>♭</sup>", "D<sup>♭</sup>", "G<sup>♭</sup>"];
+const flat_scale_name = ["C", "F", "B<sup>♭</sup>", "E<sup>♭</sup>", "A<sup>♭</sup>", "D<sup>♭</sup>", "G<sup>♭</sup>"];
 const diff = [2, 2, 1, 2, 2, 2, 1];
 const velocites = [32, 48, 56, 64, 68, 72, 80, 88, 96, 108];
 const key2note = new Map();
@@ -28,24 +28,19 @@ export function refresh() {
         document.getElementById("key_name").innerHTML = "(1=" + note_name[(global_offset + 120) % 12] + ")";
     } else { 
         var cnt = parseInt(document.getElementById("key_offset").value);
-        if (cnt > 0) {
+        if (cnt >= 0) {
             if (cnt > 6) cnt = 6;
-            var str = "fa";
-            for (var i = 1; i < cnt; i++) {
-                str += ", " + vocal_name[sharp[i]];
-            }
-            console.log(str);
-            document.getElementById("key_name").innerHTML = sharp_scale_name[cnt] + "大调（升 " + str + "）";
+            document.getElementById("key_name").innerHTML = sharp_scale_name[cnt] + "大调 <img alt=\"调号\" " + 
+                                                                                              "align=\"center\" " + 
+                                                                                              "src=\"./keysignature/" + cnt + ".png\"" + 
+                                                                                         ">";
         } else if (cnt < 0) {
             if (cnt < -6) cnt = -6;
-            var str = "si";
-            for (var i = 1; i < (-cnt); i++) {
-                str += ", " + vocal_name[flat[i]];
-            }
-            console.log(str);
-            document.getElementById("key_name").innerHTML = flat_scale_name[-cnt] + "大调（降 " + str + "）";
+            document.getElementById("key_name").innerHTML = flat_scale_name[-cnt] + "大调 <img alt=\"调号\" " + 
+                                                                                              "align=\"center\" " + 
+                                                                                              "src=\"./keysignature/" + cnt + ".png\"" + 
+                                                                                         ">";
         } else {
-            document.getElementById("key_name").innerHTML = "C大调";
         }
     }
     document.getElementById("time_sign1").value = time1;
@@ -218,6 +213,7 @@ document.getElementById("bwv846").onclick = () => {
     time1 = 4;
     time2 = 4;
     document.getElementById('offset_option').selectedIndex = 0;
+    fixed_offset.fill(0);
     global_offset = 0;
     document.getElementById("input").value = bwv846;
     refresh();
@@ -229,6 +225,7 @@ document.getElementById("haruhikage").onclick = () => {
     time1 = 6;
     time2 = 8;
     document.getElementById('offset_option').selectedIndex = 0;
+    fixed_offset.fill(0);
     global_offset = -1;
     document.getElementById("input").value = haruhikage;
     refresh();
