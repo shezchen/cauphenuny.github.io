@@ -1,47 +1,25 @@
 <!DOCTYPE HTML>
 <html>
+<meta charset="UTF-8" >
 <head>
   <link rel="stylesheet" href="game.css">
 </head>
 
 <body>
-
-<div class="stage">
-<div class="rounded-rectangle"></div>
-<div class="rounded-boxL"></div>
-<div class="rounded-boxM"></div>
-</div>
-
-<div><img id="myImg" src="./keyboard/A.png" alt="key A"></div>
-<style>
-#myImg {
-  transition: transform 0.1s, filter 0.1s; /* 添加过渡动画 */
-}
-</style>
-<script>
-const img = document.getElementById('myImg');
-document.addEventListener('keydown', (event) => {
-  // 判断是否为空格键
-  console.log(event.keyCode);
-  if (event.keyCode === 65) {
-    // 降低图片亮度
-    img.style.filter = 'brightness(0.7)';
-    img.style.transform = 'scale(0.9)';
-  }
-});
-document.addEventListener('keyup', (event) => {
-  // 判断是否为空格键
-  console.log(event.keyCode);
-  if (event.keyCode === 65) {
-    // 恢复图片亮度
-    img.style.filter = 'brightness(1)';
-    img.style.transform = 'scale(1)'; // 恢复到原始大小
-  }
-});
+<p id="difficulty"></p>
+<p id="sheet"></p>
+<script type="module" src="game.js">
 </script>
+<span class="kb-img-ctn"><img id="keyA" class="kb-img" src="./keyboard/A.png" alt="keyA"></span>
+<span class="kb-img-ctn"><img id="keyS" class="kb-img" src="./keyboard/S.png" alt="keyS"></span>
+<span class="kb-img-ctn"><img id="keyD" class="kb-img" src="./keyboard/D.png" alt="keyD"></span>
+<span class="kb-img-ctn"><img id="keyF" class="kb-img" src="./keyboard/F.png" alt="keyF"></span>
+<span class="kb-img-ctn"><img id="keyG" class="kb-img" src="./keyboard/G.png" alt="keyG"></span>
+<span class="kb-img-ctn"><img id="keyH" class="kb-img" src="./keyboard/H.png" alt="keyH"></span>
+<span class="kb-img-ctn"><img id="keyJ" class="kb-img" src="./keyboard/J.png" alt="keyJ"></span>
 
 <hr>
-<a href="index.html">back</a>
+<a href="javascript:history.back()">back</a>
 
 </body>
 </html>

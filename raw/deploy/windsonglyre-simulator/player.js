@@ -67,7 +67,7 @@ document.getElementById("submit").onclick = () => {
         global_offset = 0;
         fixed_offset.fill(0);
         var cnt = parseInt(document.getElementById("key_offset").value);
-        console.log(cnt);
+        //console.log(cnt);
         if (cnt > 0) {
             for (var i = 0; i < cnt; i++) {
                 fixed_offset[sharp[i]] = 1;
@@ -77,39 +77,40 @@ document.getElementById("submit").onclick = () => {
                 fixed_offset[flat[i]] = -1;
             }
         }
-        console.log(fixed_offset);
+        //console.log(fixed_offset);
     }
     time1 = parseInt(document.getElementById("time_sign1").value);
     time2 = parseInt(document.getElementById("time_sign2").value);
-    console.log(bpm, global_offset, time1, time2);
+    //console.log(bpm, global_offset, time1, time2);
     refresh();
-}
-function animated_down(key) {
-    console.log("a_d ", key);
-    console.log(key);
-    const img = document.getElementById("key" + String.fromCharCode(key));
-    img.style.filter = 'brightness(0.7)';
-    img.style.transform = 'scale(0.85)';
 }
 function animated_up(key) {
     const img = document.getElementById("key" + String.fromCharCode(key));
     img.style.filter = 'brightness(1)';
     img.style.transform = 'scale(1)';
 }
+function animated_down(key) {
+    //console.log("a_d ", key);
+    //console.log(key);
+    const img = document.getElementById("key" + String.fromCharCode(key));
+    img.style.filter = 'brightness(0.7)';
+    img.style.transform = 'scale(0.85)';
+    setTimeout(function() {animated_up(key);}, 1000);
+}
 function animated_press(key) {
-    console.log("a_p ", key);
+    //console.log("a_p ", key);
     animated_down(key);
     setTimeout(function() {animated_up(key);}, 70);
 }
 var timers = [];
 function stroke(code, tim, velc) {
     piano.start({ note: code + global_offset + fixed_offset[code % 12], 
-                  velocity: Math.round(velocites[velc] - (C3 - code) / 2), 
+                  velocity: Math.round(velocites[velc] - Math.max(Math.min((C3 - code) / 2, 20), -10)), 
                   time: tim });
 }
 function animated_stroke(code, tim, velc, key, delay) {
     stroke(code, tim, velc);
-    console.log("push: ", delay);
+    //console.log("push: ", delay);
     timers.push(setTimeout(function() { animated_press(key); }, delay - 20));
 }
 function notedown(key) {
@@ -134,7 +135,7 @@ window.onload = function() {
     //console.log(str);
     const key_buttons = document.getElementsByClassName("kb-img");
     for (var i = 0; i < key_buttons.length; i++) {
-        key_buttons[i].draggable = false; // 设置不可拖动
+        key_buttons[i].draggable = false; // 不可拖动
         key_buttons[i].addEventListener('mouseover', function() {
             this.parentNode.style.filter = 'brightness(0.9)';
         });
@@ -163,7 +164,7 @@ piano.load.then(() => {
     }
     document.addEventListener("keydown", function(event) {
         var key = event.keyCode;
-        console.log(key, key2note.get(key));
+        //console.log(key, key2note.get(key));
         if (key2note.has(key)) {
             notedown(key);
         }
@@ -178,7 +179,7 @@ piano.load.then(() => {
     });
     document.addEventListener("keyup", function(event) {
         var key = event.keyCode;
-        console.log(key, key2note.get(key));
+        //console.log(key, key2note.get(key));
         if (key2note.has(key)) {
             noteup(key);
         }
@@ -199,6 +200,7 @@ function stop() {
 }
 export function play(music) {
     stop();
+    console.log("------- start parsing -------");
     var interval = 60 * 4 / bpm / time2;
     var velc = vel;
     var stack = [];
@@ -247,7 +249,11 @@ export function play(music) {
                 tmpoffset++;
                 break;
             case '/':
-                //console.log(cnt);
+                if (time1 != cnt) {
+                    console.log("warning: rhythm not correct: expect " + time1 + ", read " + cnt + " .");
+                } else {
+                    console.log("success.");
+                }
                 cnt = 0;
                 break;
             case '^':

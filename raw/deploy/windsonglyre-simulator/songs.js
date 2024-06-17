@@ -58,7 +58,7 @@ var tutorial = `（教程也可以播放，点击演奏按钮）
 有效字符：
 .()<>{[UYTREWQJHGFDSAMNBVCXZ]}-+%^
 其他字符在自动播放时均忽略
-`
+`;
 var bwv846 = 
 `[[>>ADGQEGQEADGQEGQE/ASHWRHWRASHWRHWR/
 MSGWRGWRMSGWRGWR/ADGQEGQEADGQEGQE/
@@ -78,8 +78,9 @@ BDGQTGQTBDGQTGQT/BSGQRGQRBSGQRGQR/
 BSGJRGJRBSGJRGJR/ZAG-JEG-JEZAG-JEG-JE/
 ZAFHQRQHQHFHFSFS][ZM%GJWRWJW]{JGJSF}DS
 (%ZA%DGQ)]
-`
-var haruhikage = `[
+`;
+var haruhikage = `春日影
+[
 # 注意拍号是6/8，而这里外层套了个中括号时值减半
 # 所以以下每一位表示一个16分音符
 
@@ -191,10 +192,110 @@ var haruhikage = `[
 (ZBQ).AZB.(ZBS)...(ZA)./(ZVQ).(NW).(AQ).(XBW).(XQ).(MW)./
 
 (AGQE)...W.Q...W./(VAE)..RE.W.N.M./(AGE).S.W.
-(GQ)...(AW)./(VADE)..RE.(FW)...../......(ZBDQ)....../
+(GQ)...(AW)./(VADE)..RE.(FW)...../......(ZBDQ)...../
 ]
 
 ---
 来源：https://www.bilibili.com/read/cv27118373/
 略有修改，使节奏正确。
-`
+`;
+
+var komorebi = `komorebi
+a段：
+(VH).AE/D.W./(BDJT).../(JE).../
+(NGW).AE/D.(GQ)./(CGJ).M./(SG).../
+(VH).(AE)./D.JQ/(BJ).XG/B.S./
+(NAD).C./N.A./(BM).C./B.X./
+
+(VH).AE/D.(AW)./(BT).M./(SE).M./
+(NW).AE/D.(GQ)./(CJ).M./(DG).M./
+(VH).(AE)./D.JQ/(BJ).XG/B.S./
+(NAD).C./N.A./(BM).../..../
+
+a1段：
+
+(VH).AE/D.(AW)./(BT).M./(SE).M./
+(NW).AE/D.(GQ)./(CJ).M./(DG).M./
+(VDH).(AHE)./D.SD/(BSG).(MGE)./S.(MG)J/
+(NDH).(AHE)./D.(AH)E/(CDH).(MHE)./D.(MH)E/
+
+(VH).AE/D.(AW)./(BT).M./(SE).M./
+(NW).AE/D.(GQ)./(CJ).M./(DG).M./
+(VDH).(AHE)./FGHQ/(BSGJ).X/MSGJ/
+(NDQ).A./(DH)J(GQ)T/(CJET).M/(DH)J(MW)T/
+
+b段：
+
+(VQ).A(GQ)./D.(AQ)./(BJ).MJ/SHM./
+(NHQ).A(HQ)./D(GQ).(GJ)/C.M./(DG)J(MW)T./
+(VGQ).A(QY)/.Q.W./(BWTU).XQ/UTWE./
+(NW).AQ/DWGE./C.MG/(DJ)W(MT)J./
+
+(VGQ).A(QT)/DQA./(BJW).M./(SH)J(MW)T./
+(NGQ).A(GQ)/D.Q(QT)/CU(MQ)W./(DU)T(MW)T./
+(VQEY).AQ/.FGQ./(BGJ).X(JT)/.JWQ./
+(NQT).(AD)G/DG(AH)Q./(CD)G(MH)J./(DQ)T(MG)J./
+
+(VQ).A(QT)/DQA./(BW).M./SH(MG)H./
+(NQ).A(HQ)/D.GQ/(CGJ).M./(DG)J(MW)T./
+(VGQ).A(QY)/.Q.W/(BWTU).XQ/UTWE./
+(NW).AQ/DWGE./C.MG/(DJ)W(MT)J./
+
+(VGQ).A(QT)/DQA./(BJW).M./(SH)J(MW)T./
+(NGQ).A(GQ)/D.Q(QT)/CU(MQ)W./(DU)T(MW)T./
+(VQEY).AQ/.FGQ/(BGJ).X(JT)/.JWQ/
+(NQT).(AD)G/DG(AH)Q./(CGJ).M./HJ(MW)T./
+
+a1段：
+
+(VH).AE/D.(AW)./(BT).M./(SE).M./
+(NW).AE/D.(GQ)./(CJ).M./(DG).M./
+(VDH).(AHE)./D.SD/(BSG).(MGE)./S.(MG)J/
+(NDH).(AHE)./D.(AH)E/(CDH).(MHE)./D.(MH)E/
+
+(VH).AE/D.(AW)./(BT).M./(SE).M./
+(NW).AE/D.(GQ)./(CJ).M./(DG).M./
+(VDH).(AHE)./FGHQ./(BSGJ).X./MSGJ./
+(NDQ).A./(DH)J(GQ)T./(CJET).M./(DH)J(MW)T./
+
+c段：
+
+(VWY).(AWY)(QT)./D(WT)(AE)Q./(BHE)WMW./(SGQ).(MGQ)J./
+NJ(AG)./D.AG/(CSG).(MSG)A/D(AG)M./
+(VWY).(AWY)(QT)./D(WT)(AE)Q./(BHE)WMW./(SGQ).(MGQ)J./
+N(GJ)(AHQ)./DQ(GU)Q./CU(MT)W./(DQ)J(MG)S./
+
+(VQT).(AQT)Q./DWA./(BG)JM(JT)./(SGQ).(MGW)./
+(NHE).(AHE)W./DQA./C(GJ)M(GJ)./(DGQ).(MGW)./
+(VQT).A(QT)./D.A./(BJT).M(JT)./S.M./
+(NQT).A(QT)./D.G./(CJT).M(JT)./(DG)J(MW)T./
+
+a1段：
+
+(VH).AE/D.(AW)./(BT).M./(SE).M./
+(NW).AE/D.(GQ)./(CJ).M./(DG).(MH)G./
+(VDH).(AHE)./D.SD/(BSG).(MGE)./S.(MG)J/
+(NDH).(AHE)./D.(AH)E/(CDH).(MHE)./D.(MH)E/
+
+(VH).AE/D.(AW)./(BT).M./(SE).M./
+(NW).AE/D.(GQ)./(CJ).M./(DG).(MH)G./
+(VDH).(AHE)./FGHQ./(BSGJ).X./MSGJ./
+(NDQ).A./(DH)J(GQ)T./(CJET).M./(DH)J(MW)T./
+
+来源：https://www.bilibili.com/video/BV1s34y1H727
+
+`;
+
+var zenzenzense = `前前前世
+[
+>[{ASD}QGWGET][.QEQREQ.]
+[{ASD}QGWGET][.QEQREQ.]
+[{ASD}QGWGET][.QEQREQ.]
+[[WETE]WQWGQ.]{(GQET)(GQET)(GQET)(GQET)(GQET)(GQET)}
+[{ASD}QGWGEG][RGEGTGQG]
+[{ASD}QGWGEG][RGEGWGEG]
+[{ASD}QGWGEG][RGEGTGQG]
+[[WETE]WQWGQ.](ADGQET)..B/
+<[A..S]A./.B{FDS}/A.../..AS/[DSDFDSAS][DSDFD.SA]
+]..../..../
+`;

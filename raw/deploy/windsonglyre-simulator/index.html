@@ -83,22 +83,30 @@
   <p>
     音游模式选项：<br><br>
     判定延迟：<input type="number" id="delay" value="0">ms<br>
-    选择难度：<select id="my-select">
+    选择难度：<select id="difficulty-select">
       <option value="easy">简单</option>
       <option value="normal">普通</option>
       <option value="hard">困难</option>
+      <option value="full">原版</option>
     </select></span><br>
+    难度说明：
+    简单：4键，仅重拍
+    普通：8键，全部拍，仅单音
+    困难，8键，所有音，键盘上的一列三个键合并为一个
+    原版：24键，所有音。
   </p>
   <button id="gamestart" onclick="gamestart()">开始！</button><br><br>
   <script>
     function gamestart() {
       alert('还没写呢');
-      //window.location.href = './game.html'
+      localStorage.setItem('sheet', document.getElementById("input").value);
+      localStorage.setItem('difficulty', document.getElementById("difficulty-select").selectedIndex);
+      window.location.href = './game.html'
     }
   </script>
 
   </body>
 
 <hr>
-开发中，当前版本 v0.6.1， <a href="https://cauphenuny.github.io/2024/06/14/build-a-windsonglyre-simulator/">开发日志</a>
+开发中，当前版本 v0.6.2， <a href="https://cauphenuny.github.io/2024/06/14/build-a-windsonglyre-simulator/">开发日志</a>
 </html>
