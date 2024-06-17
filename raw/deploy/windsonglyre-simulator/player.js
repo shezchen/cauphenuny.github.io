@@ -112,6 +112,15 @@ window.onload = function() {
         str += "<span id=hover" + key[i] + "><img id=\"key" + key[i] + "\" class=\"keyboard-img\" src=\"./keyboard/" + key[i] + ".png\" alt=\"key" + key[i] + "\"></span>\n"
     }
     console.log(str);
+    const key_buttons = document.getElementsByClassName("keyboard-img");
+    for (var i = 0; i < key_buttons.length; i++) {
+        key_buttons[i].addEventListener('mouseover', function() {
+            this.parentNode.style.filter = 'brightness(0.9)';
+        });
+        key_buttons[i].addEventListener('mouseout', function() {
+            this.parentNode.style.filter = 'brightness(1)';
+        });
+    }
 }
 
 piano.load.then(() => {
@@ -122,12 +131,6 @@ piano.load.then(() => {
 
     const key_buttons = document.getElementsByClassName("keyboard-img");
     for (var i = 0; i < key_buttons.length; i++) {
-        key_buttons[i].addEventListener('mouseover', function() {
-            this.parentNode.style.filter = 'brightness(0.9)';
-        });
-        key_buttons[i].addEventListener('mouseout', function() {
-            this.parentNode.style.filter = 'brightness(1)';
-        });
         key_buttons[i].addEventListener('mousedown', function() {
             var keyCode = this.id.charCodeAt("key".length);
             notedown(keyCode);
