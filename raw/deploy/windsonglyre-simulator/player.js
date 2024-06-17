@@ -53,7 +53,6 @@ export function init() {
     document.getElementById("input").value = "";
     refresh();
 }
-import { Soundfont2Sampler } from "https://unpkg.com/smplr/dist/index.mjs";
 import { SplendidGrandPiano } from "https://unpkg.com/smplr/dist/index.mjs";
 const context = new AudioContext();
 const piano = new SplendidGrandPiano(context);
@@ -111,7 +110,7 @@ function stroke(code, tim, velc) {
 function animated_stroke(code, tim, velc, key, delay) {
     stroke(code, tim, velc);
     console.log("push: ", delay);
-    timers.push(setTimeout(function() { animated_press(key); }, delay));
+    timers.push(setTimeout(function() { animated_press(key); }, delay - 20));
 }
 function notedown(key) {
     stroke(key2note.get(key), context.currentTime, vel);
