@@ -115,7 +115,7 @@ function piano_stroke(code, velc) {
 
 function arrange_note(key, code, velc, delay) {
     console.log(`arrange_note ${key}, ${code}, ${velc}, ${delay}`);
-    setTimeout(function() { drum.start({note: "hihat-close"}); }, delay);
+    //setTimeout(function() { drum.start({note: "hihat-close"}); }, delay);
     setTimeout(piano_stroke, delay, 
                code + env.global_offset + env.fixed_offset[code % 12], 
                velocity_levels[velc] + velocity_adj[code]
