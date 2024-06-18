@@ -1,27 +1,36 @@
 const key = 'ZXCVBNMASDFGHJQWERTYU';
-const note_name = ["C", "C<sup>♯</sup>/D<sup>♭</sup>", "D", "D<sup>♯</sup>/E<sup>♭</sup>", "E", "F", "F<sup>♯</sup>/G<sup>♭</sup>", "G", "G<sup>♯</sup>/A<sup>♭</sup>", "A", "A<sup>♯</sup>/B<sup>♭</sup>", "B"];
+const note_name = ["C", "C<sup>♯</sup>/D<sup>♭</sup>", "D", "D<sup>♯</sup>/E<sup>♭</sup>", "E", "F", "F<sup>♯</sup>/G<sup>♭</sup>", 
+                   "G", "G<sup>♯</sup>/A<sup>♭</sup>", "A", "A<sup>♯</sup>/B<sup>♭</sup>", "B"];
 const sharp_name = ["C", "C<sup>♯</sup>", "D", "D<sup>♯</sup>", "E", "F", "F<sup>♯</sup>", "G", "G<sup>♯</sup>", "A", "A<sup>♯</sup>", "B"];
 const flat_name  = ["C", "D<sup>♭</sup>", "D", "E<sup>♭</sup>", "E", "F", "G<sup>♭</sup>", "G", "A<sup>♭</sup>", "A", "B<sup>♭</sup>", "B"];
 const vocal_name = ["do", "", "re", "", "mi", "fa", "", "sol", "", "la", "", "si"];
 const major_scale = "CDEFGAB";
-const sharp = [5, 0, 7, 2, 9, 4, 11];
+const sharp_note = [5, 0, 7, 2, 9, 4, 11];
 const sharp_scale_name = ["C", "G", "D", "A", "E", "B", "F<sup>♯</sup>"];
-const flat = [11, 4, 9, 2, 7, 0, 5];
+const flat_note = [11, 4, 9, 2, 7, 0, 5];
 const flat_scale_name = ["C", "F", "B<sup>♭</sup>", "E<sup>♭</sup>", "A<sup>♭</sup>", "D<sup>♭</sup>", "G<sup>♭</sup>"];
 const diff = [2, 2, 1, 2, 2, 2, 1];
-const velocites = [32, 48, 56, 64, 68, 72, 80, 88, 96, 108];
+const velocity_levels = [32, 48, 56, 64, 68, 72, 80, 88, 96, 108];
+const velocity_adj = [];
 const key2note = new Map();
 const C1 = 48, C2 = 60, C3 = 72;
-var fixed_offset = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-var vel, global_offset, bpm, time1, time2;
-export { vel, global_offset, bpm, time1, time2 };
-export function refresh() {
-    document.getElementById("bpm").value = bpm;
-    document.getElementById("vel").textContent = "力度：" + velocites[vel];
+export { note_name, sharp_name, flat_name, vocal_name };
+var env = {
+    velocity: 4,
+    global_offset: 0,
+    bpm: 90,
+    time1: 4, time2: 4,
+    fixed_offset: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+};
+// var vel, global_offset, bpm, time1, time2;
+export { env };
+function refresh() {
+    document.getElementById("bpm").value = env.bpm;
+    document.getElementById("vel").textContent = "力度：" + velocity_levels[env.velocity];
     const selectElement = document.getElementById('offset_option');
     const selectedOption = selectElement.options[selectElement.selectedIndex];
     if (selectedOption.value == "flex") {
-        document.getElementById("key_name").innerHTML = "(1=" + note_name[(global_offset + 120) % 12] + ")";
+        document.getElementById("key_name").innerHTML = "(1=" + note_name[(env.global_offset + 120) % 12] + ")";
     } else { 
         var cnt = parseInt(document.getElementById("key_offset").value);
         if (cnt >= 0) {
@@ -39,16 +48,16 @@ export function refresh() {
         } else {
         }
     }
-    document.getElementById("time_sign1").value = time1;
-    document.getElementById("time_sign2").value = time2;
+    document.getElementById("time_sign1").value = env.time1;
+    document.getElementById("time_sign2").value = env.time2;
 }
-export function init() {
-    vel = 4;
-    global_offset = 0;
-    bpm = 90;
-    time1 = 4, time2 = 4;
+function init() {
+    env.velocity = 4;
+    env.global_offset = 0;
+    env.bpm = 90;
+    env.time1 = 4, env.time2 = 4;
     document.getElementById('offset_option').selectedIndex = 0;
-    fixed_offset.fill(0);
+    env.fixed_offset.fill(0);
     document.getElementById("key_offset").value = "0";
     document.getElementById("input").value = "";
     document.getElementById("input2").value = "";
@@ -58,71 +67,72 @@ import { SplendidGrandPiano } from "https://unpkg.com/smplr/dist/index.mjs";
 const context = new AudioContext();
 const piano = new SplendidGrandPiano(context);
 document.getElementById("submit").onclick = () => {
-    bpm = parseInt(document.getElementById("bpm").value);
+    env.bpm = parseInt(document.getElementById("bpm").value);
     const selectElement = document.getElementById('offset_option');
     const selectedOption = selectElement.options[selectElement.selectedIndex];
     if (selectedOption.value == "flex") {
-        global_offset = parseInt(document.getElementById("key_offset").value);
-        fixed_offset.fill(0);
+        env.global_offset = parseInt(document.getElementById("key_offset").value);
+        env.fixed_offset.fill(0);
     } else {
-        global_offset = 0;
-        fixed_offset.fill(0);
+        env.global_offset = 0;
+        env.fixed_offset.fill(0);
         var cnt = parseInt(document.getElementById("key_offset").value);
         //console.log(cnt);
         if (cnt > 0) {
             for (var i = 0; i < cnt; i++) {
-                fixed_offset[sharp[i]] = 1;
+                env.fixed_offset[sharp_note[i]] = 1;
             }
         } else if (cnt < 0) {
             for (var i = 0; i < (-cnt); i++) {
-                fixed_offset[flat[i]] = -1;
+                env.fixed_offset[flat_note[i]] = -1;
             }
         }
-        //console.log(fixed_offset);
+        //console.log(env.fixed_offset);
     }
-    time1 = parseInt(document.getElementById("time_sign1").value);
-    time2 = parseInt(document.getElementById("time_sign2").value);
-    //console.log(bpm, global_offset, time1, time2);
+    env.time1 = parseInt(document.getElementById("time_sign1").value);
+    env.time2 = parseInt(document.getElementById("time_sign2").value);
     refresh();
 }
-function animated_up(key) {
+function keyup_animation(key) {
     const img = document.getElementById("key" + String.fromCharCode(key));
     img.style.filter = 'brightness(1)';
     img.style.transform = 'scale(1)';
 }
-function animated_down(key) {
+function keydown_animation(key) {
     //console.log("a_d ", key);
     //console.log(key);
     const img = document.getElementById("key" + String.fromCharCode(key));
     img.style.filter = 'brightness(0.7)';
     img.style.transform = 'scale(0.85)';
 }
-function animated_press(key) {
-    //console.log("a_p ", key);
-    animated_down(key);
-    setTimeout(function() {animated_up(key);}, 70);
-}
+
 var timers = [];
-function stroke(code, tim, velc) {
-    piano.start({ note: code + global_offset + fixed_offset[code % 12], 
-                  velocity: Math.round(velocites[velc] - Math.max(Math.min((C3 - code) / 2, 20), -10)), 
-                  time: tim });
+function stroke(note, time, velc) {
+    //console.log(`stroke ${note},${time},${velc}`);
+    piano.start({ note: note + env.global_offset + env.fixed_offset[note % 12], 
+                  velocity: Math.round(velocity_levels[velc] + velocity_adj[note]), 
+                  time: time });
 }
-function animated_stroke(code, tim, velc, key, delay) {
-    stroke(code, tim, velc);
-    //console.log("push: ", delay);
-    timers.push(setTimeout(function() { animated_press(key); }, delay - 20));
-}
-function notedown(key) {
-    stroke(key2note.get(key), context.currentTime, vel);
-    animated_down(key);
+
+function notedown(key, note, velc) {
+    //console.log(`notedown ${key},${note},${velc}`);
+    stroke(note, context.currentTime, velc);
+    keydown_animation(key);
 }
 function noteup(key) {
-    animated_up(key);
+    keyup_animation(key);
 }
-function notepress(key) {
-    notedown(key);
-    setTimeout(function() {noteup(key);}, 50);
+function notepress(key, note, velc) {
+    //console.log(`notepress ${key},${note},${velc}`);
+    notedown(key, note, velc);
+    setTimeout(function() {noteup(key);}, 100);
+}
+
+function arrange_press(key, code, velc, delay) {
+    //console.log("a_p ", key);
+    timers.push(
+        setTimeout(function() {notepress(key, code, velc);}, delay - 10)
+    );
 }
 
 window.onload = function() {
@@ -132,14 +142,17 @@ window.onload = function() {
         note += diff[i % 7];
         //str += "<span id=hover" + key[i] + "><img id=\"key" + key[i] + "\" class=\"kb-img\" src=\"./keyboard/" + key[i] + ".png\" alt=\"key" + key[i] + "\"></span>\n"
     }
+    for (var i = 0; i <= 200; i++) {
+        velocity_adj[i] = -Math.max(Math.min((C3 - i) / 2, 20), -10);
+    }
     //console.log(str);
     const key_buttons = document.getElementsByClassName("kb-img");
     for (var i = 0; i < key_buttons.length; i++) {
         key_buttons[i].draggable = false; // 不可拖动
-        key_buttons[i].addEventListener('mouseover', function() {
+        key_buttons[i].addEventListener('mouseenter', function() {
             this.parentNode.style.filter = 'brightness(0.9)';
         });
-        key_buttons[i].addEventListener('mouseout', function() {
+        key_buttons[i].addEventListener('mouseleave', function() {
             this.parentNode.style.filter = 'brightness(1)';
         });
     }
@@ -158,22 +171,22 @@ piano.load.then(() => {
     const key_buttons = document.getElementsByClassName("kb-img");
     for (var i = 0; i < key_buttons.length; i++) {
         key_buttons[i].addEventListener('mousedown', function() {
-            var keyCode = this.id.charCodeAt("key".length);
-            notepress(keyCode);
+            var key_code = this.id.charCodeAt("key".length);
+            notepress(key_code, key2note.get(key_code), env.velocity);
         });
     }
     document.addEventListener("keydown", function(event) {
         var key = event.keyCode;
         //console.log(key, key2note.get(key));
         if (key2note.has(key)) {
-            notedown(key);
+            notedown(key, key2note.get(key), env.velocity);
         }
         if (key == 189) {
-            if (vel > 0) vel--; 
+            if (env.velocity > 0) env.velocity--; 
             refresh();
         }
         if (key == 187) {
-            if (vel < 9) vel++;
+            if (env.velocity < 9) env.velocity++;
             refresh();
         }
     });
@@ -198,11 +211,45 @@ function stop() {
     timers.length = 0;
     piano.stop();
 }
-export function play(music) {
+function extract(tape) {
+    console.log("------- start extracting -------");
+    console.log(`origin: \n ${tape} \n`);
+    var ext = "";
+    for (var i = 0; i < tape.length; i++) {
+        switch (tape[i]) {
+            case '#':
+                while (i < tape.length && tape[i] != '\n' && tape[i] != '\r') {
+                    i++;
+                }
+                break;
+            case '(': case ')':
+            case '[': case ']':
+            case '{': case '}':
+            case '<': case '>':
+            case '-': case '+':
+            case '^': case '%':
+            case '.': case '/':
+                ext += tape[i];
+                break;
+            default: 
+                if (key2note.has(tape.charCodeAt(i))) {
+                    ext += tape[i];
+                }
+                break;
+        }
+    }
+    return ext;
+}
+function decompress(sheet) {
+    //TODO
+    return sheet;
+}
+export function play(tape, cur_env = env) {
     stop();
-    console.log("------- start parsing -------");
-    var interval = 60 * 4 / bpm / time2;
-    var velc = vel;
+    console.log("------- start playing -------");
+    console.log(`tape: \n ${tape} \n`);
+    var interval = 60 * 4 / cur_env.bpm / cur_env.time2;
+    var velc = cur_env.velocity;
     var stack = [];
     stack.push(1);
     var cnt = 0;
@@ -210,12 +257,12 @@ export function play(music) {
     var now = context.currentTime;
     var getTop = arr => arr[arr.length - 1];
     var tmpoffset = 0, octoffset = 0;
-    for (var i = 0; i < music.length; i++) {
-        var key = music.charCodeAt(i);
-        //console.log(i, music[i], key);
-        switch (music[i]) {
+    for (var i = 0; i < tape.length; i++) {
+        var key = tape.charCodeAt(i);
+        //console.log(i, tape[i], key);
+        switch (tape[i]) {
             case '(':
-                //console.log("chord start", music[i + 1]);
+                //console.log("chord start", tape[i + 1]);
                 stack.push(0);
                 break;
             case ')':
@@ -249,8 +296,8 @@ export function play(music) {
                 tmpoffset++;
                 break;
             case '/':
-                if (time1 != cnt) {
-                    console.log("warning: rhythm not correct: expect " + time1 + ", read " + cnt + " .");
+                if (cur_env.time1 != cnt) {
+                    console.log("warning: rhythm not correct: expect " + cur_env.time1 + ", read " + cnt + " .");
                 } else {
                     console.log("success.");
                 }
@@ -272,16 +319,20 @@ export function play(music) {
                 break;
 
             default:
-                if (key2note.has(key)) {
-                    animated_stroke(key2note.get(key) + tmpoffset + octoffset * 12, now + sum * interval, velc, key, sum * interval * 1000);
-                    tmpoffset = 0;
-                    cnt += getTop(stack);
-                    sum += getTop(stack);
-                    //cnt++, sum++;
-                }
-                break;
+                arrange_press(key, key2note.get(key) + tmpoffset + octoffset * 12, velc, sum * interval * 1000);
+                tmpoffset = 0;
+                cnt += getTop(stack);
+                sum += getTop(stack);
+                //cnt++, sum++;
         }
     }
+}
+function fetch_input() {
+    let inputs = {
+        main: extract(document.getElementById("input").value),
+        sub: decompress(extract(document.getElementById("input2").value)),
+    };
+    return inputs;
 }
 document.getElementById("stop").onclick = () => {
     console.log("stop");
@@ -298,12 +349,12 @@ document.getElementById("tutorial2").onclick = () => {
     refresh();
 };
 document.getElementById("bwv846").onclick = () => {
-    bpm = 70;
-    time1 = 4;
-    time2 = 4;
+    env.bpm = 70;
+    env.time1 = 4;
+    env.time2 = 4;
     document.getElementById('offset_option').selectedIndex = 0;
-    fixed_offset.fill(0);
-    global_offset = 0;
+    env.fixed_offset.fill(0);
+    env.global_offset = 0;
     document.getElementById("input").value = bwv846;
     document.getElementById("input2").value = "";
     refresh();
@@ -311,12 +362,12 @@ document.getElementById("bwv846").onclick = () => {
     //context.resume();
 };
 document.getElementById("haruhikage").onclick = () => {
-    bpm = 90;
-    time1 = 6;
-    time2 = 8;
+    env.bpm = 90;
+    env.time1 = 6;
+    env.time2 = 8;
     document.getElementById('offset_option').selectedIndex = 0;
-    fixed_offset.fill(0);
-    global_offset = -1;
+    env.fixed_offset.fill(0);
+    env.global_offset = -1;
     document.getElementById("input").value = haruhikage;
     document.getElementById("input2").value = "";
     refresh();
@@ -330,5 +381,13 @@ document.getElementById("reset").onclick = () => {
 document.getElementById("start").onclick = () => {
     console.log("click");
     //getAttribute();
-    play(document.getElementById("input").value);
-};
+    var input = fetch_input();
+    play(input.main);
+}
+document.getElementById("gamestart").onclick = () => {
+  alert('还没写呢');
+  localStorage.setItem('input', fetch_input());
+  localStorage.setItem('env', env);
+  localStorage.setItem('difficulty', document.getElementById("difficulty-select").selectedIndex);
+  window.location.href = './game.html'
+}

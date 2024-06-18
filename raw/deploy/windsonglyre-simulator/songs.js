@@ -247,9 +247,8 @@ var haruhikage = `春日影
 (GQ)...(AW)./(VADE)..RE.(FW)...../......(ZBDQ)...../
 ]
 
----
-来源：https://www.bilibili.com/read/cv27118373/
-略有修改，使节奏正确。
+# 来源：https://www.bilibili.com/read/cv27118373/
+# 略有修改，使节奏正确。
 `;
 
 var komorebi = `komorebi

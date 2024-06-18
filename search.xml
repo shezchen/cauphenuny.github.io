@@ -210,6 +210,9 @@ r_{n-1}&amp;=r_{n}x_{n+1}\\
 <p>加了个加载时的提示悬浮窗</p>
 <p>version 0.6.1</p>
 <hr />
+<p>6.18</p>
+<p>重构了代码</p>
+<p>version 0.7.0</p>
 ]]></content>
       <categories>
         <category>CS</category>
