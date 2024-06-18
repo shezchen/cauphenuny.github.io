@@ -1,8 +1,8 @@
 let tape = localStorage.getItem('tape');
-document.getElementById("difficulty").innerHTML = "难度：" + localStorage.getItem('difficulty');
-document.getElementById("environment").innerHTML = "环境：" + localStorage.getItem('env');
+//document.getElementById("difficulty").innerHTML = "难度：" + localStorage.getItem('difficulty');
+//document.getElementById("environment").innerHTML = "环境：" + localStorage.getItem('env');
 let env = JSON.parse(localStorage.getItem('env'));
-document.getElementById("sheet").innerHTML = "谱子：" + tape;
+//document.getElementById("sheet").innerHTML = "谱子：" + tape;
 tape = JSON.parse(tape);
 
 import { key2note, velocity_levels, velocity_adj, init_constants } from './constants.js'

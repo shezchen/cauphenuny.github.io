@@ -129,16 +129,19 @@ body {
 }
 .stage-div {
   width: 100vw; /* 宽度为视口宽度 */
-  height: 95vh; /* 高度为视口高度 */
+  height: 100vh; /* 高度为视口高度 */
   margin: 0; /* 取消外边距 */
   padding: 0; /* 取消内边距 */
   position: fixed; /* 固定定位 */
-  top: 5vh; /* 顶部对齐 */
+  top: 0vh; /* 顶部对齐 */
   left: 0; /* 左边对齐 */
   overflow: auto; /* 超出内容可滚动 */
   transform-style: preserve-3d;
   perspective: 50px;
   transform: rotateX(0);
+}
+.float {
+  z-index: 100;
 }
 .fullscreen-div {
   width: 100vw; /* 宽度为视口宽度 */
