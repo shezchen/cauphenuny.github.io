@@ -25,6 +25,14 @@
     transform: translate(-50%, -50%);
 }
 
+@keyframes moveDown{
+  from {
+    transform: translate(-50%, -200px);
+  }
+  to {
+    transform: translate(-50%, 200px);
+  }
+}
 .note {
     width: 6%;
     height: 1.2em;
@@ -39,6 +47,8 @@
     /*
             drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.3));
             */
+    animation: moveDown 2s infinite alternate;
+    animation-timing-function:linear;
 }
 
 #trigger-line {
@@ -86,3 +96,4 @@ body {
   left: 0; /* 左边对齐 */
   backdrop-filter: blur(7px);
 }
+
