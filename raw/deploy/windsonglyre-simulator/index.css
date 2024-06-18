@@ -7,6 +7,7 @@ input textarea select {
 textarea {
   font-family: "Consolas", Monospace;
   background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
 }
 sup {
     font-size: xx-small
@@ -50,14 +51,17 @@ body{
 }
 
 .kb-img{
-    transition: transform 0.1s, filter 0.1s;
-    height: 5em;
-    margin: 0.2em;
+  transition: transform 0.1s, filter 0.1s;
+  height: 5em;
+  margin: 0.2em;
+  filter: drop-shadow(5px 5px 5px rgba(0,0,0,0.45));
 }
 
 .kb-img-ctn {
   position: relative;
   display: inline-block;
+  /*box-shadow: 5px 5px 10px 2px rgba(0,0,0,0.37);
+  from: https://html-css-js.com/css/generator/box-shadow/*/
 }
 .kb-img-ctn:hover .hvinfo {
   display: block;

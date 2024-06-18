@@ -2,15 +2,20 @@
 <html>
   <head>
     <meta charset="UTF-8" >
-    <link rel="icon" type="image/x-icon" href="./icon.jpg">
+    <!--
+    创造性：
+      - 一个能奏出曲子，并且真正达到了“好听”程度的钢琴
+      - 自制记谱方法
+      - 输入和弦自动生成伴奏织体
+      - 附带音游模式自制谱面可玩性极高
+    -->
   </head>
   <body>
     <title>钢琴模拟器 - 自制谱面音游</title>
     <h2>钢琴模拟器 - 自制谱面音游</h2>
     <p>请使用电脑网页打开</p>
-    <p>功能：使用键盘模拟钢琴演奏、输入谱子自动播放、根据曲子自动生成音游谱面</p>
+    <p>功能：使用键盘模拟钢琴演奏、输入谱子自动播放、根据曲子自动生成音游谱面进行游戏</p>
     <link rel="stylesheet" href="./index.css">
-    <hr>
     <div class="image-container">
       <form>
         <p id="status" style="color: red;"><b>加载中，请稍候……</b></p>
@@ -32,10 +37,9 @@
       <div class="column">
         <p><label for="input">使用键盘（键位见教程），或在下框中输入谱子以自动演奏：<br>
           输入每个音对应键位的大写字母，英文句号表示休止符<br> </label></p>
-        <p>预设：</p>
         <p>
           <button id="tutorial">教程：键位与记谱</button> 
-          <button id="tutorial2">教程：自动创建伴奏织体</button>
+          <button id="tutorial2">教程：自动生成伴奏织体</button>
         </p>
         <p>
           <button id="haruhikage">乐曲：春日影</button> 
@@ -87,7 +91,6 @@
     </div>
   <script type="module" src="player.js"> </script>
   <script src="songs.js"> </script>
-  <hr>
   <h3>音游模式</h3>
   <p>
     谱面根据主音轨自动创建<br><br>
@@ -112,5 +115,5 @@
 
 <hr>
 <p>本来是想写个原神风物之诗琴的模拟器的，但是音源没搞好，干脆就写个钢琴的得了</p>
-开发中，当前版本 v0.7.0， <a href="https://cauphenuny.github.io/2024/06/14/build-a-windsonglyre-simulator/">开发日志</a>
+开发中，当前版本 v0.7.1， <a href="https://cauphenuny.github.io/2024/06/14/build-a-windsonglyre-simulator/">开发日志</a>
 </html>

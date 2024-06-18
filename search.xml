@@ -213,6 +213,8 @@ r_{n-1}&amp;=r_{n}x_{n+1}\\
 <p>6.18</p>
 <p>重构了代码</p>
 <p>version 0.7.0</p>
+<p>给按钮加了点阴影，感谢<a href="https://html-css-js.com/css/generator/box-shadow/">Box-Shadow CSS Generator</a>以及<a href="https://www.cnblogs.com/kangxinzhi/p/16442217.html">用filter: drop-shadow()给透明图片添加阴影</a></p>
+<p>version 0.7.1</p>
 ]]></content>
       <categories>
         <category>CS</category>

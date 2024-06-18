@@ -95,7 +95,7 @@ document.getElementById("submit").onclick = () => {
 }
 function keyup_animation(key) {
     const img = document.getElementById("key" + String.fromCharCode(key));
-    img.style.filter = 'brightness(1)';
+    img.style.filter = 'brightness(1) drop-shadow(5px 5px 5px rgba(0,0,0,0.45))';
     img.style.transform = 'scale(1)';
 }
 function keydown_animation(key) {
@@ -103,12 +103,12 @@ function keydown_animation(key) {
     //console.log(key);
     const img = document.getElementById("key" + String.fromCharCode(key));
     img.style.filter = 'brightness(0.7)';
-    img.style.transform = 'scale(0.85)';
+    img.style.transform = 'scale(0.9)';
 }
 
 var timers = [];
 function stroke(note, time, velc) {
-    //console.log(`stroke ${note},${time},${velc}`);
+    //console.log(`stroke ${note},${time},${velc} /${velocity_adj[note]}`);
     piano.start({ note: note + env.global_offset + env.fixed_offset[note % 12], 
                   velocity: Math.round(velocity_levels[velc] + velocity_adj[note]), 
                   time: time });
@@ -142,7 +142,7 @@ window.onload = function() {
         note += diff[i % 7];
         //str += "<span id=hover" + key[i] + "><img id=\"key" + key[i] + "\" class=\"kb-img\" src=\"./keyboard/" + key[i] + ".png\" alt=\"key" + key[i] + "\"></span>\n"
     }
-    for (var i = 0; i <= 200; i++) {
+    for (var i = 0; i <= 120; i++) {
         velocity_adj[i] = -Math.max(Math.min((C3 - i) / 2, 20), -10);
     }
     //console.log(str);
