@@ -176,28 +176,39 @@ piano.load.then(() => {
         });
     }
     document.addEventListener("keydown", function(event) {
+        var key = event.key;
+        var code = key.charCodeAt();
+        console.log(`${key} ${code} down`);
         if (event.repeat) {
             return;
         }
-        var key = event.keyCode;
-        //console.log(key, key2note.get(key));
-        if (key2note.has(key)) {
-            notedown(key, key2note.get(key), env.velocity);
+        if (event.ctrlKey || event.altKey || event.metaKey) {
+            return;
         }
-        if (key == 189) {
+        if (code >= 97 && code <= 122) {
+            code -= 32; // 小写转大写
+        }
+        if (key2note.has(code)) {
+            notedown(code, key2note.get(code), env.velocity);
+        }
+        if (key == '-') {
             if (env.velocity > 0) env.velocity--; 
             refresh();
         }
-        if (key == 187) {
+        if (key == '=' || key == '+') {
             if (env.velocity < 9) env.velocity++;
             refresh();
         }
     });
     document.addEventListener("keyup", function(event) {
-        var key = event.keyCode;
-        //console.log(key, key2note.get(key));
-        if (key2note.has(key)) {
-            noteup(key);
+        var key = event.key;
+        var code = key.charCodeAt();
+        console.log(`${key} ${code} up`);
+        if (code >= 97 && code <= 122) {
+            code -= 32; // 小写转大写
+        }
+        if (key2note.has(code)) {
+            noteup(code);
         }
     });
 });

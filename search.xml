@@ -215,6 +215,11 @@ r_{n-1}&amp;=r_{n}x_{n+1}\\
 <p>version 0.7.0</p>
 <p>给按钮加了点阴影，感谢<a href="https://html-css-js.com/css/generator/box-shadow/">Box-Shadow CSS Generator</a>以及<a href="https://www.cnblogs.com/kangxinzhi/p/16442217.html">用filter: drop-shadow()给透明图片添加阴影</a></p>
 <p>version 0.7.1</p>
+<p>遇到了个 bug 就是说在 mac 上同时按下 command 和某个键，这个时候这个键的 keyup 事件就直接没有了</p>
+<p><a href="https://stackoverflow.com/questions/11818637/why-does-javascript-drop-keyup-events-when-the-metakey-is-pressed-on-mac-browser">stackoverflow question</a></p>
+<p>好像还挺难解决，选择在 ctrl/alt/meta 按下时忽略别的键的 keydown 事件。</p>
+<p><a href="https://segmentfault.com/q/1010000013680244">检测是否按下ctrl</a></p>
+<p>version 0.7.2</p>
 ]]></content>
       <categories>
         <category>CS</category>
