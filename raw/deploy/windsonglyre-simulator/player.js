@@ -102,7 +102,7 @@ function keydown_animation(key) {
     //console.log("a_d ", key);
     //console.log(key);
     const img = document.getElementById("key" + String.fromCharCode(key));
-    img.style.filter = 'brightness(0.7)';
+    img.style.filter = 'brightness(0.65)';
     img.style.transform = 'scale(0.9)';
 }
 
@@ -149,12 +149,6 @@ window.onload = function() {
     const key_buttons = document.getElementsByClassName("kb-img");
     for (var i = 0; i < key_buttons.length; i++) {
         key_buttons[i].draggable = false; // 不可拖动
-        key_buttons[i].addEventListener('mouseenter', function() {
-            this.parentNode.style.filter = 'brightness(0.9)';
-        });
-        key_buttons[i].addEventListener('mouseleave', function() {
-            this.parentNode.style.filter = 'brightness(1)';
-        });
     }
 }
 
@@ -173,6 +167,12 @@ piano.load.then(() => {
         key_buttons[i].addEventListener('mousedown', function() {
             var key_code = this.id.charCodeAt("key".length);
             notepress(key_code, key2note.get(key_code), env.velocity);
+        });
+        key_buttons[i].addEventListener('mouseenter', function() {
+            this.parentNode.style.filter = 'brightness(0.9)';
+        });
+        key_buttons[i].addEventListener('mouseleave', function() {
+            this.parentNode.style.filter = 'brightness(1)';
         });
     }
     document.addEventListener("keydown", function(event) {
