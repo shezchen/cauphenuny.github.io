@@ -1,20 +1,10 @@
-const key = 'ZXCVBNMASDFGHJQWERTYU';
-const note_name = ["C", "C<sup>♯</sup>/D<sup>♭</sup>", "D", "D<sup>♯</sup>/E<sup>♭</sup>", "E", "F", "F<sup>♯</sup>/G<sup>♭</sup>", 
-                   "G", "G<sup>♯</sup>/A<sup>♭</sup>", "A", "A<sup>♯</sup>/B<sup>♭</sup>", "B"];
-const sharp_name = ["C", "C<sup>♯</sup>", "D", "D<sup>♯</sup>", "E", "F", "F<sup>♯</sup>", "G", "G<sup>♯</sup>", "A", "A<sup>♯</sup>", "B"];
-const flat_name  = ["C", "D<sup>♭</sup>", "D", "E<sup>♭</sup>", "E", "F", "G<sup>♭</sup>", "G", "A<sup>♭</sup>", "A", "B<sup>♭</sup>", "B"];
-const vocal_name = ["do", "", "re", "", "mi", "fa", "", "sol", "", "la", "", "si"];
-const major_scale = "CDEFGAB";
-const sharp_note = [5, 0, 7, 2, 9, 4, 11];
-const sharp_scale_name = ["C", "G", "D", "A", "E", "B", "F<sup>♯</sup>"];
-const flat_note = [11, 4, 9, 2, 7, 0, 5];
-const flat_scale_name = ["C", "F", "B<sup>♭</sup>", "E<sup>♭</sup>", "A<sup>♭</sup>", "D<sup>♭</sup>", "G<sup>♭</sup>"];
-const diff = [2, 2, 1, 2, 2, 2, 1];
-const velocity_levels = [32, 48, 56, 64, 68, 72, 80, 88, 96, 108];
-const velocity_adj = [];
-const key2note = new Map();
-const C1 = 48, C2 = 60, C3 = 72;
-export { note_name, sharp_name, flat_name, vocal_name };
+import {
+    key, note_name, sharp_name, flat_name,
+    sharp_note, sharp_scale_name, flat_note, flat_scale_name,
+    diff, velocity_levels, velocity_adj, key2note, C1, C2, C3,
+    init_constants,
+} from './constants.js'
+
 var env = {
     velocity: 4,
     global_offset: 0,
@@ -93,18 +83,8 @@ document.getElementById("submit").onclick = () => {
     env.time2 = parseInt(document.getElementById("time_sign2").value);
     refresh();
 }
-function keyup_animation(key) {
-    const img = document.getElementById("key" + String.fromCharCode(key));
-    img.style.filter = 'brightness(1) drop-shadow(5px 5px 5px rgba(0,0,0,0.45))';
-    img.style.transform = 'scale(1)';
-}
-function keydown_animation(key) {
-    //console.log("a_d ", key);
-    //console.log(key);
-    const img = document.getElementById("key" + String.fromCharCode(key));
-    img.style.filter = 'brightness(0.65)';
-    img.style.transform = 'scale(0.9)';
-}
+
+import { keyup_animation, keydown_animation, mouseenter, mouseleave } from './keyboard.js'
 
 var timers = [];
 function stroke(note, time, velc) {
@@ -137,11 +117,7 @@ function arrange_press(key, code, velc, delay) {
 
 window.onload = function() {
     //var str = "";
-    for (var i = 0, note = C1; i < key.length; i++) {
-        key2note.set(key.charCodeAt(i), note);
-        note += diff[i % 7];
-        //str += "<span id=hover" + key[i] + "><img id=\"key" + key[i] + "\" class=\"kb-img\" src=\"./keyboard/" + key[i] + ".png\" alt=\"key" + key[i] + "\"></span>\n"
-    }
+    init_constants();
     for (var i = 0; i <= 120; i++) {
         velocity_adj[i] = -Math.max(Math.min((C3 - i) / 2, 20), -10);
     }
@@ -169,10 +145,10 @@ piano.load.then(() => {
             notepress(key_code, key2note.get(key_code), env.velocity);
         });
         key_buttons[i].addEventListener('mouseenter', function() {
-            this.parentNode.style.filter = 'brightness(0.9)';
+            mouseenter(this.parentNode);
         });
         key_buttons[i].addEventListener('mouseleave', function() {
-            this.parentNode.style.filter = 'brightness(1)';
+            mouseleave(this.parentNode);
         });
     }
     document.addEventListener("keydown", function(event) {

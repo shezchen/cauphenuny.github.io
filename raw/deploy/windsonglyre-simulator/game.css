@@ -4,3 +4,8 @@
     margin: 0.2em;
 }
 
+.btm{
+    position: fixed;
+    top: 90%;
+    left: 100%;
+}
