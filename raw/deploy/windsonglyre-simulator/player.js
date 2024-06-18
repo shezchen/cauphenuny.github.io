@@ -176,6 +176,9 @@ piano.load.then(() => {
         });
     }
     document.addEventListener("keydown", function(event) {
+        if (event.repeat) {
+            return;
+        }
         var key = event.keyCode;
         //console.log(key, key2note.get(key));
         if (key2note.has(key)) {
