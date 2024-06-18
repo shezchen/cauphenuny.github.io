@@ -15,18 +15,25 @@
     transform: translate(-50%, 0);
 }
 
-.trigger-point {
-    z-index: 10;
-    width: 16px;
-    height:16px;
-    border-radius: 8px;
-    position: absolute;   /* 绝对定位 */
-    left: 150%;
-    top: 70%;
-    background-color: #f5f0e1;
-    transform: translate(-50%, -50%);
+@keyframes lineMoveDown{
+  0%{
+    opacity: 0;
+    top:0%;
+  }
+  5%{
+    opacity: 1;
+  }
+  87.5%{
+    opacity: 1;
+  }
+  87.6%{
+    opacity: 0;
+  }
+  100% {
+    top:80%;
+    opacity: 0;
+  }
 }
-
 @keyframes moveDown{
   0%{
     opacity: 0;
@@ -42,6 +49,29 @@
     top:80%;
     opacity: 0;
   }
+}
+
+.hori-line {
+    z-index: 5;
+    height: 2px;
+    background-color: #b7b1a8; /* 线的颜色 */
+    position: absolute;   /* 绝对定位 */
+    transform: translate(0, -50%);
+    animation: lineMoveDown 1.2s linear;
+    animation-timing-function:linear;
+    animation-fill-mode: forwards;
+}
+
+.trigger-point {
+    z-index: 10;
+    width: 16px;
+    height:16px;
+    border-radius: 8px;
+    position: absolute;   /* 绝对定位 */
+    left: 150%;
+    top: 70%;
+    background-color: #f5f0e1;
+    transform: translate(-50%, -50%);
 }
 
 .column {
@@ -68,7 +98,7 @@
     /*
             drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.3));
             */
-    animation: moveDown 1.6s linear;
+    animation: moveDown 1.2s linear;
     animation-timing-function:linear;
     animation-fill-mode: forwards;
 }

@@ -15,6 +15,9 @@ export const velocity_adj = [];
 export const key2note = new Map();
 export const C1 = 48, C2 = 60, C3 = 72;
 export function init_constants() {
+    for (var i = 0; i <= 120; i++) {
+        velocity_adj[i] = Math.round(-Math.max(Math.min((C3 - i) / 2, 20), -10));
+    }
     for (var i = 0, note = C1; i < key.length; i++) {
         key2note.set(key.charCodeAt(i), note);
         note += diff[i % 7];

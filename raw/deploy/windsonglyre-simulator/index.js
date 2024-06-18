@@ -4,7 +4,7 @@ import {
     diff, velocity_levels, velocity_adj, key2note, C1, C2, C3,
     init_constants,
 } from './constants.js'
-import { env, play, notepress, notedown, noteup, piano } from './player.js'
+import { env, play, notepress, notedown, noteup, piano, stop } from './player.js'
 import { keyup_animation, keydown_animation, mouseenter, mouseleave } from './keyboard.js'
 
 
@@ -104,15 +104,16 @@ function after_load() {
         });
     }
     document.addEventListener("keydown", function(event) {
-        var key = event.key.toUpperCase();
-        var code = key.charCodeAt();
-        console.log(`${key} ${code} down`);
         if (event.repeat) {
             return;
         }
         if (event.ctrlKey || event.altKey || event.metaKey) {
             return;
         }
+        var key = event.key.toUpperCase();
+        if (key.length > 1) return;
+        var code = key.charCodeAt();
+        console.log(`${key} ${code} down`);
         if (key2note.has(code)) {
             notedown(code, key2note.get(code), env.velocity);
         }
@@ -224,7 +225,6 @@ document.getElementById("start").onclick = () => {
     play(input.main);
 }
 document.getElementById("gamestart").onclick = () => {
-  alert('还没写呢');
   var input = fetch_input();
   console.log(input);
   localStorage.setItem('tape', JSON.stringify(input));
