@@ -1,11 +1,62 @@
-.kb-img{
+.kb-img {
     transition: transform 0.1s, filter 0.1s;
     height: 5em;
     margin: 0.2em;
 }
 
-.btm{
-    position: fixed;
+.vert-line {
+    width: 2px;           /* 线的宽度 */
+    height: 80%;        /* 线的高度 */
+    background-color: #aea59e; /* 线的颜色 */
+    position: absolute;   /* 绝对定位 */
+    left: 100%;           /* 线的水平位置 */
+    bottom: 80%;            /* 线的垂直位置 */
+    transform: translate(-50%, 0);
+}
+
+.trigger-point {
+    width: 16px;
+    height:16px;
+    border-radius: 8px;
+    position: absolute;   /* 绝对定位 */
+    left: 100%;
+    top: 70%;
+    background-color: #9d938b;
+    transform: translate(-50%, -50%);
+}
+
+#trigger-line {
+    height: 0;
+    width: 60%;
+    position: absolute;
+    left: 20%;
+    top: 70%;
+    background-color: #aea59e;
+    transform: translate(0, -50%);
+}
+
+.btm {
+    position: absolute;
     top: 90%;
     left: 100%;
+    transform: translate(-50%, -50%);
+}
+body {
+    background-image: url('./background/01.avif');
+    background-repeat: no-repeat; /* 背景图片不重复 */
+    background-size: cover; /* 背景图片覆盖整个页面 */
+    background-attachment: fixed; /* 背景固定，不滚动 */
+}
+.fullscreen-div {
+  width: 100vw; /* 宽度为视口宽度 */
+  height: 90vh; /* 高度为视口高度 */
+  margin: 0; /* 取消外边距 */
+  padding: 0; /* 取消内边距 */
+  position: fixed; /* 固定定位 */
+  top: 10vh; /* 顶部对齐 */
+  left: 0; /* 左边对齐 */
+  overflow: auto; /* 超出内容可滚动 */
+  transform-style: preserve-3d;
+  perspective: 50px;
+  transform: rotateX(0);
 }

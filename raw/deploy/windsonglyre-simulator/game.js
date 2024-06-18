@@ -14,8 +14,14 @@ for (var i = 1; i <= 7; i++) {
     var pos = (i - mid) * position_diff + 50;
     const buttom = document.getElementById("btm" + i);
     buttom.style.left = pos + "%";
-    buttom.style.transform = "translate(-50%, -50%)";
+    const line = document.getElementById('line' + i);
+    line.style.left = pos + "%";
+    line.style.top = "0";
+    const point = document.getElementById('ptn' + i);
+    point.style.left = pos + "%";
 }
+const trigger_line = document.getElementById('trigger-line');
+trigger_line.style.height = "2px";
 
 import { context, drum } from "./player.js";
 
