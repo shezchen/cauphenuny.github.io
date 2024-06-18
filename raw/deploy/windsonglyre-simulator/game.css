@@ -7,7 +7,7 @@
 .vert-line {
     width: 2px;           /* 线的宽度 */
     height: 80%;        /* 线的高度 */
-    background-color: #aea59e; /* 线的颜色 */
+    background-color: #d1c9bf; /* 线的颜色 */
     position: absolute;   /* 绝对定位 */
     left: 100%;           /* 线的水平位置 */
     bottom: 80%;            /* 线的垂直位置 */
@@ -19,10 +19,26 @@
     height:16px;
     border-radius: 8px;
     position: absolute;   /* 绝对定位 */
-    left: 100%;
+    left: 150%;
     top: 70%;
-    background-color: #9d938b;
+    background-color: #f5f0e1;
     transform: translate(-50%, -50%);
+}
+
+.note {
+    width: 6%;
+    height: 1.5em;
+    border-radius: 0.5em;
+    position: absolute;   /* 绝对定位 */
+    border: 2px solid #5f564e;
+    background-color: #e2dbcb; /* 填充颜色 */
+    left: 50%;
+    top: 30%;
+    transform: translate(-50%, -50%);
+    filter: drop-shadow(2px 2px 2px rgba(95,86,65,0.8));
+    /*
+            drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.3));
+            */
 }
 
 #trigger-line {
@@ -38,16 +54,16 @@
 .btm {
     position: absolute;
     top: 90%;
-    left: 100%;
+    left: 150%;
     transform: translate(-50%, -50%);
 }
 body {
-    background-image: url('./background/01.avif');
+    background-image: url('./background/1.jpg');
     background-repeat: no-repeat; /* 背景图片不重复 */
     background-size: cover; /* 背景图片覆盖整个页面 */
     background-attachment: fixed; /* 背景固定，不滚动 */
 }
-.fullscreen-div {
+.stage-div {
   width: 100vw; /* 宽度为视口宽度 */
   height: 90vh; /* 高度为视口高度 */
   margin: 0; /* 取消外边距 */
@@ -59,4 +75,14 @@ body {
   transform-style: preserve-3d;
   perspective: 50px;
   transform: rotateX(0);
+}
+.fullscreen-div {
+  width: 100vw; /* 宽度为视口宽度 */
+  height: 100vh; /* 高度为视口高度 */
+  margin: 0; /* 取消外边距 */
+  padding: 0; /* 取消内边距 */
+  position: fixed; /* 固定定位 */
+  top: 0; /* 顶部对齐 */
+  left: 0; /* 左边对齐 */
+  backdrop-filter: blur(7px);
 }

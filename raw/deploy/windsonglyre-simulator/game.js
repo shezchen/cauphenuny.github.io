@@ -52,3 +52,6 @@ document.addEventListener("keyup", function(event) {
     }
 });
 
+import { key } from './constants.js'
+
+
