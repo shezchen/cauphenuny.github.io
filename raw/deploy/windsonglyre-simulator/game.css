@@ -7,7 +7,7 @@
 .vert-line {
     width: 2px;           /* 线的宽度 */
     height: 80%;        /* 线的高度 */
-    background-color: #d1c9bf; /* 线的颜色 */
+    background-color: #b7b1a8; /* 线的颜色 */
     position: absolute;   /* 绝对定位 */
     left: 100%;           /* 线的水平位置 */
     bottom: 80%;            /* 线的垂直位置 */
@@ -27,11 +27,11 @@
 
 .note {
     width: 6%;
-    height: 1.5em;
+    height: 1.2em;
     border-radius: 0.5em;
     position: absolute;   /* 绝对定位 */
     border: 2px solid #5f564e;
-    background-color: #e2dbcb; /* 填充颜色 */
+    background-color: #e8e7e4; /* 填充颜色 */
     left: 50%;
     top: 30%;
     transform: translate(-50%, -50%);
@@ -47,7 +47,7 @@
     position: absolute;
     left: 20%;
     top: 70%;
-    background-color: #aea59e;
+    background-color: #b7b1a8;
     transform: translate(0, -50%);
 }
 
@@ -65,11 +65,11 @@ body {
 }
 .stage-div {
   width: 100vw; /* 宽度为视口宽度 */
-  height: 90vh; /* 高度为视口高度 */
+  height: 95vh; /* 高度为视口高度 */
   margin: 0; /* 取消外边距 */
   padding: 0; /* 取消内边距 */
   position: fixed; /* 固定定位 */
-  top: 10vh; /* 顶部对齐 */
+  top: 5vh; /* 顶部对齐 */
   left: 0; /* 左边对齐 */
   overflow: auto; /* 超出内容可滚动 */
   transform-style: preserve-3d;
