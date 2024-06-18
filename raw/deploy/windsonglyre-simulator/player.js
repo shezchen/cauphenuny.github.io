@@ -51,6 +51,7 @@ export function init() {
     fixed_offset.fill(0);
     document.getElementById("key_offset").value = "0";
     document.getElementById("input").value = "";
+    document.getElementById("input2").value = "";
     refresh();
 }
 import { SplendidGrandPiano } from "https://unpkg.com/smplr/dist/index.mjs";
@@ -291,6 +292,11 @@ document.getElementById("tutorial").onclick = () => {
     document.getElementById("input").value = tutorial;
     refresh();
 };
+document.getElementById("tutorial2").onclick = () => {
+    init();
+    document.getElementById("input2").value = tutorial2;
+    refresh();
+};
 document.getElementById("bwv846").onclick = () => {
     bpm = 70;
     time1 = 4;
@@ -299,6 +305,7 @@ document.getElementById("bwv846").onclick = () => {
     fixed_offset.fill(0);
     global_offset = 0;
     document.getElementById("input").value = bwv846;
+    document.getElementById("input2").value = "";
     refresh();
     //console.log(sampler.instrumentNames);
     //context.resume();
@@ -311,6 +318,7 @@ document.getElementById("haruhikage").onclick = () => {
     fixed_offset.fill(0);
     global_offset = -1;
     document.getElementById("input").value = haruhikage;
+    document.getElementById("input2").value = "";
     refresh();
     //play(haruhikage);
     //console.log(sampler.instrumentNames);

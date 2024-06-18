@@ -1,13 +1,26 @@
 input[type='number']{
     width: 40px;
 }
+input textarea select {
+  opacity: 0.7;
+}
 textarea {
   font-family: "Consolas", Monospace;
+  background-color: rgba(255, 255, 255, 0.5);
 }
 sup {
     font-size: xx-small
 }
 img {
+}
+html{
+    background-image: url('./background/01.avif');
+    background-repeat: no-repeat; /* 背景图片不重复 */
+    background-size: cover; /* 背景图片覆盖整个页面 */
+    background-attachment: fixed; /* 背景固定，不滚动 */
+}
+body{
+    opacity: 0.8;
 }
 .image-container {
     display: inline-flex;
@@ -30,8 +43,10 @@ img {
     flex: 1; /* 两列等宽 */
 }
 .displayer {
-    justify-content: center; /* 水平居中 */
-    align-items: center;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(0, -50%);
 }
 
 .kb-img{

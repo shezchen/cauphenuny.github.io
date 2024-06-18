@@ -3,13 +3,13 @@
   <head>
     <meta charset="UTF-8" >
     <link rel="icon" type="image/x-icon" href="./icon.jpg">
+  </head>
+  <body>
     <title>钢琴模拟器 - 自制谱面音游</title>
     <h2>钢琴模拟器 - 自制谱面音游</h2>
     <p>请使用电脑网页打开</p>
-    <p>本来是想写个原神里面风物之诗琴的模拟器的，但是音源没搞好，干脆就写个钢琴的得了</p>
+    <p>功能：使用键盘模拟钢琴演奏、输入谱子自动播放、根据曲子自动生成音游谱面</p>
     <link rel="stylesheet" href="./index.css">
-  </head>
-  <body>
     <hr>
     <div class="image-container">
       <form>
@@ -21,8 +21,8 @@
         <input type="number" id="time_sign1" size=5>/<input type="number" id="time_sign2" size=5><br>
         移调：
         <select id="offset_option">
-          <option value="flex">整体平移key数</option>
-          <option value="fixed">升降号个数</option>
+          <option value="flex">整体升降key数（简谱）</option>
+          <option value="fixed">升降号个数（五线谱）</option>
         </select>
         <input type="number" id="key_offset" size=5>&nbsp;<span id="key_name"></span><br>
         <input type="button" value="确定" id="submit">
@@ -30,13 +30,12 @@
     </div>
     <div class="container">
       <div class="column">
-          <p><label for="input">使用键盘（键位见教程），或在下框中输入谱子以自动演奏：<br>
-            输入每个音对应键位的大写字母，英文句号表示休止符<br> </label></p>
-          <p><textarea id="input" name="input" rows="12" cols="60"></textarea></p>
-          <p><button id="start">演奏</button> <button id="stop">停止</button></p>
+        <p><label for="input">使用键盘（键位见教程），或在下框中输入谱子以自动演奏：<br>
+          输入每个音对应键位的大写字母，英文句号表示休止符<br> </label></p>
         <p>预设：</p>
         <p>
-          <button id="tutorial">教程：键位与记谱</button>
+          <button id="tutorial">教程：键位与记谱</button> 
+          <button id="tutorial2">教程：自动创建伴奏织体</button>
         </p>
         <p>
           <button id="haruhikage">乐曲：春日影</button> 
@@ -45,6 +44,15 @@
         <p>
           <button id="reset">复原</button>
         </p>
+        <p>
+          主音轨：<br>
+          <textarea id="input" name="input" rows="16" cols="60"></textarea>
+        </p>
+        <p>
+          副音轨：<br>
+          <textarea id="input2" name="input2" rows="10" cols="60"></textarea>
+        </p>
+        <p><button id="start">演奏</button> <button id="stop">停止</button></p>
       </div>
       <div class="column">
         <div class="displayer">
@@ -80,8 +88,10 @@
   <script type="module" src="player.js"> </script>
   <script src="songs.js"> </script>
   <hr>
+  <h3>音游模式</h3>
   <p>
-    音游模式选项：<br><br>
+    谱面根据主音轨自动创建<br><br>
+    选项：<br>
     判定延迟：<input type="number" id="delay" value="0">ms<br><br>
     选择难度：<select id="difficulty-select">
       <option value="easy">简单</option>
@@ -107,5 +117,6 @@
   </body>
 
 <hr>
-开发中，当前版本 v0.6.3， <a href="https://cauphenuny.github.io/2024/06/14/build-a-windsonglyre-simulator/">开发日志</a>
+<p>本来是想写个原神风物之诗琴的模拟器的，但是音源没搞好，干脆就写个钢琴的得了</p>
+开发中，当前版本 v0.6.4， <a href="https://cauphenuny.github.io/2024/06/14/build-a-windsonglyre-simulator/">开发日志</a>
 </html>
