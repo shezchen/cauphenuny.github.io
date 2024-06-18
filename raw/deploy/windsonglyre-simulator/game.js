@@ -10,7 +10,7 @@ init_constants();
 import { keyup_animation, keydown_animation } from './keyboard.js'
 
 const position_diff = 10, mid = 4;
-const available_key = "ASDFGHJ";
+const available_key = "ASD GHJ";
 const all_key = "ZXCVBNMQWERTYU";
 var key2col = [];
 var position = [];
@@ -19,17 +19,23 @@ for (var i = 1; i <= 7; i++) {
     var pos = (i - mid) * position_diff + 50;
     position[i] = pos;
     const buttom = document.getElementById("btm" + i);
-    buttom.style.left = pos + "%";
+    buttom.style.left = "50%";
     const line = document.getElementById('line' + i);
-    line.style.left = pos + "%";
+    line.style.left = "50%";
     const point = document.getElementById('ptn' + i);
-    point.style.left = pos + "%";
+    point.style.left = "50%";
     const column= document.getElementById('column' + i);
     column.style.left = pos + "%";
     key2col[available_key.charCodeAt(i - 1)] = i;
     key2col[all_key.charCodeAt(i - 1)] = i;
     key2col[all_key.charCodeAt(i - 1 + 7)] = i;
 }
+key2col["R".charCodeAt()] = 5;
+key2col["F".charCodeAt()] = 5;
+key2col["V".charCodeAt()] = 5;
+const col4 = document.getElementById("column4");
+col4.parentNode.removeChild(col4);
+
 const trigger_line = document.getElementById('trigger-line');
 trigger_line.style.height = "2px";
 
@@ -109,7 +115,7 @@ function piano_stroke(code, velc) {
 
 function arrange_note(key, code, velc, delay) {
     console.log(`arrange_note ${key}, ${code}, ${velc}, ${delay}`);
-    //setTimeout(function() { drum.start({note: "hihat-close"}); }, delay);
+    setTimeout(function() { drum.start({note: "hihat-close"}); }, delay);
     setTimeout(piano_stroke, delay, 
                code + env.global_offset + env.fixed_offset[code % 12], 
                velocity_levels[velc] + velocity_adj[code]
