@@ -14,6 +14,17 @@ export const velocity_levels = [32, 48, 56, 64, 68, 72, 80, 88, 96, 108];
 export const velocity_adj = [];
 export const key2note = new Map();
 export const C1 = 48, C2 = 60, C3 = 72;
+export const beat = [
+[],
+[2],
+[2, 0],
+[2, 0, 0],
+[2, 0, 1, 0],
+[2, 0, 0, 0, 0],
+[2, 0, 0, 1, 0, 0],
+[2, 0, 1, 0, 1, 0, 0],
+[2, 0, 0, 1, 0, 0, 1, 0],
+]; //强弱拍
 export function init_constants() {
     for (var i = 0; i <= 120; i++) {
         velocity_adj[i] = Math.round(-Math.max(Math.min((C3 - i) / 2, 20), -10));
