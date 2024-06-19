@@ -15,7 +15,9 @@ function refresh() {
     const selectedOption = selectElement.options[selectElement.selectedIndex];
     if (selectedOption.value == "flex") {
         document.getElementById("key_name").innerHTML = "(1=" + note_name[(env.global_offset + 120) % 12] + ")";
+        document.getElementById("key_offset").value = env.global_offset;
     } else { 
+        document.getElementById("key_offset").value = env.fix_offset_cnt;
         var cnt = parseInt(document.getElementById("key_offset").value);
         if (cnt >= 0) {
             if (cnt > 6) cnt = 6;
@@ -42,7 +44,7 @@ function init() {
     env.time1 = 4, env.time2 = 4;
     document.getElementById('offset_option').selectedIndex = 0;
     env.fixed_offset.fill(0);
-    document.getElementById("key_offset").value = "0";
+    env.fix_offset_cnt = 0;
     document.getElementById("input").value = "";
     document.getElementById("input2").value = "";
     refresh();
@@ -157,7 +159,7 @@ document.getElementById("submit").onclick = () => {
         env.global_offset = 0;
         env.fixed_offset.fill(0);
         var cnt = parseInt(document.getElementById("key_offset").value);
-        //console.log(cnt);
+        env.fix_offset_cnt = cnt;
         if (cnt > 0) {
             for (var i = 0; i < cnt; i++) {
                 env.fixed_offset[sharp_note[i]] = 1;
@@ -195,6 +197,7 @@ document.getElementById("bwv846").onclick = () => {
     document.getElementById('offset_option').selectedIndex = 0;
     env.fixed_offset.fill(0);
     env.global_offset = 0;
+    env.fix_offset_cnt = 0;
     document.getElementById("input").value = bwv846;
     document.getElementById("input2").value = "";
     refresh();
@@ -207,6 +210,7 @@ document.getElementById("haruhikage").onclick = () => {
     env.time2 = 8;
     document.getElementById('offset_option').selectedIndex = 0;
     env.fixed_offset.fill(0);
+    env.fix_offset_cnt = 0;
     env.global_offset = -1;
     document.getElementById("input").value = haruhikage;
     document.getElementById("input2").value = "";
