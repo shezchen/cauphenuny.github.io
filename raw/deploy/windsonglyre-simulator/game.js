@@ -1,8 +1,8 @@
 let tape = localStorage.getItem('tape');
 //document.getElementById("difficulty").innerHTML = "难度：" + localStorage.getItem('difficulty');
-//document.getElementById("environment").innerHTML = "环境：" + localStorage.getItem('env');
+document.getElementById("environment").innerHTML = "环境：" + localStorage.getItem('env');
 let env = JSON.parse(localStorage.getItem('env'));
-//document.getElementById("sheet").innerHTML = "谱子：" + tape;
+document.getElementById("sheet").innerHTML = "谱子：" + tape;
 tape = JSON.parse(tape);
 
 import { key2note, velocity_levels, velocity_adj, init_constants } from './constants.js'
@@ -52,7 +52,7 @@ function remove_element(ele) {
 function draw_note(col) {
     const note = document.createElement('div');
     note.classList.add('note');
-    console.log(`add note on ${col}`);
+    console.log(`draw note on ${col}`);
     const column= document.getElementById('column' + col);
     column.appendChild(note);
     setTimeout(() => {remove_element(note);}, drop_time);
@@ -61,7 +61,7 @@ function draw_note(col) {
 function draw_line(minid, maxid) {
     const line = document.createElement('div');
     line.classList.add('hori-line');
-    console.log(`add line on ${minid} ${maxid} ${position[minid]}%, ${position[maxid]}%`);
+    console.log(`draw line on ${minid} ${maxid} ${position[minid]}%, ${position[maxid]}%`);
     line.style.left = position[minid] + "%";
     line.style.width = (position[maxid] - position[minid]) + "%";
     const stage = document.getElementById('stage');
@@ -126,19 +126,26 @@ function arrange_note(key, code, velc, delay) {
 window.onload = function() {
 };
 function play(tape) {
-    stop();
     console.log("------- start playing -------");
     console.log(`tape: \n ${tape} \n`);
-    var interval = 60 * 4 / env.bpm / env.time2;
+    var interval = 60 * 4 * 1000 / env.bpm / env.time2;
     var velc = env.velocity;
     var stack = [];
     stack.push(1);
     var cnt = 0;
     var sum = 0;
-    var now = context.currentTime;
     var getTop = arr => arr[arr.length - 1];
     var tmpoffset = 0, octoffset = 0;
-    var startoffset = drop_time;
+    console.log(env.time1);
+    var startoffset = Math.max(0, drop_time - interval * env.time1);
+    drum.output.setVolume(120);
+    setTimeout(() => {drum.start({note: "conga-hi"})}, startoffset);
+    for (var i = 1; i < env.time1; i++) {
+        console.log(`arrange hihat-close at ${startoffset + interval * i}`);
+        setTimeout(() => {drum.start({note: "conga-low"})}, startoffset + interval * i);
+    }
+    sum = env.time1;
+    setTimeout(() => {drum.output.setVolume(50)}, startoffset + interval * (sum - 1/2));
     var maxid, minid;
     for (var i = 0; i < tape.length; i++) {
         var key = tape.charCodeAt(i);
@@ -151,7 +158,7 @@ function play(tape) {
                 break;
             case ')':
                 stack.pop();
-                arrange_line(minid, maxid, sum * interval * 1000 + startoffset);
+                arrange_line(minid, maxid, sum * interval + startoffset);
                 cnt += getTop(stack);
                 sum += getTop(stack);
                 //console.log("chord end");
@@ -203,7 +210,7 @@ function play(tape) {
                     maxid = Math.max(maxid, key2col[key]);
                     minid = Math.min(minid, key2col[key]);
                 }
-                arrange_note(key, key2note.get(key) + tmpoffset + octoffset * 12, velc, sum * interval * 1000 + startoffset);
+                arrange_note(key, key2note.get(key) + tmpoffset + octoffset * 12, velc, sum * interval + startoffset);
                 tmpoffset = 0;
                 cnt += cur_step;
                 sum += cur_step;
