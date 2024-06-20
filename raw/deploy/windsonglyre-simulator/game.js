@@ -156,8 +156,10 @@ let score = {
     miss: 0,
     count: 0,
     all: 0,
-    init: () => {
-        sum = 0, combo = 0, miss = 0, count = 0, all = 0;
+    init: function () {
+        this.sum = 0, this.combo = 0, 
+        this.miss = 0, this.count = 0, 
+        this.all = 0;
     }
 };
 
@@ -172,9 +174,11 @@ function get_rank() {
     const get = score.sum * (score.miss == 0 ? 1.6 : 1);
     const normalized = get / expect * 100;
     let name = "D";
+    console.log(`normalized score: ${normalized}`);
     for (let i = 0; i < levels.length; i++) {
-        if (normalized >= level[i].normalized_score) {
-            name = level[i].name;
+        if (normalized >= levels[i].normalized_score) {
+            name = levels[i].name;
+            break;
         }
     }
     return name;
