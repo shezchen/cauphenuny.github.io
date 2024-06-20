@@ -144,8 +144,8 @@ const perfect_time = 50, miss_time = 100, catch_time = 250;
 const levels = [
     { normalized_score: 150, name: "SS"},
     { normalized_score: 100, name: "S" },
-    { normalized_score:  85, name: "A" },
-    { normalized_score:  70, name: "B" },
+    { normalized_score:  90, name: "A" },
+    { normalized_score:  80, name: "B" },
     { normalized_score:  50, name: "C" },
     { normalized_score:   0, name: "D" },
 ];
