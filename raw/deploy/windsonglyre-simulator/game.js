@@ -148,15 +148,15 @@ function hit(col) {
     if (id == -1) return;
     const diff = Math.abs(time - triggers[id].time);
     console.log(`diff: ${diff} id: ${id}`);
-    if (diff <= 100) {
+    if (diff <= 200) {
         triggers[id].used = 1;
         const ele = document.getElementById(`ingame-trigger-${id}`);
         ele.style.opacity = 0;
-        if (diff > 50) {
+        if (diff > 100) {
             ele.style.backgroundColor = "#f99";
         } else {
             drum.start({ note: id2note[triggers[id].type] });
-            if (diff <= 30) {
+            if (diff <= 50) {
                 ele.style.backgroundColor = "#afa";
             } else {
                 ele.style.backgroundColor = "#99f";
@@ -313,12 +313,14 @@ function play() {
                 var element = document.getElementById(`ingame-trigger-${id}`);
                 var time = clock.get() - (triggers[id].time - trigger_time);
                 var pos = (time / drop_time) * (end_pos - start_pos) + start_pos;
-                element.style.top = pos + "%";
-                if (time > trigger_time + 100) {
+                if (time > trigger_time + 150) {
                     element.style.backgroundColor = "#f99";
                     element.style.opacity = 0;
                     triggers[id].used = 1;
                     console.log("miss");
+                }
+                if (triggers[id].used == 0) {
+                    element.style.top = pos + "%";
                 }
                 //console.log(`set #${id} to ${pos}%`);
             });
