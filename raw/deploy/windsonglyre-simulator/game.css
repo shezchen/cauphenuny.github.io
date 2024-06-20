@@ -89,7 +89,7 @@
 .trigger-0 {
     z-index: 20;
     width: 60%;
-    height: 1.2em;
+    height: 1.0em;
     border-radius: 0.6em;
     position: absolute;   /* 绝对定位 */
     border: 2px solid #5f564e;
@@ -110,7 +110,7 @@
 .trigger-1 {
     z-index: 20;
     width: 60%;
-    height: 1.2em;
+    height: 1.0em;
     border-radius: 0.6em;
     position: absolute;   /* 绝对定位 */
     border: 2px solid #5f564e;
@@ -118,7 +118,7 @@
     left: 50%;
     top: 30%;
     transform: translate(-50%, -50%);
-    box-shadow: 0 0 40px 10px #fff, 0 0 20px 0px #fff inset;
+    box-shadow: 0 0 15px 2px #fff, 0 0 10px 0px #fff inset;
     filter: drop-shadow(2px 2px 2px rgba(95,86,65,0.8));
     transition: opacity 0.1s;
     /*
@@ -149,7 +149,7 @@
     transform: translate(-50%, -50%);
 }
 body {
-    background-image: url('./background/1.jpeg');
+    background-image: url('./background/2-blur18px.jpg');
     background-repeat: no-repeat; /* 背景图片不重复 */
     background-size: cover; /* 背景图片覆盖整个页面 */
     background-attachment: fixed; /* 背景固定，不滚动 */
@@ -212,6 +212,5 @@ body {
   position: fixed; /* 固定定位 */
   top: 0; /* 顶部对齐 */
   left: 0; /* 左边对齐 */
-  backdrop-filter: blur(7px) brightness(0.7);
 }
 

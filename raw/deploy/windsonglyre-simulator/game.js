@@ -1,8 +1,7 @@
 let tape = localStorage.getItem('tape');
-//document.getElementById("difficulty").innerHTML = "难度：" + localStorage.getItem('difficulty');
-document.getElementById("environment").innerHTML = "环境：" + localStorage.getItem('env');
 let env = JSON.parse(localStorage.getItem('env'));
-document.getElementById("sheet").innerHTML = "谱子：" + tape;
+console.log(`环境：${env}`);
+console.log(`谱子：${tape}`);
 tape = JSON.parse(tape);
 
 import { key2note, velocity_levels, velocity_adj, init_constants, beat } from './constants.js'
@@ -344,6 +343,7 @@ function play() {
                     if (time > trigger_time + miss_time) {
                         element.style.backgroundColor = "#f99";
                         element.style.opacity = 0;
+                        element.style.boxShadow = "0 0 40px 10px #f55, 0 0 20px 0px #f55 inset";
                         triggers[id].used = 1;
                         console.log(`miss at ${i}`);
                         combo = 0;
