@@ -1,7 +1,9 @@
 let tape = localStorage.getItem('tape');
 let env = JSON.parse(localStorage.getItem('env'));
+let delay = parseInt(localStorage.getItem('delay'));
 console.log(`环境：${env}`);
 console.log(`谱子：${tape}`);
+console.log(`延迟：${delay}`);
 tape = JSON.parse(tape);
 
 import { key2note, velocity_levels, velocity_adj, init_constants, beat } from './constants.js'
@@ -45,7 +47,7 @@ trigger_line.style.height = "2px";
 
 import { context, drum, piano, stroke } from "./player.js";
 
-const frame_rate = 60;
+const frame_rate = 120;
 
 let bgm = {
     notes: [],
@@ -145,7 +147,7 @@ function remove_line(id) {
 const status_elements = document.getElementsByClassName('status');
 const perfect_time = 50, miss_time = 100, catch_time = 250;
 const levels = [
-    { score: 158, name: "SS"},
+    { score: 147, name: "SS"},
     { score: 120, name: "S" },
     { score:  90, name: "A" },
     { score:  80, name: "B" },
@@ -177,7 +179,7 @@ const id2note = ["hihat-close", "hihat-open"];
 
 function get_rank() {
     const expect = (score.miss + score.hit) * 5;
-    const get = score.sum * (score.miss == 0 ? 1.6 : 1);
+    const get = score.sum * (score.miss == 0 ? 1.5 : 1);
     const normalized = get / expect * 100;
     let name = "D";
     console.log(`normalized score: ${normalized}`);
@@ -198,7 +200,7 @@ function reflesh() {
 }
 
 function hit(col) {
-    const time = clock.get();
+    const time = clock.get() - delay;
     let id = -1;
     stage.triggers[col].forEach((candidate_id) => {
         const tri = triggers[candidate_id];
@@ -332,7 +334,7 @@ function play() {
     let interval_id;
     function frame() {
         if (clock.is_paused()) return;
-        //console.log(`frame on ${clock.get()}`);
+        //console.log(`frame ${clock.get()} start`);
         while (events.length - event_pos > 0) {
             const eve = events[event_pos];
             if (clock.get() > eve.time) {
@@ -412,6 +414,7 @@ function play() {
                 }
             });
         }
+        //console.log(`frame ${clock.get()} done`);
     }
     clock.start();
     interval_id = setInterval(frame, frame_time);

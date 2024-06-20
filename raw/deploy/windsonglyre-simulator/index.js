@@ -233,6 +233,7 @@ document.getElementById("gamestart").onclick = () => {
   console.log(input);
   localStorage.setItem('tape', JSON.stringify(input));
   localStorage.setItem('env', JSON.stringify(env));
+  localStorage.setItem('delay', document.getElementById("delay").value);
   localStorage.setItem('difficulty', document.getElementById("difficulty-select").selectedIndex);
   window.location.href = './game.html'
 }
