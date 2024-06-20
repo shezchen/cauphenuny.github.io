@@ -149,7 +149,7 @@
     transform: translate(-50%, -50%);
 }
 body {
-    background-image: url('./background/1.jpg');
+    background-image: url('./background/1.jpeg');
     background-repeat: no-repeat; /* 背景图片不重复 */
     background-size: cover; /* 背景图片覆盖整个页面 */
     background-attachment: fixed; /* 背景固定，不滚动 */
