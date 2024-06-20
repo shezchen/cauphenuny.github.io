@@ -174,7 +174,7 @@ function get_rank() {
     const get = score.sum * (score.miss == 0 ? 1.6 : 1);
     const normalized = get / expect * 100;
     let name = "D";
-    console.log(`normalized score: ${normalized}`);
+    //console.log(`normalized score: ${normalized}`);
     for (let i = 0; i < levels.length; i++) {
         if (normalized >= levels[i].normalized_score) {
             name = levels[i].name;
