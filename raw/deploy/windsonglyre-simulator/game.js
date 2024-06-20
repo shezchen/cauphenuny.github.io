@@ -153,7 +153,7 @@ const levels = [
     { score:  93, name: "A" },
     { score:  87, name: "A-" },
     { score:  83, name: "B+" },
-    { score:  80, name: "B" },
+    { score:  78, name: "B" },
     { score:  70, name: "B-" },
     { score:  60, name: "C" },
     { score:   0, name: "D" },
