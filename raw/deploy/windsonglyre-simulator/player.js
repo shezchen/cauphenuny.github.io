@@ -64,7 +64,6 @@ export function stop() {
     piano.stop();
 }
 export function play(tape, cur_env = env) {
-    stop();
     console.log("------- start playing -------");
     console.log(`tape: \n ${tape} \n`);
     var interval = 60 * 4 / cur_env.bpm / cur_env.time2;

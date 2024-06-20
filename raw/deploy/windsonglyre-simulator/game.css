@@ -92,10 +92,21 @@
 
 #trigger-line {
     z-index: 5;
-    height: 0;
+    height: 2px;
     width: 60%;
     position: absolute;
     left: 20%;
+    top: 70%;
+    background-color: #b7b1a8;
+    transform: translate(0, -50%);
+}
+
+#trigger-line2 {
+    z-index: 5;
+    height: 2px;
+    width: 40%;
+    position: absolute;
+    left: 30%;
     top: 70%;
     background-color: #b7b1a8;
     transform: translate(0, -50%);

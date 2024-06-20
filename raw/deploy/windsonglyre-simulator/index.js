@@ -45,8 +45,8 @@ function init() {
     document.getElementById('offset_option').selectedIndex = 0;
     env.fixed_offset.fill(0);
     env.fix_offset_cnt = 0;
-    document.getElementById("input").value = "";
-    document.getElementById("input2").value = "";
+    document.getElementById("input").value = "在这里的第一行输入曲名，第二行开始写谱子，记谱方法可以看看教程";
+    document.getElementById("input2").value = "副音轨与主音轨同时播放，但不会生成音游谱面";
     refresh();
 }
 function extract(tape) {
@@ -196,11 +196,11 @@ document.getElementById("tutorial").onclick = () => {
     document.getElementById("input").value = tutorial;
     refresh();
 };
-document.getElementById("tutorial2").onclick = () => {
-    init();
-    document.getElementById("input2").value = tutorial2;
-    refresh();
-};
+//document.getElementById("tutorial2").onclick = () => {
+//    init();
+//    document.getElementById("input2").value = tutorial2;
+//    refresh();
+//};
 document.getElementById("bwv846").onclick = () => {
     env.bpm = 70;
     env.time1 = 4;
@@ -237,7 +237,8 @@ document.getElementById("start").onclick = () => {
     console.log("click");
     //getAttribute();
     var input = fetch_input();
-    play(input.main);
+    stop();
+    play(input.main), play(input.sub);
 }
 document.getElementById("gamestart").onclick = () => {
   var input = fetch_input();
@@ -248,6 +249,14 @@ document.getElementById("gamestart").onclick = () => {
   localStorage.setItem('difficulty', document.getElementById("difficulty-select").selectedIndex);
   window.location.href = './game.html'
 }
+document.getElementById("vel-add").onclick = () => {
+    if (env.velocity < 9) env.velocity++;
+    refresh();
+}
+document.getElementById("vel-minus").onclick = () => {
+    if (env.velocity > 0) env.velocity--;
+    refresh();
+}
 
 window.onload = function() {
     //var str = "";
@@ -257,6 +266,6 @@ window.onload = function() {
     for (var i = 0; i < key_buttons.length; i++) {
         key_buttons[i].draggable = false; // 不可拖动
     }
-    document.getElementById("difficulty-select").selectedIndex = 2;
+    document.getElementById("difficulty-select").selectedIndex = 4;
 }
 

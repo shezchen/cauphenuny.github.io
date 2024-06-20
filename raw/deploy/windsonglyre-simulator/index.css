@@ -1,8 +1,8 @@
 input[type='number']{
     width: 40px;
 }
-input textarea select {
-  opacity: 0.7;
+input, textarea, select {
+  opacity: 0.9;
 }
 textarea {
   font-family: "Consolas", Monospace;
@@ -14,7 +14,35 @@ sup {
 }
 img {
 }
-html{
+h1{
+    text-align: center;
+}
+select, input[type='number'] {
+    padding: 0.1em;
+    border: 1px solid;
+    border-radius: 0.3em;
+}
+button, input[type='button'] {
+    background-color: #fff9ef;
+    border: 1px solid #000;
+    border-radius: 0.4em;
+    padding: 0.4em 0.8em;
+    /*
+    box-shadow: 3px 3px 4px rgba(0,0,0,0.4);
+    */
+    transition: filter 0.1s;
+}
+.vel-button {
+    padding: 0.1em 0.5em;
+    border-radius: 0.5em;
+}
+button:hover, input[type='button']:hover {
+    filter: brightness(0.9);
+}
+button:active, {
+    filter: brightness(0.7);
+}
+body{
     background-image: url('./background/01.avif');
     background-repeat: no-repeat; /* 背景图片不重复 */
     background-size: cover; /* 背景图片覆盖整个页面 */
@@ -45,7 +73,7 @@ body{
 }
 .displayer {
     position: fixed;
-    left: 50%;
+    right: 5%;
     top: 50%;
     transform: translate(0, -50%);
 }

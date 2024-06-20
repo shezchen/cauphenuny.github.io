@@ -214,7 +214,7 @@ function get_rank() {
 
 function reflesh() {
     const score_element = document.getElementById('score');
-    score_element.innerHTML = `${tape.name}&nbsp;|&nbsp;difficulty: ${difficulty}<br>score: ${score.sum}, combo: ${score.combo}, rank: ${get_rank()}`
+    score_element.innerHTML = `${tape.name}&nbsp;|&nbsp;score: ${score.sum}, combo: ${score.combo}, rank: ${get_rank()}`
     const diff_element = document.getElementById('avg-diff');
     diff_element.innerHTML = `avg diff: ${(score.diff_sum / score.hit).toFixed(2)}ms`;
 }
@@ -505,7 +505,7 @@ function parse(tape) {
     function strong_beat(count) {
         const tmp = Math.round(count);
         if (Math.abs(tmp - count) > 1e-10) return false;
-        return beat[env.time1][tmp % env.time1] > 0;
+        return beat[env.time2][tmp % env.time2] > 0;
     }
     function int_beat(count) {
         return Math.abs(Math.round(count) - count) <= 1e-10;
@@ -513,9 +513,7 @@ function parse(tape) {
     function all_beat(count) {
         return true;
     }
-    let priority = [5, 4, 6, 3, 7, 1]; // 和弦中加入音的优先级
-    let check = [strong_beat, int_beat, int_beat, all_beat, all_beat];
-    let limit = [2, 2, 2, 2, 6];
+    let check = [int_beat, strong_beat, strong_beat, all_beat, all_beat];
     for (let i = 0; i < tape.length; i++) {
         let key = tape.charCodeAt(i);
         console.log(i, tape[i], key);
@@ -528,38 +526,40 @@ function parse(tape) {
             case ')':
                 stack.pop();
                 let minid = 10, maxid = 0;
-                if (!check[difficulty](sum)) {
-                    cnt += getTop(stack);
-                    sum += getTop(stack);
-                    continue;
-                }
-                let chord_cnt = 0;
-                for (let k = 0; k < priority.length && chord_cnt < limit[difficulty]; k++) {
-                    let j = priority[k];
-                    if (chord_note_cnt[j] > 1) {
+                if (!check(sum)) continue;
+                for (let j = 1; j <= column_cnt; j++) {
+                    if (chord_note_cnt[j] >= 1) {
                         minid = Math.min(minid, j);
                         maxid = Math.max(maxid, j);
-                        chord_cnt++;
-                        triggers.push({
-                            column: j,
-                            time: sum * interval + startoffset,
-                            type: 1,
-                            hitted: 0,
-                        });
-                    }
-                }
-                for (let k = 0; k < priority.length && chord_cnt < limit[difficulty]; k++) {
-                    let j = priority[k];
-                    if (chord_note_cnt[j] == 1) {
-                        minid = Math.min(minid, j);
-                        maxid = Math.max(maxid, j);
-                        chord_cnt++;
-                        triggers.push({
-                            column: j,
-                            time: sum * interval + startoffset,
-                            type: 0,
-                            hitted: 0,
-                        });
+                        if (chord_note_cnt[j] > 1) {
+                            triggers.push({
+                                column: j,
+                                time: sum * interval + startoffset,
+                                type: 1,
+                                hitted: 0,
+                            });
+                            //bgm.notes.push({
+                            //    instrument: "drum",
+                            //    time: sum * interval + startoffset,
+                            //    options: {
+                            //        note: "hihat-open",
+                            //    }
+                            //});
+                        } else {
+                            triggers.push({
+                                column: j,
+                                time: sum * interval + startoffset,
+                                type: 0,
+                                hitted: 0,
+                            });
+                            //bgm.notes.push({
+                            //    instrument: "drum",
+                            //    time: sum * interval + startoffset,
+                            //    options: {
+                            //        note: "hihat-close",
+                            //    }
+                            //});
+                        }
                     }
                 }
                 if (minid < maxid) {
@@ -625,18 +625,15 @@ function parse(tape) {
                     },
                     time: sum * interval + startoffset,
                 });
-                tmpoffset = 0;
                 if (cur_step == 0) {
                     chord_note_cnt[note2col[key]]++;
                 } else {
-                    if (check[difficulty](sum)) {
-                        triggers.push({
-                            column: note2col[key],
-                            time: sum * interval + startoffset,
-                            type: 0,
-                            hitted: 0
-                        });
-                    }
+                    triggers.push({
+                        column: note2col[key],
+                        time: sum * interval + startoffset,
+                        type: 0,
+                        hitted: 0
+                    });
                     //bgm.notes.push({
                     //    instrument: "drum",
                     //    time: sum * interval + startoffset,
@@ -647,6 +644,7 @@ function parse(tape) {
                     cnt += cur_step;
                     sum += cur_step;
                 }
+                tmpoffset = 0;
                 break;
         }
     }
