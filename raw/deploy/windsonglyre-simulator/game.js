@@ -175,10 +175,6 @@ let score = {
     }
 };
 
-for (let i = 0; i < status_elements.length; i++) {
-    status_elements[i].innerHTML = "<img class=\"stat-img\"src=./scores/perfect.png></img>";
-}
-
 const id2note = ["hihat-close", "hihat-open"];
 
 function get_rank() {
@@ -201,6 +197,15 @@ function reflesh() {
     score_element.innerHTML = `${tape.name}&nbsp;|&nbsp;score: ${score.sum}, combo: ${score.combo}, rank: ${get_rank()}`
     const diff_element = document.getElementById('avg-diff');
     diff_element.innerHTML = `avg diff: ${(score.diff_sum / score.hit).toFixed(2)}ms`;
+}
+
+function draw_status(col, name, color = "#fff") {
+    const status_element = document.createElement('div');
+    const column = document.getElementById('column' + col);
+    status_element.classList.add('status');
+    status_element.innerHTML = `<img class="stat-img" src=./scores/${name}.png></img>`;
+    column.appendChild(status_element);
+    return status_element;
 }
 
 function hit(col) {
@@ -226,6 +231,8 @@ function hit(col) {
             score.combo = 0;
             score.miss++;
             console.log(`bad at ${col}, diff: ${diff}`);
+            const status_ele = draw_status(col, "bad", "#f55");
+            setTimeout(() => {remove_element(status_ele)}, 1000);
         } else {
             score.diff_sum += diff;
             drum.start({ note: id2note[triggers[id].type] });
@@ -239,13 +246,17 @@ function hit(col) {
             if (absdiff <= perfect_time) {
                 console.log(`perfect at ${col}, diff: ${diff}`);
                 ele.style.backgroundColor = "#afa";
-                ele.style.boxShadow = "0 0 40px 10px #8f8, 0 0 20px 0px #8f8 inset";
+                ele.style.boxShadow = "0 0 40px 10px #8f9, 0 0 20px 0px #8f9 inset";
                 score.sum += 5;
+                const status_ele = draw_status(col, "perfect", "#8f9");
+                setTimeout(() => {remove_element(status_ele)}, 1000);
             } else {
                 console.log(`good at ${col}, diff: ${diff}`);
                 ele.style.backgroundColor = "#9cf";
                 ele.style.boxShadow = "0 0 40px 10px #6af, 0 0 20px 0px #6af inset";
                 score.sum += 3;
+                const status_ele = draw_status(col, "good", "#6af");
+                setTimeout(() => {remove_element(status_ele)}, 1000);
             }
         }
         reflesh();
@@ -410,6 +421,8 @@ function play() {
                         element.style.boxShadow = "0 0 40px 10px #f55, 0 0 20px 0px #f55 inset";
                         triggers[id].used = 1;
                         console.log(`miss at ${i}`);
+                        const status_ele = draw_status(i, "miss", "#f55");
+                        setTimeout(() => {remove_element(status_ele)}, 1000);
                         score.combo = 0;
                         score.miss++;
                         reflesh();

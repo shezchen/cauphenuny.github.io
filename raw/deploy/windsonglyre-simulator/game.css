@@ -6,56 +6,20 @@
 
 .vert-line {
     z-index: 5;
-    width: 2px;           /* 线的宽度 */
-    height: 85%;        /* 线的高度 */
+    width: 2px;          /* 线的宽度 */
+    height: 85%;         /* 线的高度 */
     background-color: #b7b1a8; /* 线的颜色 */
-    position: absolute;   /* 绝对定位 */
-    left: 100%;           /* 线的水平位置 */
-    bottom: 10%;            /* 线的垂直位置 */
+    position: absolute;  /* 绝对定位 */
+    left: 100%;          /* 线的水平位置 */
+    bottom: 10%;         /* 线的垂直位置 */
     transform: translate(-50%, 0);
-}
-
-@keyframes lineMoveDown{
-  0%{
-    opacity: 0;
-    top:0%;
-  }
-  5%{
-    opacity: 1;
-  }
-  87.5%{
-    opacity: 1;
-  }
-  87.6%{
-    opacity: 0;
-  }
-  100% {
-    top:80%;
-    opacity: 0;
-  }
-}
-@keyframes moveDown{
-  0%{
-    opacity: 0;
-    top:0%;
-  }
-  5%{
-    opacity: 1;
-  }
-  95%{
-    opacity: 1;
-  }
-  100% {
-    top:80%;
-    opacity: 0;
-  }
 }
 
 .hori-line {
     z-index: 5;
     height: 2px;
     background-color: #b7b1a8; /* 线的颜色 */
-    position: absolute;   /* 绝对定位 */
+    position: absolute;     /* 绝对定位 */
     transform: translate(0, -50%);
     /*
     animation: lineMoveDown 1.2s linear;
@@ -69,7 +33,7 @@
     width: 16px;
     height:16px;
     border-radius: 8px;
-    position: absolute;   /* 绝对定位 */
+    position: absolute;     /* 绝对定位 */
     left: 150%;
     top: 70%;
     background-color: #f5f0e1;
@@ -91,7 +55,7 @@
     width: 60%;
     height: 1.0em;
     border-radius: 0.6em;
-    position: absolute;   /* 绝对定位 */
+    position: absolute;     /* 绝对定位 */
     border: 2px solid #5f564e;
     background-color: #ffe5cc; /* 填充颜色 */
     left: 50%;
@@ -100,8 +64,8 @@
     filter: drop-shadow(2px 2px 2px rgba(95,86,65,0.8));
     transition: opacity 0.1s;
     /*
-            drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.3));
-            */
+       drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.3));
+    */
     /*animation: moveDown 1.2s linear;
     animation-timing-function:linear;
     animation-fill-mode: forwards;
@@ -112,7 +76,7 @@
     width: 60%;
     height: 1.0em;
     border-radius: 0.6em;
-    position: absolute;   /* 绝对定位 */
+    position: absolute;     /* 绝对定位 */
     border: 2px solid #5f564e;
     background-color: #fff2e5; /* 填充颜色 */
     left: 50%;
@@ -124,10 +88,6 @@
     /*
             drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.3));
             */
-    /*animation: moveDown 1.2s linear;
-    animation-timing-function:linear;
-    animation-fill-mode: forwards;
-    */
 }
 
 #trigger-line {
@@ -155,62 +115,79 @@ body {
     background-attachment: fixed; /* 背景固定，不滚动 */
 }
 .stage-div {
-  width: 100vw; /* 宽度为视口宽度 */
-  height: 100vh; /* 高度为视口高度 */
-  margin: 0; /* 取消外边距 */
-  padding: 0; /* 取消内边距 */
-  position: fixed; /* 固定定位 */
-  top: 0vh; /* 顶部对齐 */
-  left: 0; /* 左边对齐 */
-  overflow: auto; /* 超出内容可滚动 */
-  transform-style: preserve-3d;
-  perspective: 50px;
-  transform: rotateX(0);
+    width: 100vw; /* 宽度为视口宽度 */
+    height: 100vh; /* 高度为视口高度 */
+    margin: 0; /* 取消外边距 */
+    padding: 0; /* 取消内边距 */
+    position: fixed; /* 固定定位 */
+    top: 0vh; /* 顶部对齐 */
+    left: 0; /* 左边对齐 */
+    overflow: auto; /* 超出内容可滚动 */
+    transform-style: preserve-3d;
+    perspective: 50px;
+    transform: rotateX(0);
 }
 @keyframes fadeOut {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
 }
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@keyframes moveDown {
+    0% {
+        opacity 0;
+        top: 79%;
+    }
+    20% {
+        opacity: 1;
+    }
+    60% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        top: 80%;
+    }
 }
 .status {
-  z-index: 100;
-  display: block;
-  position: absolute;
-  top: 75%;
-  left: 0%;
-  width: 100%;
-  opacity: 0;
-  transition: opacity 0.05s;
+    z-index: 100;
+    display: block;
+    position: absolute;
+    top: 75%;
+    left: 0%;
+    width: 100%;
+    opacity: 1;
+    animation: moveDown 0.5s linear forwards;
 }
 .stat-img {
-  position: absolute;
-  z-index: 100;
-  left: 50%;
-  height: 1.5em;
-  left: 50%;
-  transform: translate(-50%, -50%);
+    position: absolute;
+    z-index: 100;
+    left: 50%;
+    height: 1.5em;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    filter: drop-shadow(0px 0px 3px rgba(255,255,255,0.6));
 }
 .float {
-  z-index: 100;
+    z-index: 100;
 }
 .fullscreen-div {
-  width: 100vw; /* 宽度为视口宽度 */
-  height: 100vh; /* 高度为视口高度 */
-  margin: 0; /* 取消外边距 */
-  padding: 0; /* 取消内边距 */
-  position: fixed; /* 固定定位 */
-  top: 0; /* 顶部对齐 */
-  left: 0; /* 左边对齐 */
+    width: 100vw; /* 宽度为视口宽度 */
+    height: 100vh; /* 高度为视口高度 */
+    margin: 0; /* 取消外边距 */
+    padding: 0; /* 取消内边距 */
+    position: fixed; /* 固定定位 */
+    top: 0; /* 顶部对齐 */
+    left: 0; /* 左边对齐 */
 }
 
