@@ -9,9 +9,10 @@ init_constants();
 import { keyup_animation, keydown_animation } from './keyboard.js'
 
 const position_diff = 10, mid = 4, column_cnt = 7;
-const available_key = "ASD GHJ";
-const other_key = "ZXCVBNMQWERTYU";
+const available_key = "SDF JKL";
+const all_note = "ASDFGHJZXCVBNMQWERTYU";
 let note2col = [];
+let key2col = [];
 let position = [];
 
 for (let i = 1; i <= 7; i++) {
@@ -25,15 +26,17 @@ for (let i = 1; i <= 7; i++) {
     point.style.left = "50%";
     const column= document.getElementById('column' + i);
     column.style.left = pos + "%";
-    note2col[available_key.charCodeAt(i - 1)] = i;
-    note2col[other_key.charCodeAt(i - 1)] = i;
-    note2col[other_key.charCodeAt(i - 1 + 7)] = i;
+    note2col[all_note.charCodeAt(i - 1)] = i;
+    note2col[all_note.charCodeAt(i - 1 + 7)] = i;
+    note2col[all_note.charCodeAt(i - 1 + 14)] = i;
+    if (available_key[i - 1] != " ") {
+        key2col[available_key.charCodeAt(i - 1)] = i;
+    }
 }
 note2col["R".charCodeAt()] = 5;
 note2col["F".charCodeAt()] = 5;
-note2col["V".charCodeAt()] = 5;
+note2col["V".charCodeAt()] = 3;
 
-const key2col = note2col;
 const col4 = document.getElementById("column4");
 col4.parentNode.removeChild(col4);
 
@@ -142,12 +145,12 @@ function remove_line(id) {
 const status_elements = document.getElementsByClassName('status');
 const perfect_time = 50, miss_time = 100, catch_time = 250;
 const levels = [
-    { normalized_score: 150, name: "SS"},
-    { normalized_score: 110, name: "S" },
-    { normalized_score:  90, name: "A" },
-    { normalized_score:  80, name: "B" },
-    { normalized_score:  60, name: "C" },
-    { normalized_score:   0, name: "D" },
+    { score: 158, name: "SS"},
+    { score: 120, name: "S" },
+    { score:  90, name: "A" },
+    { score:  80, name: "B" },
+    { score:  60, name: "C" },
+    { score:   0, name: "D" },
 ];
 
 let score = {
@@ -179,7 +182,7 @@ function get_rank() {
     let name = "D";
     console.log(`normalized score: ${normalized}`);
     for (let i = 0; i < levels.length; i++) {
-        if (normalized >= levels[i].normalized_score) {
+        if (normalized >= levels[i].score) {
             name = levels[i].name;
             break;
         }
@@ -263,8 +266,7 @@ document.addEventListener("keydown", function(event) {
     }
     let index = available_key.indexOf(key);
     if (index != -1) {
-        index++;
-        hit(index);
+        hit(key2col[code]);
         //const stat_ele = document.getElementById("status" + index);
         //const point_ele = document.getElementById("ptn" + index);
         //stat_ele.style.opacity = 1;
@@ -571,10 +573,10 @@ function parse(tape) {
                     time: sum * interval + startoffset,
                 });
                 if (cur_step == 0) {
-                    chord_note_cnt[key2col[key]]++;
+                    chord_note_cnt[note2col[key]]++;
                 } else {
                     triggers.push({
-                        column: key2col[key],
+                        column: note2col[key],
                         time: sum * interval + startoffset,
                         type: 0,
                         used: 0
