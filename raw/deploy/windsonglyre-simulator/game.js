@@ -152,14 +152,17 @@ const levels = [
 
 let score = {
     sum: 0,
+    diff_sum: 0,
     combo: 0,
-    miss: 0,
-    count: 0,
-    all: 0,
+    miss: 0, hit: 0,
+    fast: 0, slow: 0,
+    created: 0,
     init: function () {
-        this.sum = 0, this.combo = 0, 
-        this.miss = 0, this.count = 0, 
-        this.all = 0;
+        this.diff_sum = 0,
+        this.sum = this.combo = 0, 
+        this.created = 0,
+        this.fast = this.slow = 0;
+        this.miss = this.hit = 0;
     }
 };
 
@@ -170,11 +173,11 @@ for (let i = 0; i < status_elements.length; i++) {
 const id2note = ["hihat-close", "hihat-open"];
 
 function get_rank() {
-    const expect = score.all * 5;
+    const expect = (score.miss + score.hit) * 5;
     const get = score.sum * (score.miss == 0 ? 1.6 : 1);
     const normalized = get / expect * 100;
     let name = "D";
-    //console.log(`normalized score: ${normalized}`);
+    console.log(`normalized score: ${normalized}`);
     for (let i = 0; i < levels.length; i++) {
         if (normalized >= levels[i].normalized_score) {
             name = levels[i].name;
@@ -187,6 +190,8 @@ function get_rank() {
 function reflesh() {
     const score_element = document.getElementById('score');
     score_element.innerHTML = `score: ${score.sum}, combo: ${score.combo} rank: ${get_rank()}`
+    const diff_element = document.getElementById('avg-diff');
+    diff_element.innerHTML = `avg diff: ${(score.diff_sum / score.hit).toFixed(2)}ms`;
 }
 
 function hit(col) {
@@ -213,20 +218,25 @@ function hit(col) {
             score.miss++;
             console.log(`bad at ${col}, diff: ${diff}`);
         } else {
+            score.diff_sum += diff;
             drum.start({ note: id2note[triggers[id].type] });
             score.combo++;
+            score.hit++;
+            if (diff > 0) {
+                score.slow++;
+            } else {
+                score.fast++;
+            }
             if (absdiff <= perfect_time) {
                 console.log(`perfect at ${col}, diff: ${diff}`);
                 ele.style.backgroundColor = "#afa";
                 ele.style.boxShadow = "0 0 40px 10px #8f8, 0 0 20px 0px #8f8 inset";
                 score.sum += 5;
-                score.count++;
             } else {
                 console.log(`good at ${col}, diff: ${diff}`);
                 ele.style.backgroundColor = "#9cf";
                 ele.style.boxShadow = "0 0 40px 10px #6af, 0 0 20px 0px #6af inset";
                 score.sum += 3;
-                score.count++;
             }
         }
         reflesh();
@@ -341,7 +351,7 @@ function play() {
                         //console.log(`add trigger at ${column}`);
                         draw_trigger(eve.index);
                         stage.triggers[column].add(eve.index);
-                        score.all++;
+                        score.created++;
                     break;
 
                     case "delete trigger":
