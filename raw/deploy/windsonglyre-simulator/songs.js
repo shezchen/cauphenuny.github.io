@@ -1,4 +1,6 @@
-var tutorial = `（教程也可以播放，点击下方演奏按钮）
+var tutorial = `教程
+（第一行填写曲名）
+（教程也可以播放，点击下方演奏按钮）
 教程中拍号4/4，此时一位表示一个四分音符：
 /AAAA/..../
 （斜杠是小节线标记，方便阅读，播放时会忽略）
@@ -116,7 +118,8 @@ c=[13531353]
 
 `;
 var bwv846 = 
-`[[>>ADGQEGQEADGQEGQE/ASHWRHWRASHWRHWR/
+`BWV846 prelude
+[[>>ADGQEGQEADGQEGQE/ASHWRHWRASHWRHWR/
 MSGWRGWRMSGWRGWR/ADGQEGQEADGQEGQE/
 <<ADHEYHEYADHEYHEY/>>AS+FHW+FHWAS+FHW+FHW/
 MSGWTGWTMSGWTGWT/>MADGQDGQMADGQDGQ/

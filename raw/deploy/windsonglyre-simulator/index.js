@@ -142,8 +142,19 @@ piano.load.then(() => {
 });
 
 function fetch_input() {
+    let main_input = document.getElementById("input").value;
+    let name = "", content = "";
+    for (let i = 0, flag = 0; i < main_input.length; i++) {
+        if (main_input[i] == '\n' || main_input[i] == '\r') flag = 1;
+        if (flag == 0) {
+            name += main_input[i];
+        } else {
+            content += main_input[i];
+        }
+    }
     let inputs = {
-        main: extract(document.getElementById("input").value),
+        name: name,
+        main: extract(content),
         sub: decompress(extract(document.getElementById("input2").value)),
     };
     return inputs;

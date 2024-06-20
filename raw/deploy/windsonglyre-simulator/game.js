@@ -198,7 +198,7 @@ function get_rank() {
 
 function reflesh() {
     const score_element = document.getElementById('score');
-    score_element.innerHTML = `score: ${score.sum}, combo: ${score.combo} rank: ${get_rank()}`
+    score_element.innerHTML = `${tape.name}&nbsp;|&nbsp;score: ${score.sum}, combo: ${score.combo}, rank: ${get_rank()}`
     const diff_element = document.getElementById('avg-diff');
     diff_element.innerHTML = `avg diff: ${(score.diff_sum / score.hit).toFixed(2)}ms`;
 }
