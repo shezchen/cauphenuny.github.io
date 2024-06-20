@@ -237,3 +237,14 @@ document.getElementById("gamestart").onclick = () => {
   window.location.href = './game.html'
 }
 
+window.onload = function() {
+    //var str = "";
+    init_constants();
+    //console.log(str);
+    const key_buttons = document.getElementsByClassName("kb-img");
+    for (var i = 0; i < key_buttons.length; i++) {
+        key_buttons[i].draggable = false; // 不可拖动
+    }
+    document.getElementById("difficulty-select").selectedIndex = 2;
+}
+

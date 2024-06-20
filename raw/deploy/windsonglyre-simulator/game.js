@@ -11,11 +11,11 @@ import { keyup_animation, keydown_animation } from './keyboard.js'
 const position_diff = 10, mid = 4, column_cnt = 7;
 const available_key = "ASD GHJ";
 const other_key = "ZXCVBNMQWERTYU";
-var note2col = [];
-var position = [];
+let note2col = [];
+let position = [];
 
-for (var i = 1; i <= 7; i++) {
-    var pos = (i - mid) * position_diff + 50;
+for (let i = 1; i <= 7; i++) {
+    const pos = (i - mid) * position_diff + 50;
     position[i] = pos;
     const buttom = document.getElementById("btm" + i);
     buttom.style.left = "50%";
@@ -44,14 +44,19 @@ import { context, drum, piano, stroke } from "./player.js";
 
 const frame_rate = 60;
 
-var bgm_notes = [], triggers = [], lines = [];
+let bgm = {
+    notes: [],
+    mute: 0,
+};
+
+let triggers = [], lines = [];
 
 const drop_time = 1200, start_pos = 0, trigger_pos = 70, end_pos = 85;
 const trigger_duration = trigger_pos - start_pos, all_duration = end_pos - start_pos;
 const trigger_time = Math.round(drop_time / (all_duration) * (trigger_duration));
 
 function create_clock() {
-    var start_time, pause_time;
+    let start_time, pause_time;
     function start() {
         start_time = new Date().getTime();
         pause_time = 0;
@@ -87,10 +92,13 @@ function create_clock() {
 
 const clock = create_clock();
 
-let onstage_lines = new Set();
-let onstage_triggers = [];
-for (var i = 1; i <= column_cnt; i++) {
-    onstage_triggers[i] = new Set();
+let stage = {
+    lines: new Set(),
+    triggers: [],
+};
+
+for (let i = 1; i <= column_cnt; i++) {
+    stage.triggers[i] = new Set();
 }
 
 function remove_element(ele) {
@@ -132,25 +140,55 @@ function remove_line(id) {
 }
 
 const status_elements = document.getElementsByClassName('status');
-var score, combo;
 const perfect_time = 50, miss_time = 100, catch_time = 250;
-const SS = 150, S = 100, A = 85, B = 70, C = 50, D = 0;
+const levels = [
+    { normalized_score: 150, name: "SS"},
+    { normalized_score: 100, name: "S" },
+    { normalized_score:  85, name: "A" },
+    { normalized_score:  70, name: "B" },
+    { normalized_score:  50, name: "C" },
+    { normalized_score:   0, name: "D" },
+];
 
-for (var i = 0; i < status_elements.length; i++) {
+let score = {
+    sum: 0,
+    combo: 0,
+    miss: 0,
+    count: 0,
+    all: 0,
+    init: () => {
+        sum = 0, combo = 0, miss = 0, count = 0, all = 0;
+    }
+};
+
+for (let i = 0; i < status_elements.length; i++) {
     status_elements[i].innerHTML = "<img class=\"stat-img\"src=./scores/perfect.png></img>";
 }
 
 const id2note = ["hihat-close", "hihat-open"];
 
+function get_rank() {
+    const expect = score.all * 5;
+    const get = score.sum * (score.miss == 0 ? 1.6 : 1);
+    const normalized = get / expect * 100;
+    let name = "D";
+    for (let i = 0; i < levels.length; i++) {
+        if (normalized >= level[i].normalized_score) {
+            name = level[i].name;
+        }
+    }
+    return name;
+}
+
 function reflesh() {
     const score_element = document.getElementById('score');
-    score_element.innerHTML = ` | score: ${score}, combo: ${combo}`
+    score_element.innerHTML = `score: ${score.sum}, combo: ${score.combo} rank: ${get_rank()}`
 }
 
 function hit(col) {
     const time = clock.get();
-    var id = -1;
-    onstage_triggers[col].forEach((candidate_id) => {
+    let id = -1;
+    stage.triggers[col].forEach((candidate_id) => {
         const tri = triggers[candidate_id];
         if (tri.used == 0 && 
             (id == -1 || Math.abs(time - triggers[id].time) > Math.abs(time - triggers[candidate_id].time))) {
@@ -167,21 +205,24 @@ function hit(col) {
         if (absdiff > miss_time) {
             ele.style.backgroundColor = "#f99";
             ele.style.boxShadow = "0 0 40px 10px #f55, 0 0 20px 0px #f55 inset";
-            combo = 0;
+            score.combo = 0;
+            score.miss++;
             console.log(`bad at ${col}, diff: ${diff}`);
         } else {
             drum.start({ note: id2note[triggers[id].type] });
-            combo++;
+            score.combo++;
             if (absdiff <= perfect_time) {
                 console.log(`perfect at ${col}, diff: ${diff}`);
                 ele.style.backgroundColor = "#afa";
                 ele.style.boxShadow = "0 0 40px 10px #8f8, 0 0 20px 0px #8f8 inset";
-                score += 5;
+                score.sum += 5;
+                score.count++;
             } else {
                 console.log(`good at ${col}, diff: ${diff}`);
                 ele.style.backgroundColor = "#9cf";
                 ele.style.boxShadow = "0 0 40px 10px #6af, 0 0 20px 0px #6af inset";
-                score += 3;
+                score.sum += 3;
+                score.count++;
             }
         }
         reflesh();
@@ -189,8 +230,8 @@ function hit(col) {
 }
 
 document.addEventListener("keydown", function(event) {
-    var key = event.key.toUpperCase();
-    var code = key.charCodeAt();
+    let key = event.key.toUpperCase();
+    let code = key.charCodeAt();
     if (event.repeat) {
         return;
     }
@@ -206,7 +247,7 @@ document.addEventListener("keydown", function(event) {
         }
         return;
     }
-    var index = available_key.indexOf(key);
+    let index = available_key.indexOf(key);
     if (index != -1) {
         index++;
         hit(index);
@@ -223,14 +264,13 @@ document.addEventListener("keydown", function(event) {
 });
 
 document.addEventListener("keyup", function(event) {
-    var key = event.key.toUpperCase();
-    var code = key.charCodeAt();
+    const key = event.key.toUpperCase();
+    const code = key.charCodeAt();
     //console.log(`${key} ${code} up`);
     if (key == " ") return;
-    var index = available_key.indexOf(key);
+    let index = available_key.indexOf(key);
     if (index != -1) {
         index++;
-        var op = 1;
         const stat_ele = document.getElementById("status" + index);
         const point_ele = document.getElementById("ptn" + index);
         point_ele.style.boxShadow = "";
@@ -239,10 +279,10 @@ document.addEventListener("keyup", function(event) {
 });
 
 function play() {
-    score = 0, combo = 0;
-    console.log(`------- start playing (bgm_count:${bgm_notes.length}) -------`);
+    score.init();
+    console.log(`------- start playing (bgm_count:${bgm.notes.length}) -------`);
     const events = [];
-    for (var i = 0; i < lines.length; i++) {
+    for (let i = 0; i < lines.length; i++) {
         events.push({
             time: lines[i].time - trigger_time,
             name: "add line",
@@ -254,7 +294,7 @@ function play() {
             index: i,
         });
     }
-    for (var i = 0; i < triggers.length; i++) {
+    for (let i = 0; i < triggers.length; i++) {
         const tri = triggers[i];
         events.push({
             time: tri.time - trigger_time,
@@ -270,10 +310,10 @@ function play() {
     console.log(`event count: ${events.length}`);
     events.sort((a, b) => a.time - b.time);
     console.log(`event count: ${events.length}`);
-    for (var i = 0; i < events.length; i++) console.log(events[i]);
-    var event_pos = 0, bgm_pos = 0;
-    var frame_time = 1000 / frame_rate;
-    var interval_id;
+    for (let i = 0; i < events.length; i++) console.log(events[i]);
+    let event_pos = 0, bgm_pos = 0;
+    let frame_time = 1000 / frame_rate;
+    let interval_id;
     function frame() {
         if (clock.is_paused()) return;
         //console.log(`frame on ${clock.get()}`);
@@ -284,24 +324,25 @@ function play() {
                 switch (eve.name) {
                     case "add line":
                         draw_line(eve.index);
-                        onstage_lines.add(eve.index);
+                        stage.lines.add(eve.index);
                     break;
 
                     case "delete line":
                         remove_line(eve.index);
-                        onstage_lines.delete(eve.index);
+                        stage.lines.delete(eve.index);
                     break;
 
                     case "add trigger":
                         const column = triggers[eve.index].column;
                         //console.log(`add trigger at ${column}`);
                         draw_trigger(eve.index);
-                        onstage_triggers[column].add(eve.index);
+                        stage.triggers[column].add(eve.index);
+                        score.all++;
                     break;
 
                     case "delete trigger":
                         remove_trigger(eve.index);
-                        onstage_triggers[triggers[eve.index].column].delete(eve.index);
+                        stage.triggers[triggers[eve.index].column].delete(eve.index);
                     break;
                 }
                 event_pos++;
@@ -312,44 +353,47 @@ function play() {
         if (event_pos >= events.length) {
             clearInterval(interval_id);
         }
-        while (bgm_notes.length - bgm_pos > 0) {
-            const note = bgm_notes[bgm_pos];
+        while (bgm.notes.length - bgm_pos > 0) {
+            const note = bgm.notes[bgm_pos];
             if (clock.get() > note.time) {
-                if (note.instrument == 'piano') {
-                    //console.log(note.options);
-                    piano.start(note.options);
-                } else {
-                    drum.start(note.options);
+                if (bgm.mute == 0) {
+                    if (note.instrument == 'piano') {
+                        //console.log(note.options);
+                        piano.start(note.options);
+                    } else {
+                        drum.start(note.options);
+                    }
                 }
                 bgm_pos++;
             } else {
                 break;
             }
         }
-        onstage_lines.forEach((id) => {
-            var element = document.getElementById(`ingame-line-${id}`);
-            var time = clock.get() - (lines[id].time - trigger_time);
-            var pos = (time / drop_time) * (end_pos - start_pos) + start_pos;
+        stage.lines.forEach((id) => {
+            const element = document.getElementById(`ingame-line-${id}`);
+            const time = clock.get() - (lines[id].time - trigger_time);
+            const pos = (time / drop_time) * (end_pos - start_pos) + start_pos;
             element.style.top = pos + "%";
         });
-        for (var i = 1, id; i <= column_cnt; i++) {
-            onstage_triggers[i].forEach((id) => {
+        for (let i = 1, id; i <= column_cnt; i++) {
+            stage.triggers[i].forEach((id) => {
                 if (triggers[id].used == 0) {
-                    var element = document.getElementById(`ingame-trigger-${id}`);
-                    var time = clock.get() - (triggers[id].time - trigger_time);
-                    var pos = (time / drop_time) * (end_pos - start_pos) + start_pos;
-                        element.style.top = pos + "%";
-                    }
+                    const element = document.getElementById(`ingame-trigger-${id}`);
+                    const time = clock.get() - (triggers[id].time - trigger_time);
+                    const pos = (time / drop_time) * (end_pos - start_pos) + start_pos;
+                    element.style.top = pos + "%";
                     if (time > trigger_time + miss_time) {
                         element.style.backgroundColor = "#f99";
                         element.style.opacity = 0;
                         element.style.boxShadow = "0 0 40px 10px #f55, 0 0 20px 0px #f55 inset";
                         triggers[id].used = 1;
                         console.log(`miss at ${i}`);
-                        combo = 0;
+                        score.combo = 0;
+                        score.miss++;
                         reflesh();
                     }
                 //console.log(`set #${id} to ${pos}%`);
+                }
             });
         }
     }
@@ -358,7 +402,7 @@ function play() {
 }
 
 function code_wrap(code) {
-    var new_code = code + env.global_offset + env.fixed_offset[code % 12];
+    let new_code = code + env.global_offset + env.fixed_offset[code % 12];
     return new_code;
 }
 
@@ -366,15 +410,15 @@ function parse(tape) {
     console.log("------- start parsing -------");
     console.log(`tape: \n ${tape} \n`);
     lines = [], triggers = [];
-    var interval = 60 * 4 * 1000 / env.bpm / env.time2;
-    var velc = env.velocity;
-    var stack = []; stack.push(1);
-    var cnt = 0;
-    var sum = 0;
-    var getTop = arr => arr[arr.length - 1];
-    var tmpoffset = 0, octoffset = 0;
-    var startoffset = Math.max(500, drop_time - interval * env.time1);
-    for (var i = 0, drum_note, beat_type; i < env.time1; i++) {
+    let interval = 60 * 4 * 1000 / env.bpm / env.time2;
+    let velc = env.velocity;
+    let stack = []; stack.push(1);
+    let cnt = 0;
+    let sum = 0;
+    let getTop = arr => arr[arr.length - 1];
+    let tmpoffset = 0, octoffset = 0;
+    let startoffset = Math.max(500, drop_time - interval * env.time1);
+    for (let i = 0, drum_note, beat_type; i < env.time1; i++) {
         if (beat[env.time1] != undefined) {
             beat_type = beat[env.time1][i];
         } else {
@@ -391,7 +435,7 @@ function parse(tape) {
                 drum_note = "conga-low";
             break;
         }
-        bgm_notes.push({
+        bgm.notes.push({
             instrument: "drum",
             options: {
                 note: drum_note,
@@ -400,10 +444,10 @@ function parse(tape) {
         });
     }
     sum = env.time1;
-    var chord_note_cnt = [0, 0, 0, 0, 0, 0, 0, 0];
+    let chord_note_cnt = [0, 0, 0, 0, 0, 0, 0, 0];
     console.log(tape);
-    for (var i = 0; i < tape.length; i++) {
-        var key = tape.charCodeAt(i);
+    for (let i = 0; i < tape.length; i++) {
+        let key = tape.charCodeAt(i);
         console.log(i, tape[i], key);
         switch (tape[i]) {
             case '(':
@@ -413,8 +457,8 @@ function parse(tape) {
                 break;
             case ')':
                 stack.pop();
-                var minid = 10, maxid = 0;
-                for (var j = 1; j <= column_cnt; j++) {
+                let minid = 10, maxid = 0;
+                for (let j = 1; j <= column_cnt; j++) {
                     if (chord_note_cnt[j] >= 1) {
                         minid = Math.min(minid, j);
                         maxid = Math.max(maxid, j);
@@ -425,7 +469,7 @@ function parse(tape) {
                                 type: 1,
                                 used: 0,
                             });
-                            //bgm_notes.push({
+                            //bgm.notes.push({
                             //    instrument: "drum",
                             //    time: sum * interval + startoffset,
                             //    options: {
@@ -439,7 +483,7 @@ function parse(tape) {
                                 type: 0,
                                 used: 0,
                             });
-                            //bgm_notes.push({
+                            //bgm.notes.push({
                             //    instrument: "drum",
                             //    time: sum * interval + startoffset,
                             //    options: {
@@ -502,9 +546,9 @@ function parse(tape) {
                 break;
 
             default:
-                var cur_step = getTop(stack);
-                var note_code = code_wrap(key2note.get(key) + tmpoffset + octoffset * 12);
-                bgm_notes.push({
+                let cur_step = getTop(stack);
+                let note_code = code_wrap(key2note.get(key) + tmpoffset + octoffset * 12);
+                bgm.notes.push({
                     instrument: "piano",
                     options: {
                         note: note_code,
@@ -521,7 +565,7 @@ function parse(tape) {
                         type: 0,
                         used: 0
                     });
-                    //bgm_notes.push({
+                    //bgm.notes.push({
                     //    instrument: "drum",
                     //    time: sum * interval + startoffset,
                     //    options: {
@@ -535,7 +579,7 @@ function parse(tape) {
                 break;
         }
     }
-    bgm_notes.sort((a, b) => a.time - b.time);
+    bgm.notes.sort((a, b) => a.time - b.time);
     console.log(`------- parsed ${triggers.length} / ${lines.length} -------`);
 }
 
