@@ -213,7 +213,7 @@ function hit(col) {
     let id = -1;
     stage.triggers[col].forEach((candidate_id) => {
         const tri = triggers[candidate_id];
-        if (tri.used == 0 && 
+        if (tri.hitted == 0 && 
             (id == -1 || Math.abs(time - triggers[id].time) > Math.abs(time - triggers[candidate_id].time))) {
             id = candidate_id;
         }
@@ -222,7 +222,7 @@ function hit(col) {
     const diff = time - triggers[id].time;
     const absdiff = Math.abs(diff);
     if (absdiff <= catch_time) {
-        triggers[id].used = 1;
+        triggers[id].hitted = 1;
         const ele = document.getElementById(`ingame-trigger-${id}`);
         ele.style.opacity = 0;
         if (absdiff > miss_time) {
@@ -410,7 +410,7 @@ function play() {
         });
         for (let i = 1, id; i <= column_cnt; i++) {
             stage.triggers[i].forEach((id) => {
-                if (triggers[id].used == 0) {
+                if (triggers[id].hitted == 0) {
                     const element = document.getElementById(`ingame-trigger-${id}`);
                     const time = clock.get() - (triggers[id].time - trigger_time);
                     const pos = (time / drop_time) * (end_pos - start_pos) + start_pos;
@@ -419,7 +419,7 @@ function play() {
                         element.style.backgroundColor = "#f99";
                         element.style.opacity = 0;
                         element.style.boxShadow = "0 0 40px 10px #f55, 0 0 20px 0px #f55 inset";
-                        triggers[id].used = 1;
+                        triggers[id].hitted = 1;
                         console.log(`miss at ${i}`);
                         const status_ele = draw_status(i, "miss", "#f55");
                         setTimeout(() => {remove_element(status_ele)}, 1000);
@@ -503,7 +503,7 @@ function parse(tape) {
                                 column: j,
                                 time: sum * interval + startoffset,
                                 type: 1,
-                                used: 0,
+                                hitted: 0,
                             });
                             //bgm.notes.push({
                             //    instrument: "drum",
@@ -517,7 +517,7 @@ function parse(tape) {
                                 column: j,
                                 time: sum * interval + startoffset,
                                 type: 0,
-                                used: 0,
+                                hitted: 0,
                             });
                             //bgm.notes.push({
                             //    instrument: "drum",
@@ -599,7 +599,7 @@ function parse(tape) {
                         column: note2col[key],
                         time: sum * interval + startoffset,
                         type: 0,
-                        used: 0
+                        hitted: 0
                     });
                     //bgm.notes.push({
                     //    instrument: "drum",
