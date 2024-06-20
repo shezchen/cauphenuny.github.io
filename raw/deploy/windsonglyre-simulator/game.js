@@ -149,8 +149,12 @@ const perfect_time = 50, miss_time = 100, catch_time = 250;
 const levels = [
     { score: 147, name: "SS"},
     { score: 120, name: "S" },
-    { score:  90, name: "A" },
+    { score:  97, name: "A+" },
+    { score:  93, name: "A" },
+    { score:  87, name: "A-" },
+    { score:  83, name: "B+" },
     { score:  80, name: "B" },
+    { score:  70, name: "B-" },
     { score:  60, name: "C" },
     { score:   0, name: "D" },
 ];
