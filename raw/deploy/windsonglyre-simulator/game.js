@@ -128,7 +128,8 @@ function remove_line(id) {
 
 const status_elements = document.getElementsByClassName('status');
 var score, combo;
-const perfect_time = 50, miss_time = 100, catch_time = 150;
+const perfect_time = 50, miss_time = 100, catch_time = 250;
+const SS = 150, S = 100, A = 85, B = 70, C = 50, D = 0;
 
 for (var i = 0; i < status_elements.length; i++) {
     status_elements[i].innerHTML = "<img class=\"stat-img\"src=./scores/perfect.png></img>";
@@ -142,7 +143,6 @@ function reflesh() {
 }
 
 function hit(col) {
-    console.log(`hit ${col}`);
     const time = clock.get();
     var id = -1;
     onstage_triggers[col].forEach((candidate_id) => {
@@ -153,24 +153,26 @@ function hit(col) {
         }
     });
     if (id == -1) return;
-    const diff = Math.abs(time - triggers[id].time);
-    console.log(`diff: ${diff} id: ${id}`);
-    if (diff <= catch_time) {
+    const diff = time - triggers[id].time;
+    const absdiff = Math.abs(diff);
+    if (absdiff <= catch_time) {
         triggers[id].used = 1;
         const ele = document.getElementById(`ingame-trigger-${id}`);
         ele.style.opacity = 0;
-        if (diff > miss_time) {
+        if (absdiff > miss_time) {
             ele.style.backgroundColor = "#f99";
             combo = 0;
-            console.log("bad");
+            console.log(`bad at ${col}, diff: ${diff}`);
         } else {
             drum.start({ note: id2note[triggers[id].type] });
             combo++;
-            if (diff <= perfect_time) {
+            if (absdiff <= perfect_time) {
+                console.log(`perfect at ${col}, diff: ${diff}`);
                 ele.style.backgroundColor = "#afa";
                 score += 5;
             } else {
-                ele.style.backgroundColor = "#9bf";
+                console.log(`good at ${col}, diff: ${diff}`);
+                ele.style.backgroundColor = "#9cf";
                 score += 3;
             }
         }
@@ -184,7 +186,7 @@ document.addEventListener("keydown", function(event) {
     if (event.repeat) {
         return;
     }
-    console.log(`${key} ${code} down`);
+    //console.log(`${key} ${code} down`);
     if (event.ctrlKey || event.altKey || event.metaKey) {
         return;
     }
@@ -215,7 +217,7 @@ document.addEventListener("keydown", function(event) {
 document.addEventListener("keyup", function(event) {
     var key = event.key.toUpperCase();
     var code = key.charCodeAt();
-    console.log(`${key} ${code} up`);
+    //console.log(`${key} ${code} up`);
     if (key == " ") return;
     var index = available_key.indexOf(key);
     if (index != -1) {
@@ -334,7 +336,7 @@ function play() {
                         element.style.backgroundColor = "#f99";
                         element.style.opacity = 0;
                         triggers[id].used = 1;
-                        console.log("miss");
+                        console.log(`miss at ${i}`);
                         combo = 0;
                         reflesh();
                     }
