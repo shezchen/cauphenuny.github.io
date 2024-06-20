@@ -510,11 +510,15 @@ function parse(tape) {
     function int_beat(count) {
         return Math.abs(Math.round(count) - count) <= 1e-10;
     }
+    function semi_beat(count) {
+        count *= 2;
+        return Math.abs(Math.round(count) - count) <= 1e-10;
+    }
     function all_beat(count) {
         return true;
     }
     let priority = [5, 4, 6, 3, 7, 1]; // 和弦中加入音的优先级
-    let check = [strong_beat, int_beat, int_beat, all_beat, all_beat];
+    let check = [strong_beat, int_beat, int_beat, semi_beat, all_beat];
     let limit = [2, 2, 2, 2, 6];
     for (let i = 0; i < tape.length; i++) {
         let key = tape.charCodeAt(i);
