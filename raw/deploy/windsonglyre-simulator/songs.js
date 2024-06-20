@@ -353,3 +353,10 @@ var zenzenzense = `前前前世
 <[A..S]A./.B{FDS}/A.../..AS/[DSDFDSAS][DSDFD.SA]
 ]
 `;
+
+var sad_machine = `Sad Machine
+[
+[E..E..]E.[UT]U[TR]/[E..E..]E.[UT]U[TR]/
+[E..E..]E.[UT]U[TR]/[E..(QE)..](QE).[U^Q^]T[TR]/
+]
+`;
