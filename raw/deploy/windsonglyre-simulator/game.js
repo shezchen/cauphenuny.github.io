@@ -127,12 +127,19 @@ function remove_line(id) {
 }
 
 const status_elements = document.getElementsByClassName('status');
+var score, combo;
+const perfect_time = 50, miss_time = 100, catch_time = 150;
 
 for (var i = 0; i < status_elements.length; i++) {
     status_elements[i].innerHTML = "<img class=\"stat-img\"src=./scores/perfect.png></img>";
 }
 
 const id2note = ["hihat-close", "hihat-open"];
+
+function reflesh() {
+    const score_element = document.getElementById('score');
+    score_element.innerHTML = ` | score: ${score}, combo: ${combo}`
+}
 
 function hit(col) {
     console.log(`hit ${col}`);
@@ -148,20 +155,26 @@ function hit(col) {
     if (id == -1) return;
     const diff = Math.abs(time - triggers[id].time);
     console.log(`diff: ${diff} id: ${id}`);
-    if (diff <= 200) {
+    if (diff <= catch_time) {
         triggers[id].used = 1;
         const ele = document.getElementById(`ingame-trigger-${id}`);
         ele.style.opacity = 0;
-        if (diff > 100) {
+        if (diff > miss_time) {
             ele.style.backgroundColor = "#f99";
+            combo = 0;
+            console.log("bad");
         } else {
             drum.start({ note: id2note[triggers[id].type] });
-            if (diff <= 50) {
+            combo++;
+            if (diff <= perfect_time) {
                 ele.style.backgroundColor = "#afa";
+                score += 5;
             } else {
-                ele.style.backgroundColor = "#99f";
+                ele.style.backgroundColor = "#9bf";
+                score += 3;
             }
         }
+        reflesh();
     }
 }
 
@@ -216,6 +229,7 @@ document.addEventListener("keyup", function(event) {
 });
 
 function play() {
+    score = 0, combo = 0;
     console.log(`------- start playing (bgm_count:${bgm_notes.length}) -------`);
     const events = [];
     for (var i = 0; i < lines.length; i++) {
@@ -310,18 +324,20 @@ function play() {
         });
         for (var i = 1, id; i <= column_cnt; i++) {
             onstage_triggers[i].forEach((id) => {
-                var element = document.getElementById(`ingame-trigger-${id}`);
-                var time = clock.get() - (triggers[id].time - trigger_time);
-                var pos = (time / drop_time) * (end_pos - start_pos) + start_pos;
-                if (time > trigger_time + 150) {
-                    element.style.backgroundColor = "#f99";
-                    element.style.opacity = 0;
-                    triggers[id].used = 1;
-                    console.log("miss");
-                }
                 if (triggers[id].used == 0) {
-                    element.style.top = pos + "%";
-                }
+                    var element = document.getElementById(`ingame-trigger-${id}`);
+                    var time = clock.get() - (triggers[id].time - trigger_time);
+                    var pos = (time / drop_time) * (end_pos - start_pos) + start_pos;
+                        element.style.top = pos + "%";
+                    }
+                    if (time > trigger_time + miss_time) {
+                        element.style.backgroundColor = "#f99";
+                        element.style.opacity = 0;
+                        triggers[id].used = 1;
+                        console.log("miss");
+                        combo = 0;
+                        reflesh();
+                    }
                 //console.log(`set #${id} to ${pos}%`);
             });
         }
