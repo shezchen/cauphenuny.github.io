@@ -71,6 +71,12 @@ function create_clock() {
     function is_paused() {
         return pause_time != 0;
     }
+    function forward(milliseconds) {
+        start_time -= milliseconds;
+    }
+    function backward(milliseconds) {
+        start_time += milliseconds;
+    }
     return {
         start: start,
         get: get,
@@ -161,6 +167,7 @@ function hit(col) {
         ele.style.opacity = 0;
         if (absdiff > miss_time) {
             ele.style.backgroundColor = "#f99";
+            ele.style.boxShadow = "0 0 40px 10px #f55, 0 0 20px 0px #f55 inset";
             combo = 0;
             console.log(`bad at ${col}, diff: ${diff}`);
         } else {
@@ -169,10 +176,12 @@ function hit(col) {
             if (absdiff <= perfect_time) {
                 console.log(`perfect at ${col}, diff: ${diff}`);
                 ele.style.backgroundColor = "#afa";
+                ele.style.boxShadow = "0 0 40px 10px #8f8, 0 0 20px 0px #8f8 inset";
                 score += 5;
             } else {
                 console.log(`good at ${col}, diff: ${diff}`);
                 ele.style.backgroundColor = "#9cf";
+                ele.style.boxShadow = "0 0 40px 10px #6af, 0 0 20px 0px #6af inset";
                 score += 3;
             }
         }
@@ -530,7 +539,9 @@ function parse(tape) {
     console.log(`------- parsed ${triggers.length} / ${lines.length} -------`);
 }
 
-document.getElementById('gamestart').onclick = () => {
+const gamestart_button = document.getElementById('gamestart');
+gamestart_button.onclick = () => {
+    gamestart_button.parentNode.removeChild(gamestart_button);
     parse(tape.main);
     new Promise((resolve, reject) => { play() });
 };
