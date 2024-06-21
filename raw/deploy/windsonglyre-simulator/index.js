@@ -241,13 +241,14 @@ document.getElementById("start").onclick = () => {
     play(input.main), play(input.sub);
 }
 document.getElementById("gamestart").onclick = () => {
-  var input = fetch_input();
-  console.log(input);
-  localStorage.setItem('tape', JSON.stringify(input));
-  localStorage.setItem('env', JSON.stringify(env));
-  localStorage.setItem('delay', document.getElementById("delay").value);
-  localStorage.setItem('difficulty', document.getElementById("difficulty-select").selectedIndex);
-  window.location.href = './game.html'
+    stop();
+    var input = fetch_input();
+    console.log(input);
+    localStorage.setItem('tape', JSON.stringify(input));
+    localStorage.setItem('env', JSON.stringify(env));
+    localStorage.setItem('delay', document.getElementById("delay").value);
+    localStorage.setItem('difficulty', document.getElementById("difficulty-select").selectedIndex);
+    window.location.href = './game.html'
 }
 document.getElementById("vel-add").onclick = () => {
     if (env.velocity < 9) env.velocity++;

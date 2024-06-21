@@ -17,15 +17,19 @@ function remove_element(ele) {
     par.removeChild(ele);
 }
 
-const position_diff = 10, mid = 4, column_cnt = 7;
 const all_note = "ASDFGHJZXCVBNMQWERTYU";
 let note2col = [];
 let key2col = [];
 let position = [];
 let available_key = "";
 
+const drop_time = 1500;
+const trigger_time = drop_time * 0.80 + delay;
+const start_pos = 0, end_pos = 85, trigger_pos = (trigger_time / drop_time) * (end_pos - start_pos) + start_pos;
+const trigger_duration = trigger_pos - start_pos, all_duration = end_pos - start_pos;
+
 for (let i = 1; i <= 7; i++) {
-    const pos = (i - mid) * position_diff + 50;
+    const pos = (i - 4) * 10 + 50;
     position[i] = pos;
     const buttom = document.getElementById("btm" + i);
     buttom.style.left = "50%";
@@ -35,7 +39,11 @@ for (let i = 1; i <= 7; i++) {
     point.style.left = "50%";
     const column= document.getElementById('column' + i);
     column.style.left = pos + "%";
+    const trigger_ptn = document.getElementById('ptn' + i);
+    trigger_ptn.style.top = trigger_pos + "%";
 }
+const trigger_line = document.getElementById('trigger-line');
+trigger_line.style.top = trigger_pos + "%";
 
 if (difficulty >= 2) {
     available_key = "SDF JKL";
@@ -52,7 +60,6 @@ if (difficulty >= 2) {
     note2col["V".charCodeAt()] = 3;
 
     remove_element(document.getElementById("column4"));
-    remove_element(document.getElementById("trigger-line2"));
 } else {
     available_key = " DF JK "
     let merge = [0, 2, 3, 3, 5, 5, 6, 6];
@@ -67,7 +74,7 @@ if (difficulty >= 2) {
     remove_element(document.getElementById("column1"));
     remove_element(document.getElementById("column4"));
     remove_element(document.getElementById("column7"));
-    remove_element(document.getElementById("trigger-line"));
+    trigger_line.style.width = "40%";
 }
 
 
@@ -81,10 +88,6 @@ let bgm = {
 };
 
 let triggers = [], lines = [];
-
-const drop_time = 1200, start_pos = 0, trigger_pos = 70, end_pos = 85;
-const trigger_duration = trigger_pos - start_pos, all_duration = end_pos - start_pos;
-const trigger_time = Math.round(drop_time / (all_duration) * (trigger_duration));
 
 function create_clock() {
     let start_time, pause_time;
@@ -128,7 +131,7 @@ let stage = {
     triggers: [],
 };
 
-for (let i = 1; i <= column_cnt; i++) {
+for (let i = 1; i <= 7; i++) {
     stage.triggers[i] = new Set();
 }
 
@@ -165,7 +168,7 @@ function remove_line(id) {
 }
 
 const status_elements = document.getElementsByClassName('status');
-const perfect_time = 50, miss_time = 100, catch_time = 250;
+const perfect_time = 50, miss_time = 100, catch_time = 200;
 const levels = [
     { score: 147, name: "SS"},
     { score: 120, name: "S" },
@@ -428,7 +431,7 @@ function play() {
             const pos = (time / drop_time) * (end_pos - start_pos) + start_pos;
             element.style.top = pos + "%";
         });
-        for (let i = 1, id; i <= column_cnt; i++) {
+        for (let i = 1, id; i <= 7; i++) {
             stage.triggers[i].forEach((id) => {
                 if (triggers[id].hitted == 0) {
                     const element = document.getElementById(`ingame-trigger-${id}`);
