@@ -153,7 +153,7 @@ function fetch_input() {
     };
     return inputs;
 }
-document.getElementById("submit").onclick = () => {
+function read_option() {
     env.bpm = parseInt(document.getElementById("bpm").value);
     const selectElement = document.getElementById('offset_option');
     const selectedOption = selectElement.options[selectElement.selectedIndex];
@@ -169,6 +169,12 @@ document.getElementById("submit").onclick = () => {
     env.time1 = parseInt(document.getElementById("time_sign1").value);
     env.time2 = parseInt(document.getElementById("time_sign2").value);
     refresh();
+}
+document.getElementById("submit").onclick = () => {
+    read_option();
+}
+document.getElementById("bpm-submit").onclick = () => {
+    read_option();
 }
 
 document.getElementById("stop").onclick = () => {
