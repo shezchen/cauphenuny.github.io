@@ -232,7 +232,7 @@ function draw_status(col, name, color = "#fff") {
 }
 
 function hit(col) {
-    const time = clock.get() - delay;
+    const time = clock.get();
     let id = -1;
     stage.triggers[col].forEach((candidate_id) => {
         const tri = triggers[candidate_id];
