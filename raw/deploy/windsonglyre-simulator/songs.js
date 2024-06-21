@@ -357,6 +357,10 @@ var zenzenzense = `前前前世
 var sad_machine = {
     main: 
 `Sad Machine（还没写完）
+# 原曲：Porter Robinson
+# 钢琴改编：Xeuphoria
+# 扒谱：B站up主蓝莓夹心奥利奥
+# 转写：我
 [
 >>
 [E..E..]E.[UT]U[TR]/[E..E..]E.[UT]U[TR]/
