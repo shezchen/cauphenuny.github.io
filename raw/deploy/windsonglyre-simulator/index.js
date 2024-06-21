@@ -259,9 +259,15 @@ function gamestart() {
     window.location.href = './game.html'
 }
 document.getElementById("gamestart").onclick = () => {
+    localStorage.setItem('is_tutorial', "0");
     gamestart();
 }
 document.getElementById("gamestart2").onclick = () => {
+    localStorage.setItem('is_tutorial', "0");
+    gamestart();
+}
+document.getElementById("gametutorial").onclick = () => {
+    localStorage.setItem('is_tutorial', "1");
     gamestart();
 }
 document.getElementById("vel-add").onclick = () => {

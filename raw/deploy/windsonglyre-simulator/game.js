@@ -1,6 +1,7 @@
 let tape = localStorage.getItem('tape');
 let env = JSON.parse(localStorage.getItem('env'));
 let delay = parseInt(localStorage.getItem('delay'));
+let is_tutorial = parseInt(localStorage.getItem('is_tutorial'));
 let difficulty = parseInt(localStorage.getItem('difficulty'));
 console.log(`环境：${env}`);
 console.log(`谱子：${tape}`);
@@ -10,6 +11,19 @@ tape = JSON.parse(tape);
 import { key2note, velocity_levels, velocity_adj, init_constants, beat } from './constants.js'
 init_constants();
 import { keyup_animation, keydown_animation } from './keyboard.js'
+
+const colors = {
+    fill: {
+        red: "#f99",
+        green: "#afa",
+        blue: "9cf",
+    },
+    shadow: {
+        red: "#f55",
+        green: "#8f9",
+        blue: "#6af",
+    },
+}
 
 function remove_element(ele) {
     if (ele == undefined) return;
@@ -43,6 +57,13 @@ for (let i = 1; i <= 7; i++) {
     trigger_ptn.style.top = trigger_pos + "%";
 }
 const trigger_line = document.getElementById('trigger-line');
+const screen = document.getElementById('screen');
+const info_window = document.getElementById('info-window');
+const title_element = document.getElementById('song-name');
+const song_info_element = document.getElementById('song-info');
+title_element.innerHTML = tape.name;
+const level2name = ['简单','较简单','普通','较困难','困难'];
+song_info_element.innerHTML = `${level2name[difficulty]} / bpm: ${env.bpm}`;
 trigger_line.style.top = trigger_pos + "%";
 
 if (difficulty >= 2) {
@@ -87,7 +108,7 @@ let bgm = {
     mute: 0,
 };
 
-let triggers = [], lines = [];
+const triggers = [], lines = [];
 
 function create_clock() {
     let start_time, pause_time;
@@ -121,6 +142,8 @@ function create_clock() {
         pause: pause,
         resume: resume,
         is_paused: is_paused,
+        forward: forward,
+        backward: backward,
     };
 }
 
@@ -232,6 +255,7 @@ function draw_status(col, name) {
 }
 
 function hit(col) {
+    if (is_tutorial == 1) return;
     const time = clock.get();
     let id = -1;
     stage.triggers[col].forEach((candidate_id) => {
@@ -249,8 +273,8 @@ function hit(col) {
         const ele = document.getElementById(`ingame-trigger-${id}`);
         ele.style.opacity = 0;
         if (absdiff > miss_time) {
-            ele.style.backgroundColor = "#f99";
-            ele.style.boxShadow = "0 0 40px 10px #f55, 0 0 20px 0px #f55 inset";
+            ele.style.backgroundColor = colors.fill.red;
+            ele.style.boxShadow = `0 0 40px 10px ${colors.shadow.red}, 0 0 20px 0px ${colors.shadow.red} inset`;
             score.combo = 0;
             score.miss++;
             console.log(`bad at ${col}, diff: ${diff}`);
@@ -268,15 +292,15 @@ function hit(col) {
             }
             if (absdiff <= perfect_time) {
                 console.log(`perfect at ${col}, diff: ${diff}`);
-                ele.style.backgroundColor = "#afa";
-                ele.style.boxShadow = "0 0 40px 10px #8f9, 0 0 20px 0px #8f9 inset";
+                ele.style.backgroundColor = colors.fill.green;
+                ele.style.boxShadow = `0 0 40px 10px ${colors.shadow.green}, 0 0 20px 0px ${colors.shadow.green} inset`;
                 score.sum += 5;
                 const status_ele = draw_status(col, "perfect");
                 setTimeout(() => {remove_element(status_ele)}, 1000);
             } else {
                 console.log(`good at ${col}, diff: ${diff}`);
-                ele.style.backgroundColor = "#9cf";
-                ele.style.boxShadow = "0 0 40px 10px #6af, 0 0 20px 0px #6af inset";
+                ele.style.backgroundColor = colors.fill.blue;
+                ele.style.boxShadow = `0 0 40px 10px ${colors.shadow.blue}, 0 0 20px 0px ${colors.shadow.blue} inset`;
                 score.sum += 3;
                 const status_ele = draw_status(col, "good");
                 setTimeout(() => {remove_element(status_ele)}, 1000);
@@ -286,58 +310,27 @@ function hit(col) {
     }
 }
 
-document.addEventListener("keydown", function(event) {
-    let key = event.key.toUpperCase();
-    let code = key.charCodeAt();
-    if (event.repeat) {
-        return;
-    }
-    //console.log(`${key} ${code} down`);
-    if (event.ctrlKey || event.altKey || event.metaKey) {
-        return;
-    }
-    if (key == " " || key == "ESCAPE") {
-        if (clock.is_paused()) {
-            clock.resume();
-        } else {
-            clock.pause();
-        }
-        return;
-    }
-    let index = available_key.indexOf(key);
-    if (index != -1) {
-        hit(key2col[code]);
-        //const stat_ele = document.getElementById("status" + index);
-        //const point_ele = document.getElementById("ptn" + index);
-        //stat_ele.style.opacity = 1;
-        //setTimeout(function() {
-        //    stat_ele.style.opacity = 0;
-        //}, 100);
-        //point_ele.style.boxShadow = "0 0 40px 10px #0f0, 0 0 20px 0px #0f0 inset";
-        keydown_animation(code);
-        //draw_note(index + 1);
-    }
-});
+function is_paused() {
+    return clock.is_paused();
+}
 
-document.addEventListener("keyup", function(event) {
-    const key = event.key.toUpperCase();
-    const code = key.charCodeAt();
-    //console.log(`${key} ${code} up`);
-    if (key == " ") return;
-    let index = available_key.indexOf(key);
-    if (index != -1) {
-        index++;
-        const stat_ele = document.getElementById("status" + index);
-        const point_ele = document.getElementById("ptn" + index);
-        point_ele.style.boxShadow = "";
-        keyup_animation(code);
-    }
-});
+function pause() {
+    clock.pause();
+    screen.style.filter = "brightness(0.3)";
+    info_window.style.opacity = "1";
+}
+
+function resume() {
+    screen.style.filter = "brightness(1)";
+    clock.resume();
+    info_window.style.opacity = "0";
+}
+
+const events = [];
 
 function play() {
     score.init();
     console.log(`------- start playing (bgm_count:${bgm.notes.length}) -------`);
-    const events = [];
     for (let i = 0; i < lines.length; i++) {
         events.push({
             time: lines[i].time - trigger_time,
@@ -438,17 +431,26 @@ function play() {
                     const time = clock.get() - (triggers[id].time - trigger_time);
                     const pos = (time / drop_time) * (end_pos - start_pos) + start_pos;
                     element.style.top = pos + "%";
-                    //if (time > trigger_time + miss_time) {
-                    if (time > trigger_time) {
-                        //element.style.backgroundColor = "#f99";
-                        element.style.backgroundColor = "#afa";
+                    if (is_tutorial == 1 && time >= trigger_time) {
                         element.style.opacity = 0;
-                        //element.style.boxShadow = "0 0 40px 10px #f55, 0 0 20px 0px #f55 inset";
-                        element.style.boxShadow = "0 0 40px 10px #8f9, 0 0 20px 0px #8f9 inset";
+                        element.style.backgroundColor = colors.fill.green;
+                        element.style.boxShadow = `0 0 40px 10px ${colors.shadow.green}, 0 0 20px 0px ${colors.shadow.green} inset`;
+                        triggers[id].hitted = 1;
+                        console.log(`fake_perfect at ${i}`);
+                        const status_ele = draw_status(i, "perfect");
+                        setTimeout(() => {remove_element(status_ele)}, 1000);
+                        score.combo++;
+                        score.hit++;
+                        score.sum += 5;
+                        reflesh();
+                    }
+                    if (time > trigger_time + miss_time) {
+                        element.style.opacity = 0;
+                        element.style.backgroundColor = colors.fill.red;
+                        element.style.boxShadow = `0 0 40px 10px ${colors.shadow.red}, 0 0 20px 0px ${colors.shadow.red} inset`;
                         triggers[id].hitted = 1;
                         console.log(`miss at ${i}`);
-                        //const status_ele = draw_status(i, "miss", "#f55");
-                        const status_ele = draw_status(i, "perfect");
+                        const status_ele = draw_status(i, "miss");
                         setTimeout(() => {remove_element(status_ele)}, 1000);
                         score.combo = 0;
                         score.miss++;
@@ -508,7 +510,7 @@ function parse(tape, check = [], cur_env) {
     sum = cur_env.time1;
     let chord_note_cnt = [0, 0, 0, 0, 0, 0, 0, 0];
     console.log(tape);
-    let priority = [5, 4, 6, 3, 7, 1]; // 和弦中加入音的优先级
+    let priority = [5, 3, 6, 2, 7, 1]; // 和弦中加入音的优先级
     let limit = [1, 2, 2, 2, 6];
     for (let i = 0; i < tape.length; i++) {
         let key = tape.charCodeAt(i);
@@ -522,7 +524,7 @@ function parse(tape, check = [], cur_env) {
             case ')':
                 stack.pop();
                 let minid = 10, maxid = 0;
-                if (check.length == 0 || !check[difficulty](sum)) {
+                if (check.length == 0 || check[difficulty](sum) == false) {
                     cnt += getTop(stack);
                     sum += getTop(stack);
                     continue;
@@ -540,13 +542,16 @@ function parse(tape, check = [], cur_env) {
                             type: 1,
                             hitted: 0,
                         });
-                        bgm.notes.push({
-                            instrument: "drum",
-                            time: sum * interval + startoffset,
-                            options: {
-                                note: "hihat-open",
-                            }
-                        });
+                        if (is_tutorial == 1) {
+                            bgm.notes.push({
+                                instrument: "drum",
+                                time: sum * interval + startoffset,
+                                options: {
+                                    note: "hihat-open",
+                                }
+                            });
+                        }
+                        //console.log("add1");
                     }
                 }
                 for (let k = 0; k < priority.length && chord_cnt < limit[difficulty]; k++) {
@@ -561,13 +566,16 @@ function parse(tape, check = [], cur_env) {
                             type: 0,
                             hitted: 0,
                         });
-                        bgm.notes.push({
-                            instrument: "drum",
-                            time: sum * interval + startoffset,
-                            options: {
-                                note: "hihat-close",
-                            }
-                        });
+                        if (is_tutorial == 1) {
+                            bgm.notes.push({
+                                instrument: "drum",
+                                time: sum * interval + startoffset,
+                                options: {
+                                    note: "hihat-close",
+                                }
+                            });
+                        }
+                        //console.log("add0");
                     }
                 }
                 if (minid < maxid) {
@@ -644,13 +652,15 @@ function parse(tape, check = [], cur_env) {
                             type: 0,
                             hitted: 0
                         });
-                        bgm.notes.push({
-                            instrument: "drum",
-                            time: sum * interval + startoffset,
-                            options: {
-                                note: "hihat-close",
-                            }
-                        });
+                        if (is_tutorial == 1) {
+                            bgm.notes.push({
+                                instrument: "drum",
+                                time: sum * interval + startoffset,
+                                options: {
+                                    note: "hihat-close",
+                                }
+                            });
+                        }
                     }
                     cnt += cur_step;
                     sum += cur_step;
@@ -663,7 +673,13 @@ function parse(tape, check = [], cur_env) {
 }
 
 function gameinit() {
-    lines = [], triggers = [];
+    lines.length = 0, triggers.length = 0, events.length = 0;
+    bgm.mute = 0;
+    bgm = {
+        notes: [],
+        mute: 0,
+    };
+    clock.start();
 }
 
 function gamestart() {
@@ -700,12 +716,80 @@ function gamestart() {
     new Promise((resolve, reject) => { play() });
 }
 
-const gamestart_button = document.getElementById('gamestart');
-gamestart_button.onclick = () => {
-    gamestart_button.parentNode.removeChild(gamestart_button);
-    gamestart();
-};
+function gamestop() {
+    if (events.length) {
+        bgm.mute = 1;
+        clock.forward(events[events.length - 1].time);
+    }
+    resume();
+}
+
+function restart() {
+    gamestop();
+    setTimeout(() => {gamestart()}, 500);
+}
+
+function back_to_home() {
+    gamestop();
+    window.history.back();
+}
 
 window.onload = function() {
+    gamestart();
+    pause();
 };
+
+document.addEventListener("keydown", function(event) {
+    let key = event.key.toUpperCase();
+    let code = key.charCodeAt();
+    if (event.repeat) {
+        return;
+    }
+    //console.log(`${key} ${code} down`);
+    if (event.ctrlKey || event.altKey || event.metaKey) {
+        return;
+    }
+    if (key == " ") {
+        if (is_paused()) {
+            resume();
+        } else {
+            pause();
+        }
+        return;
+    }
+    if (key == "ESCAPE" && is_paused()) {
+        restart();
+    }
+    if (key == "BACKSPACE" && is_paused()) {
+        back_to_home();
+    }
+    let index = available_key.indexOf(key);
+    if (index != -1) {
+        hit(key2col[code]);
+        //const stat_ele = document.getElementById("status" + index);
+        //const point_ele = document.getElementById("ptn" + index);
+        //stat_ele.style.opacity = 1;
+        //setTimeout(function() {
+        //    stat_ele.style.opacity = 0;
+        //}, 100);
+        //point_ele.style.boxShadow = "0 0 40px 10px #0f0, 0 0 20px 0px #0f0 inset";
+        keydown_animation(code);
+        //draw_note(index + 1);
+    }
+});
+
+document.addEventListener("keyup", function(event) {
+    const key = event.key.toUpperCase();
+    const code = key.charCodeAt();
+    //console.log(`${key} ${code} up`);
+    if (key == " ") return;
+    let index = available_key.indexOf(key);
+    if (index != -1) {
+        index++;
+        const stat_ele = document.getElementById("status" + index);
+        const point_ele = document.getElementById("ptn" + index);
+        point_ele.style.boxShadow = "";
+        keyup_animation(code);
+    }
+});
 
