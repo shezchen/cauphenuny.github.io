@@ -23,7 +23,7 @@ let key2col = [];
 let position = [];
 let available_key = "";
 
-const drop_time = 1500;
+const drop_time = 1200;
 const trigger_time = drop_time * 0.80 + delay;
 const start_pos = 0, end_pos = 85, trigger_pos = (trigger_time / drop_time) * (end_pos - start_pos) + start_pos;
 const trigger_duration = trigger_pos - start_pos, all_duration = end_pos - start_pos;
