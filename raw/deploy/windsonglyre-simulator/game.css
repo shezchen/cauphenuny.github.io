@@ -119,9 +119,14 @@
     left: 150%;
     transform: translate(-50%, -50%);
 }
+@font-face {
+  font-family: 'HYWenHei';
+  src: url('./fonts/HYWenHei-65W-3.ttf') format('truetype');
+}
 span, p {
     color: white;
-    text-shadow: 0 0 3px rgba(255, 255, 255, 0.8), 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.8)
+    text-shadow: 0 0 3px rgba(255, 255, 255, 0.8), 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.8);
+    font-family: 'HYWenHei',Arial;
 }
 #screen {
     background-image: url('./background/2-blur18px.jpg');

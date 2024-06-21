@@ -14,12 +14,21 @@ img {
 h1{
     text-align: center;
 }
+@font-face {
+  font-family: 'HYWenHei';
+  src: url('./fonts/HYWenHei-65W-3.ttf') format('truetype');
+}
+body {
+    font-family: 'HYWenHei',Arial,sans-serif;
+}
 select, input[type='number'] {
     padding: 0.1em;
     border: 1px solid;
     border-radius: 0.3em;
+    font-family: 'HYWenHei',Arial,sans-serif;
 }
 button, input[type='button'] {
+    font-family: 'HYWenHei',Arial,sans-serif;
     background-color: #fff9ef;
     border: 1px solid #000;
     border-radius: 0.4em;
