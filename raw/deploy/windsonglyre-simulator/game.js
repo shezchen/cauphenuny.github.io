@@ -203,7 +203,7 @@ function remove_line(id) {
 }
 
 const status_elements = document.getElementsByClassName('status');
-const perfect_time = 50, miss_time = 100, catch_time = 200;
+const perfect_time = 50, miss_time = 100, catch_time = 350;
 const levels = [
     { score: 147, name: "SS"},
     { score: 120, name: "S" },
