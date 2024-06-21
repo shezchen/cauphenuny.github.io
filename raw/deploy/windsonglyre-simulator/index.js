@@ -52,6 +52,11 @@ function init() {
         refresh();
     }
 }
+function try_init() {
+    if (document.getElementById('input').value == "加载中……") {
+        init();
+    }
+}
 function extract(tape) {
     console.log("------- start extracting -------");
     console.log(`origin: \n ${tape} \n`);
@@ -86,7 +91,7 @@ function after_load() {
     for (var i = 0; i < hovers.length; i++) {
         hovers[i].style.display = "none";
     }
-    init();
+    try_init();
     refresh();
 
     const key_buttons = document.getElementsByClassName("kb-img");
