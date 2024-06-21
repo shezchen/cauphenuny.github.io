@@ -1,9 +1,6 @@
 input[type='number']{
     width: 40px;
 }
-input, textarea, select {
-  opacity: 0.9;
-}
 textarea {
   font-family: "Consolas", Monospace;
   background-color: rgba(255, 255, 255, 0.5);
@@ -68,13 +65,20 @@ body{
 .container {
     display: flex;
 }
-.column {
-    flex: 1; /* 两列等宽 */
-}
 .displayer {
     position: fixed;
     right: 5%;
-    top: 50%;
-    transform: translate(0, -50%);
+    bottom: 5%;
+}
+#preset-buttons {
+    line-height: 2.5em;
+    text-align: left;
+}
+#tape-input {
+    position: fixed;
+    right: 5%;
+    top: 12%;
+    display: flex;
+    text-align: center;
 }
 
