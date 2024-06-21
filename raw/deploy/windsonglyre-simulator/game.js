@@ -222,7 +222,7 @@ function reflesh() {
     diff_element.innerHTML = `avg diff: ${(score.diff_sum / score.hit).toFixed(2)}ms`;
 }
 
-function draw_status(col, name, color = "#fff") {
+function draw_status(col, name) {
     const status_element = document.createElement('div');
     const column = document.getElementById('column' + col);
     status_element.classList.add('status');
@@ -254,7 +254,7 @@ function hit(col) {
             score.combo = 0;
             score.miss++;
             console.log(`bad at ${col}, diff: ${diff}`);
-            const status_ele = draw_status(col, "bad", "#f55");
+            const status_ele = draw_status(col, "bad");
             setTimeout(() => {remove_element(status_ele)}, 1000);
         } else {
             score.diff_sum += diff;
@@ -271,14 +271,14 @@ function hit(col) {
                 ele.style.backgroundColor = "#afa";
                 ele.style.boxShadow = "0 0 40px 10px #8f9, 0 0 20px 0px #8f9 inset";
                 score.sum += 5;
-                const status_ele = draw_status(col, "perfect", "#8f9");
+                const status_ele = draw_status(col, "perfect");
                 setTimeout(() => {remove_element(status_ele)}, 1000);
             } else {
                 console.log(`good at ${col}, diff: ${diff}`);
                 ele.style.backgroundColor = "#9cf";
                 ele.style.boxShadow = "0 0 40px 10px #6af, 0 0 20px 0px #6af inset";
                 score.sum += 3;
-                const status_ele = draw_status(col, "good", "#6af");
+                const status_ele = draw_status(col, "good");
                 setTimeout(() => {remove_element(status_ele)}, 1000);
             }
         }
@@ -438,13 +438,17 @@ function play() {
                     const time = clock.get() - (triggers[id].time - trigger_time);
                     const pos = (time / drop_time) * (end_pos - start_pos) + start_pos;
                     element.style.top = pos + "%";
-                    if (time > trigger_time + miss_time) {
-                        element.style.backgroundColor = "#f99";
+                    //if (time > trigger_time + miss_time) {
+                    if (time > trigger_time) {
+                        //element.style.backgroundColor = "#f99";
+                        element.style.backgroundColor = "#afa";
                         element.style.opacity = 0;
-                        element.style.boxShadow = "0 0 40px 10px #f55, 0 0 20px 0px #f55 inset";
+                        //element.style.boxShadow = "0 0 40px 10px #f55, 0 0 20px 0px #f55 inset";
+                        element.style.boxShadow = "0 0 40px 10px #8f9, 0 0 20px 0px #8f9 inset";
                         triggers[id].hitted = 1;
                         console.log(`miss at ${i}`);
-                        const status_ele = draw_status(i, "miss", "#f55");
+                        //const status_ele = draw_status(i, "miss", "#f55");
+                        const status_ele = draw_status(i, "perfect");
                         setTimeout(() => {remove_element(status_ele)}, 1000);
                         score.combo = 0;
                         score.miss++;
@@ -536,6 +540,13 @@ function parse(tape, check = [], cur_env) {
                             type: 1,
                             hitted: 0,
                         });
+                        bgm.notes.push({
+                            instrument: "drum",
+                            time: sum * interval + startoffset,
+                            options: {
+                                note: "hihat-open",
+                            }
+                        });
                     }
                 }
                 for (let k = 0; k < priority.length && chord_cnt < limit[difficulty]; k++) {
@@ -549,6 +560,13 @@ function parse(tape, check = [], cur_env) {
                             time: sum * interval + startoffset,
                             type: 0,
                             hitted: 0,
+                        });
+                        bgm.notes.push({
+                            instrument: "drum",
+                            time: sum * interval + startoffset,
+                            options: {
+                                note: "hihat-close",
+                            }
                         });
                     }
                 }
@@ -627,13 +645,13 @@ function parse(tape, check = [], cur_env) {
                             hitted: 0
                         });
                     }
-                    //bgm.notes.push({
-                    //    instrument: "drum",
-                    //    time: sum * interval + startoffset,
-                    //    options: {
-                    //        note: "hihat-close",
-                    //    }
-                    //});
+                    bgm.notes.push({
+                        instrument: "drum",
+                        time: sum * interval + startoffset,
+                        options: {
+                            note: "hihat-close",
+                        }
+                    });
                     cnt += cur_step;
                     sum += cur_step;
                 }
