@@ -197,7 +197,7 @@ document.getElementById("tutorial").onclick = () => {
 //};
 document.getElementById("sad-machine").onclick = () => {
     if (loading) return;
-    env.bpm = 80;
+    env.bpm = 90;
     env.time1 = 4;
     env.time2 = 4;
     document.getElementById('offset_option').selectedIndex = 1;

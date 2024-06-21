@@ -358,7 +358,11 @@ function result() {
     <p>
     <span class="bright">${song_info}</span>
     </p>
-    <p class="bright" style="font-size: large">Normalized Score: ${get_normalized_score().toFixed(2)}<br>Score: ${score.sum}<br>Max Combo: ${score.max_combo}<br></p>
+    <p class="bright" style="font-size: large">
+    Normalized Score: ${get_normalized_score().toFixed(2)}<br>
+    Note Count: ${score.hit + score.miss}<br>
+    Max Combo: ${score.max_combo}<br>
+    </p>
 </div>
 `;
 }
