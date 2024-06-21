@@ -260,7 +260,7 @@ function reflesh() {
     //score_element.innerHTML = `score: ${score.sum}, combo: ${score.combo}, rank: ${get_rank()}`
     score_element.innerHTML = `${score.sum}&nbsp;`
     const diff_element = document.getElementById('avg-diff');
-    diff_element.innerHTML = `avg diff: ${(score.diff_sum / score.hit).toFixed(2)}ms`;
+    diff_element.innerHTML = `avg: ${(score.diff_sum / score.hit).toFixed(2)}ms`;
 }
 
 function draw_status(col, name) {
