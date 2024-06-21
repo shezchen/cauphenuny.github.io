@@ -359,7 +359,7 @@ var zenzenzense = `前前前世
 
 var sad_machine = {
     main: 
-`Sad Machine
+`Sad Machine（还没写完）
 [
 >>
 [E..E..]E.[UT]U[TR]/[E..E..]E.[UT]U[TR]/
