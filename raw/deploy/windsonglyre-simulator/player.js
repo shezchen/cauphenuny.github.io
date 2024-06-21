@@ -81,13 +81,14 @@ export function stop() {
 export function play(tape, cur_env = env) {
     console.log("------- start playing -------");
     console.log(`tape: \n ${tape} \n`);
-    var interval = 60 * 4 / cur_env.bpm / cur_env.time2;
+    var interval = 60 * 4 * 1000 / cur_env.bpm / cur_env.time2;
     var velc = cur_env.velocity;
     var stack = [];
     stack.push(1);
     var cnt = 0;
     var sum = 0;
     var now = context.currentTime;
+    var start_offset = 100;
     var getTop = arr => arr[arr.length - 1];
     var tmpoffset = 0, octoffset = 0;
     for (var i = 0; i < tape.length; i++) {
@@ -157,7 +158,7 @@ export function play(tape, cur_env = env) {
                     key, 
                     note + tmpoffset + octoffset * 12 + cur_env.global_offset + cur_env.fixed_offset[note % 12], 
                     velc, 
-                    sum * interval * 1000
+                    sum * interval + start_offset,
                 );
                 tmpoffset = 0;
                 cnt += getTop(stack);
