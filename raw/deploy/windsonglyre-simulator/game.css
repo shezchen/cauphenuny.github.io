@@ -125,8 +125,26 @@
 }
 span, p {
     color: white;
-    text-shadow: 0 0 3px rgba(255, 255, 255, 0.8), 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.8);
     font-family: 'HYWenHei',Arial;
+    transition: opacity 0.5s;
+}
+#score {
+    position: absolute;
+    top: 0%;
+    right: 0%;
+}
+#avg-diff {
+    position: absolute;
+    bottom: 0%;
+    right: 0;
+}
+#playing-song-name {
+    position: absolute;
+    top: 0%;
+    font-size: large;
+}
+.bright {
+    text-shadow: 0 0 3px rgba(255, 255, 255, 0.6), 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.8);
 }
 #screen {
     background-image: url('./background/2-blur18px.jpg');
@@ -135,6 +153,19 @@ span, p {
     background-attachment: fixed; /* 背景固定，不滚动 */
     transition: filter 0.5s;
 }
+
+#progress-line {
+    position: fixed;
+    width: 100%;
+    top: 0%;
+    height: 0.1em;
+    right: 100%;
+}
+
+#score {
+    font-size: xx-large;
+}
+
 .stage-div {
     width: 100vw; /* 宽度为视口宽度 */
     height: 100vh; /* 高度为视口高度 */
@@ -215,6 +246,21 @@ span, p {
 .title {
     font-size: 3em;
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 255, 255, 0.6)
+}
+
+#result-window {
+    opacity: 0;
+    text-align: center;
+    border:  1px solid #fff;
+    border-radius: 2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.result-level-img {
+    width: 10em;
+    filter: drop-shadow(0px 0px 10px rgba(255,255,255,0.8));
 }
 
 .center-box {

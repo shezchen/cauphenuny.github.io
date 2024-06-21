@@ -177,7 +177,6 @@ var haruhikage = `春日影
 (XBF).X.(BD).(SD)F(BG).X./(XB).X.B.(MS).B.(XB)./
 
 副歌：
-<
 (ZD)S(BD)SDF(ADG).S.(BF)G/(ZVH).Z.HJ(AFQ).N.(VW)Q/
 (CBG).C.B.(MSG).(BF).(CF)./(CND).C.(NF)D(ADG).S.B./
 
@@ -189,7 +188,6 @@ var haruhikage = `春日影
 
 (ZVJ).(ZH).(AH).(FH).A.(VG)./(XBG).X.(MF).(SF).(MD).(BS)./
 (ZBD).B.A.S.A.B./(ZVD).(NF).(AD).(XBF).(XD).(MS)./
->
 (ZBA).AZB.(ZBS)...(ZA)./(ZB).AZB.F.D.AS/
 
 主歌：

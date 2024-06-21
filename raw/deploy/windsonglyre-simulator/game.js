@@ -16,7 +16,7 @@ const colors = {
     fill: {
         red: "#f99",
         green: "#afa",
-        blue: "9cf",
+        blue: "#9cf",
     },
     shadow: {
         red: "#f55",
@@ -41,6 +41,7 @@ const drop_time = 1200;
 const trigger_time = drop_time * 0.80 + delay;
 const start_pos = 0, end_pos = 85, trigger_pos = (trigger_time / drop_time) * (end_pos - start_pos) + start_pos;
 const trigger_duration = trigger_pos - start_pos, all_duration = end_pos - start_pos;
+let is_playing = 0;
 
 for (let i = 1; i <= 7; i++) {
     const pos = (i - 4) * 10 + 50;
@@ -59,12 +60,23 @@ for (let i = 1; i <= 7; i++) {
 const trigger_line = document.getElementById('trigger-line');
 const screen = document.getElementById('screen');
 const info_window = document.getElementById('info-window');
+const result_window = document.getElementById('result-window');
 const title_element = document.getElementById('song-name');
 const song_info_element = document.getElementById('song-info');
 title_element.innerHTML = tape.name;
 const level2name = ['简单','较简单','普通','较困难','困难'];
-song_info_element.innerHTML = `${level2name[difficulty]} / bpm: ${env.bpm}`;
+let song_info = "";
+if (is_tutorial == 1) {
+    song_info = `${level2name[difficulty]} / bpm: ${env.bpm} / 演示模式`;
+} else {
+    song_info = `${level2name[difficulty]} / bpm: ${env.bpm}`;
+}
+
+song_info_element.innerHTML = song_info;
 trigger_line.style.top = trigger_pos + "%";
+const playing_song_name = document.getElementById('playing-song-name');
+playing_song_name.style.opacity = 0;
+playing_song_name.innerHTML = tape.name;
 
 if (difficulty >= 2) {
     available_key = "SDF JKL";
@@ -208,25 +220,30 @@ const levels = [
 let score = {
     sum: 0,
     diff_sum: 0,
-    combo: 0,
-    miss: 0, hit: 0,
+    combo: 0, max_combo: 0,
+    miss: 0, hit: 0, perfect: 0,
     fast: 0, slow: 0,
     created: 0,
     init: function () {
         this.diff_sum = 0,
-        this.sum = this.combo = 0, 
+        this.sum = this.combo = this.max_combo = 0, 
         this.created = 0,
         this.fast = this.slow = 0;
-        this.miss = this.hit = 0;
+        this.miss = this.hit = this.perfect = 0;
     }
 };
 
 const id2note = ["hihat-close", "hihat-open"];
 
-function get_rank() {
+function get_normalized_score() {
     const expect = (score.miss + score.hit) * 5;
     const get = score.sum * (score.miss == 0 ? 1.5 : 1);
     const normalized = get / expect * 100;
+    return normalized;
+}
+
+function get_rank() {
+    const normalized = get_normalized_score();
     let name = "D";
     console.log(`normalized score: ${normalized}`);
     for (let i = 0; i < levels.length; i++) {
@@ -240,7 +257,8 @@ function get_rank() {
 
 function reflesh() {
     const score_element = document.getElementById('score');
-    score_element.innerHTML = `${tape.name}&nbsp;|&nbsp;difficulty: ${difficulty}<br>score: ${score.sum}, combo: ${score.combo}, rank: ${get_rank()}`
+    //score_element.innerHTML = `score: ${score.sum}, combo: ${score.combo}, rank: ${get_rank()}`
+    score_element.innerHTML = `${score.sum}&nbsp;`
     const diff_element = document.getElementById('avg-diff');
     diff_element.innerHTML = `avg diff: ${(score.diff_sum / score.hit).toFixed(2)}ms`;
 }
@@ -284,6 +302,7 @@ function hit(col) {
             score.diff_sum += diff;
             drum.start({ note: id2note[triggers[id].type] });
             score.combo++;
+            score.max_combo = Math.max(score.max_combo, score.combo);
             score.hit++;
             if (diff > 0) {
                 score.slow++;
@@ -297,6 +316,7 @@ function hit(col) {
                 score.sum += 5;
                 const status_ele = draw_status(col, "perfect");
                 setTimeout(() => {remove_element(status_ele)}, 1000);
+                score.perfect++;
             } else {
                 console.log(`good at ${col}, diff: ${diff}`);
                 ele.style.backgroundColor = colors.fill.blue;
@@ -316,11 +336,35 @@ function is_paused() {
 
 function pause() {
     clock.pause();
+    playing_song_name.style.opacity = 0;
     screen.style.filter = "brightness(0.3)";
     info_window.style.opacity = "1";
 }
 
+function result() {
+    playing_song_name.style.opacity = 0;
+    screen.style.filter = "brightness(0.3)";
+    result_window.innerHTML = ``;
+    result_window.style.opacity = 1;
+    result_window.innerHTML = 
+`
+<div id="result-window-level" style="padding: 3em; text-align: center;"> 
+    <img src=./scores/${get_rank()}.png class="result-level-img">
+</div>
+<div id="result-window-info" style="padding: 3em"> 
+    <p>
+    <span class="title">${tape.name}</span>
+    </p>
+    <p>
+    <span class="bright">${song_info}</span>
+    </p>
+    <p class="bright" style="font-size: large">Normalized Score: ${get_normalized_score().toFixed(2)}<br>Score: ${score.sum}<br>Max Combo: ${score.max_combo}<br></p>
+</div>
+`;
+}
+
 function resume() {
+    playing_song_name.style.opacity = 1;
     screen.style.filter = "brightness(1)";
     clock.resume();
     info_window.style.opacity = "0";
@@ -363,6 +407,7 @@ function play() {
     let event_pos = 0, bgm_pos = 0;
     let frame_time = 1000 / frame_rate;
     let interval_id;
+    const progress_line = document.getElementById("progress-line");
     function frame() {
         if (clock.is_paused()) return;
         //console.log(`frame ${clock.get()} start`);
@@ -401,6 +446,24 @@ function play() {
         }
         if (event_pos >= events.length) {
             clearInterval(interval_id);
+            if (is_playing == 1) {
+                is_playing = 0;
+                result();
+            }
+        }
+        const progress = event_pos / events.length;
+        progress_line.style.right = (1 - progress) * 100 + "%";
+        if (score.miss != 0) {
+            progress_line.style.backgroundColor = '#fff';
+            progress_line.style.boxShadow = `0 0 15px 3px #fff`;
+        } else {
+            if (score.perfect == score.hit) {
+                progress_line.style.backgroundColor = colors.fill.green;
+                progress_line.style.boxShadow = `0 0 15px 3px ${colors.fill.green}`;
+            } else {
+                progress_line.style.backgroundColor = colors.fill.blue;
+                progress_line.style.boxShadow = `0 0 15px 3px ${colors.fill.blue}`;
+            }
         }
         while (bgm.notes.length - bgm_pos > 0) {
             const note = bgm.notes[bgm_pos];
@@ -440,7 +503,9 @@ function play() {
                         const status_ele = draw_status(i, "perfect");
                         setTimeout(() => {remove_element(status_ele)}, 1000);
                         score.combo++;
+                        score.max_combo = Math.max(score.max_combo, score.combo);
                         score.hit++;
+                        score.perfect++;
                         score.sum += 5;
                         reflesh();
                     }
@@ -674,6 +739,7 @@ function parse(tape, check = [], cur_env) {
 
 function gameinit() {
     lines.length = 0, triggers.length = 0, events.length = 0;
+    result_window.style.opacity = 0;
     bgm.mute = 0;
     bgm = {
         notes: [],
@@ -713,10 +779,12 @@ function gamestart() {
     var env2 = { ...env };
     env2.global_offset -= 12;
     parse(tape.sub, [], env2);
+    is_playing = 1;
     new Promise((resolve, reject) => { play() });
 }
 
 function gamestop() {
+    is_playing = 0;
     if (events.length) {
         bgm.mute = 1;
         clock.forward(events[events.length - 1].time);
@@ -750,6 +818,7 @@ document.addEventListener("keydown", function(event) {
         return;
     }
     if (key == " ") {
+        if (is_playing == 0) return;
         if (is_paused()) {
             resume();
         } else {
@@ -757,10 +826,10 @@ document.addEventListener("keydown", function(event) {
         }
         return;
     }
-    if (key == "ESCAPE" && is_paused()) {
+    if (key == "ESCAPE" && (is_paused() || is_playing == 0)) {
         restart();
     }
-    if (key == "BACKSPACE" && is_paused()) {
+    if (key == "BACKSPACE" && (is_paused() || is_playing == 0)) {
         back_to_home();
     }
     let index = available_key.indexOf(key);
