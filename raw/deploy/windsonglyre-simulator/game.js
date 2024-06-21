@@ -67,9 +67,9 @@ title_element.innerHTML = tape.name;
 const level2name = ['简单','较简单','普通','较困难','困难'];
 let song_info = "";
 if (is_tutorial == 1) {
-    song_info = `${level2name[difficulty]} / bpm ${env.bpm} / 演示模式`;
+    song_info = `${level2name[difficulty]} | bpm ${env.bpm} | 演示模式`;
 } else {
-    song_info = `${level2name[difficulty]} / bpm ${env.bpm}`;
+    song_info = `${level2name[difficulty]} | bpm ${env.bpm}`;
 }
 
 song_info_element.innerHTML = song_info;
