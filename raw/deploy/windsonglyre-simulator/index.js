@@ -45,7 +45,7 @@ function init() {
     env.time1 = 4, env.time2 = 4;
     document.getElementById('offset_option').selectedIndex = 0;
     env.set_fixed_offset(0);
-    document.getElementById("input").value = "在这里的第一行输入曲名，第二行开始写谱子，记谱方法可以看看教程\n\n点击右侧预设的谱子可以直接开始玩";
+    document.getElementById("input").value = "无题\n在这里的第一行输入曲名，第二行开始写谱子，记谱方法可以看看教程\n\n点击右侧预设的谱子可以直接开始玩";
     document.getElementById("input2").value = "副音轨与主音轨同时播放，但不会生成音游谱面\n（默认比主音轨低一个八度）";
     refresh();
 }
