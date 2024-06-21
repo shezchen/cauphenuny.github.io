@@ -160,6 +160,7 @@ span, p {
     top: 0%;
     height: 0.1em;
     right: 100%;
+    transition: right 0.2s;
 }
 
 #score {
