@@ -2,7 +2,7 @@ input[type='number']{
     width: 40px;
 }
 textarea {
-  font-family: "Consolas", Monospace;
+  font-family: "Menlo", Arial, Monospace;
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 10px;
 }
@@ -16,7 +16,11 @@ h1{
 }
 @font-face {
   font-family: 'HYWenHei';
-  src: url('./fonts/HYWenHei-55W-4.ttf') format('truetype');
+  src: url('./fonts/HYWenHei-65W-3.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Menlo';
+  src: url('./fonts/Menlo-Regular.ttf') format('truetype');
 }
 body {
     font-family: 'HYWenHei',Arial,sans-serif;
