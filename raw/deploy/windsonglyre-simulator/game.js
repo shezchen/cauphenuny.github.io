@@ -669,7 +669,7 @@ function gamestart() {
     function all_beat(count) {
         return true;
     }
-    let check = [int_beat, int_beat, int_beat, semi_beat, all_beat];
+    let check = [strong_beat, int_beat, int_beat, semi_beat, all_beat];
     parse(tape.main, check, env);
     var env2 = { ...env };
     env2.global_offset -= 12;
