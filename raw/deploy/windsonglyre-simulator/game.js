@@ -607,7 +607,7 @@ function parse(tape, check = [], cur_env) {
                         chord_cnt++;
                         triggers.push({
                             column: j,
-                            time: sum * interval + startoffset,
+                            time: sum * interval + startoffset + delay,
                             type: 1,
                             hitted: 0,
                         });
@@ -631,7 +631,7 @@ function parse(tape, check = [], cur_env) {
                         chord_cnt++;
                         triggers.push({
                             column: j,
-                            time: sum * interval + startoffset,
+                            time: sum * interval + startoffset + delay,
                             type: 0,
                             hitted: 0,
                         });
@@ -651,7 +651,7 @@ function parse(tape, check = [], cur_env) {
                     lines.push({
                         left: minid,
                         right: maxid,
-                        time: sum * interval + startoffset,
+                        time: sum * interval + startoffset + delay,
                     });
                 }
                 cnt += getTop(stack);
@@ -717,7 +717,7 @@ function parse(tape, check = [], cur_env) {
                     if (check.length != 0 && check[difficulty](sum)) {
                         triggers.push({
                             column: note2col[key],
-                            time: sum * interval + startoffset,
+                            time: sum * interval + startoffset + delay,
                             type: 0,
                             hitted: 0
                         });
