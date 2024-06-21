@@ -273,7 +273,7 @@ function draw_status(col, name) {
 }
 
 function hit(col) {
-    if (is_tutorial == 1) return;
+    if (is_tutorial == 1 || clock.is_paused()) return;
     const time = clock.get();
     let id = -1;
     stage.triggers[col].forEach((candidate_id) => {
