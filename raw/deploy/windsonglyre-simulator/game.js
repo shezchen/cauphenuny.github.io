@@ -366,7 +366,7 @@ function play() {
     console.log(`event count: ${events.length}`);
     events.sort((a, b) => a.time - b.time);
     console.log(`event count: ${events.length}`);
-    for (let i = 0; i < events.length; i++) console.log(events[i]);
+    //for (let i = 0; i < events.length; i++) console.log(events[i]);
     let event_pos = 0, bgm_pos = 0;
     let frame_time = 1000 / frame_rate;
     let interval_id;
@@ -512,7 +512,7 @@ function parse(tape, check = [], cur_env) {
     let limit = [1, 2, 2, 2, 6];
     for (let i = 0; i < tape.length; i++) {
         let key = tape.charCodeAt(i);
-        console.log(i, tape[i], key);
+        //console.log(i, tape[i], key);
         switch (tape[i]) {
             case '(':
                 //console.log("chord start", tape[i + 1]);
@@ -644,14 +644,14 @@ function parse(tape, check = [], cur_env) {
                             type: 0,
                             hitted: 0
                         });
+                        bgm.notes.push({
+                            instrument: "drum",
+                            time: sum * interval + startoffset,
+                            options: {
+                                note: "hihat-close",
+                            }
+                        });
                     }
-                    bgm.notes.push({
-                        instrument: "drum",
-                        time: sum * interval + startoffset,
-                        options: {
-                            note: "hihat-close",
-                        }
-                    });
                     cnt += cur_step;
                     sum += cur_step;
                 }
@@ -682,7 +682,12 @@ function gamestart() {
     }
     function semi_beat(count) {
         count *= 2;
-        return Math.abs(Math.round(count) - count) <= 1e-10;
+        console.log(count);
+        if (Math.abs(Math.round(count) - count) <= 1e-10) return true;
+        else {
+            //console.log("check failed");
+            return 0;
+        }
     }
     function all_beat(count) {
         return true;
