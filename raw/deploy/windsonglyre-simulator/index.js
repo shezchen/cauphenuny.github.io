@@ -7,6 +7,7 @@ import {
 import { env, play, notepress, notedown, noteup, piano, stop } from './player.js'
 import { keyup_animation, keydown_animation, mouseenter, mouseleave } from './keyboard.js'
 
+let loading = 1;
 
 function refresh() {
     document.getElementById("bpm").value = env.bpm;
@@ -73,8 +74,11 @@ function decompress(sheet) {
     return sheet;
 }
 function after_load() {
+    loading = 0;
     const status_element = document.getElementById("status");
-    status_element.parentNode.removeChild(status_element);
+    //status_element.parentNode.removeChild(status_element);
+    status_element.style.color = "green";
+    status_element.innerHTML = "准备就绪";
     const hovers = document.getElementsByClassName("hvinfo");
     for (var i = 0; i < hovers.length; i++) {
         hovers[i].style.display = "none";
@@ -172,6 +176,7 @@ document.getElementById("stop").onclick = () => {
     stop();
 }
 document.getElementById("tutorial").onclick = () => {
+    if (loading) return;
     init();
     document.getElementById("input").value = tutorial;
     refresh();
@@ -182,6 +187,7 @@ document.getElementById("tutorial").onclick = () => {
 //    refresh();
 //};
 document.getElementById("sad-machine").onclick = () => {
+    if (loading) return;
     env.bpm = 80;
     env.time1 = 4;
     env.time2 = 4;
@@ -195,6 +201,7 @@ document.getElementById("sad-machine").onclick = () => {
     //context.resume();
 };
 document.getElementById("bwv846").onclick = () => {
+    if (loading) return;
     env.bpm = 70;
     env.time1 = 4;
     env.time2 = 4;
@@ -208,6 +215,7 @@ document.getElementById("bwv846").onclick = () => {
     //context.resume();
 };
 document.getElementById("haruhikage").onclick = () => {
+    if (loading) return;
     env.bpm = 90;
     env.time1 = 6;
     env.time2 = 8;
@@ -225,6 +233,7 @@ document.getElementById("reset").onclick = () => {
     init();
 };
 document.getElementById("start").onclick = () => {
+    if (loading) return;
     console.log("click");
     //getAttribute();
     var input = fetch_input();
@@ -246,9 +255,9 @@ function gamestart() {
 document.getElementById("gamestart").onclick = () => {
     gamestart();
 }
-//document.getElementById("gamestart2").onclick = () => {
-//    gamestart();
-//}
+document.getElementById("gamestart2").onclick = () => {
+    gamestart();
+}
 document.getElementById("vel-add").onclick = () => {
     if (env.velocity < 9) env.velocity++;
     refresh();
