@@ -653,7 +653,7 @@ function gamestart() {
     function strong_beat(count) {
         const tmp = Math.round(count);
         if (Math.abs(tmp - count) > 1e-10) return false;
-        if (beat[env.time] != undefined) {
+        if (beat[env.time1] != undefined) {
             return beat[env.time1][tmp % env.time1] > 0;
         } else {
             return tmp % env.time1 == 0;
