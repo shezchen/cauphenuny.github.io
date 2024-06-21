@@ -15,6 +15,14 @@
   <body>
     <title>自制谱面音游 / 钢琴模拟器</title>
     <h1>自制谱面音游 / 钢琴模拟器</h1>
+    <script>
+    function isMobileDevice() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+    if (isMobileDevice()) {
+        console.log("请使用电脑网页打开");
+    }
+    </script>
     <p><label for="input">使用键盘，或在右框中输入谱子以自动演奏：<br>
     <b>输入谱子后可进入音游模式游玩</b><br> </label></p>
     <p id="status" style="color: red;"><b>加载中，请稍候，第一次加载时间可能较长……</b></p>
