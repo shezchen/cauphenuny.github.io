@@ -505,7 +505,7 @@ function parse(tape, check = [], cur_env) {
     let chord_note_cnt = [0, 0, 0, 0, 0, 0, 0, 0];
     console.log(tape);
     let priority = [5, 4, 6, 3, 7, 1]; // 和弦中加入音的优先级
-    let limit = [2, 2, 2, 2, 6];
+    let limit = [1, 2, 2, 2, 6];
     for (let i = 0; i < tape.length; i++) {
         let key = tape.charCodeAt(i);
         console.log(i, tape[i], key);
@@ -669,7 +669,7 @@ function gamestart() {
     function all_beat(count) {
         return true;
     }
-    let check = [strong_beat, int_beat, int_beat, semi_beat, all_beat];
+    let check = [int_beat, int_beat, int_beat, semi_beat, all_beat];
     parse(tape.main, check, env);
     var env2 = { ...env };
     env2.global_offset -= 12;
