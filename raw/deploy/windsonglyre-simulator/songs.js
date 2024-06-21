@@ -119,7 +119,7 @@ var tutorial2 = `教程
 
 `;
 var bwv846 = 
-`BWV846 prelude
+`巴赫C大调前奏曲
 [[>>ADGQEGQEADGQEGQE/ASHWRHWRASHWRHWR/
 MSGWRGWRMSGWRGWR/ADGQEGQEADGQEGQE/
 <<ADHEYHEYADHEYHEY/>>AS+FHW+FHWAS+FHW+FHW/
@@ -226,12 +226,12 @@ var haruhikage = `春日影
 (BS).....(JW).(JW)(HQ)(JW)./(BSW).(BSE).(BSW).(XBE).(XB).(BR)./
 
 间奏：
-<
+
 (ZBGE).Z.B.(AD).A.B./(ZV).Z.V.(AD).A.V./
 (CBT).(CT).(MT).(DGT).(ME).(CW)./(CNQ).(CJ).(NJ).(ADJ).(NJ).(CJ)./
 (ZBE).Z.(BW).(ADW).(AQ).(BG)./(ZVH).Z.V.(CM).C.M./
 (MD).M.C.(MJ).(CJ).(MJ)./(MDQ).(MDJ).(MD)G(CMG).(CS).(CD)./
->
+
 副歌：
 
 (ZD)S(BD)SDF(ADG).S.(BF)G/(ZVH).Z.HJ(AFQ).N.(VW)Q/
