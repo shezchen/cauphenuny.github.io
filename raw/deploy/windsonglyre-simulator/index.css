@@ -74,11 +74,15 @@ body{
     line-height: 2.5em;
     text-align: left;
 }
-#tape-input {
+#tape-input {/*
     position: fixed;
     right: 5%;
-    top: 12%;
+    top: 12%;*/
     display: flex;
     text-align: center;
+    */
 }
 
+.game-start-btn {
+    background-color: #ffd999;
+}

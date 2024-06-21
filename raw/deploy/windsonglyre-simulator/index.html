@@ -23,98 +23,105 @@
     <script type="module" src="player.js"> </script>
     <script src="songs.js"> </script>
 
-    <h2>音游选项</h2>
-    <p>
-        谱面根据主音轨自动创建，记得在右边输入谱子！<br><br>
-        判定延迟：<input type="number" id="delay" value="0">ms<br><br>
-        选择难度：<select id="difficulty-select">
-            <option value="easy">简单 | 4键、音符最少</option>
-            <option value="semi-easy">较简单 | 4键、音符较少</option>
-            <option value="normal">普通 | 6键、音符较少</option>
-            <option value="semi-hard">较困难 | 6键、音符较多</option>
-            <option value="hard">困难 | 6键、音符最多</option>
-        </select></span><br>
-    </p>
-    <button id="gamestart">开始！</button><br><br>
-    <hr>
-    <h2>钢琴选项</h2>
-    <div class="image-container">
-      <form onsubmit="return false">
-        <span id="vel">力度：</span>&nbsp;&nbsp;<button id="vel-add" class="vel-button">+</button>&nbsp;<button id="vel-minus" class="vel-button">-</button><br>
-        移调：
-        <select id="offset_option">
-          <option value="flex">整体升降key数（简谱）</option>
-          <option value="fixed">升降号个数（五线谱）</option>
-        </select>
-        <input type="number" id="key_offset" size=5>&nbsp;<span id="key_name"></span><br>
-        <input type="button" value="确定" id="submit">
-      </form>
-    </div>
-    <div class="displayer">
-      <span class="kb-img-ctn"><img id="keyQ" class="kb-img" src="./keyboard/Q.png" alt="keyQ"><span class="hvinfo">加载中…</span></span>
-      <span class="kb-img-ctn"><img id="keyW" class="kb-img" src="./keyboard/W.png" alt="keyW"><span class="hvinfo">加载中…</span></span>
-      <span class="kb-img-ctn"><img id="keyE" class="kb-img" src="./keyboard/E.png" alt="keyE"><span class="hvinfo">加载中…</span></span>
-      <span class="kb-img-ctn"><img id="keyR" class="kb-img" src="./keyboard/R.png" alt="keyR"><span class="hvinfo">加载中…</span></span>
-      <span class="kb-img-ctn"><img id="keyT" class="kb-img" src="./keyboard/T.png" alt="keyT"><span class="hvinfo">加载中…</span></span>
-      <span class="kb-img-ctn"><img id="keyY" class="kb-img" src="./keyboard/Y.png" alt="keyY"><span class="hvinfo">加载中…</span></span>
-      <span class="kb-img-ctn"><img id="keyU" class="kb-img" src="./keyboard/U.png" alt="keyU"><span class="hvinfo">加载中…</span></span>
-      <br>
+    <div class='container'>
+        <div id="tape-keyboard" style="flex: 1">
+            <div id="tape-input">
+                <div class="column">
+                    <label for="bpm">bpm：</label>
+                    <input type="number" id="bpm" size=10>
+                    <label for="time_sign1">拍号：</label>
+                    <input type="number" id="time_sign1" size=5>/<input type="number" id="time_sign2" size=5><br>
+                    <p>
+                      谱子/主音轨：<br>
+                      <textarea id="input" name="input" rows="8" cols="60">加载中……</textarea>
+                    </p>
+                    <p>
+                      谱子/副音轨：<br>
+                      <textarea id="input2" name="input2" rows="4" cols="60">加载中……</textarea>
+                    </p>
+                    <button id="start">播放</button> <button id="stop">停止</button>
+                    <!--button id="gamestart2" class="game-start-btn">开始游戏</button-->
+                </div>
+                <div class="column">
+                    &nbsp;&nbsp;
+                </div>
+                <div class="column">
+                    <div id="preset-buttons">
+                        <br>
+                        <p>
+                          <button id="tutorial">教程：键位与记谱</button>
+                        </p>
+                          <!--button id="tutorial2">教程：自动生成伴奏织体</button-->
+                          <button id="haruhikage">春日影</button> <br>
+                          <button id="bwv846">巴赫 C大调前奏曲</button> <br>
+                          <button id="sad-machine">Sad Machine</button> <br>
+                        </p>
+                        <p>
+                          <button id="reset">复原</button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <span class="kb-img-ctn"><img id="keyQ" class="kb-img" src="./keyboard/Q.png" alt="keyQ"><span class="hvinfo">加载中…</span></span>
+            <span class="kb-img-ctn"><img id="keyW" class="kb-img" src="./keyboard/W.png" alt="keyW"><span class="hvinfo">加载中…</span></span>
+            <span class="kb-img-ctn"><img id="keyE" class="kb-img" src="./keyboard/E.png" alt="keyE"><span class="hvinfo">加载中…</span></span>
+            <span class="kb-img-ctn"><img id="keyR" class="kb-img" src="./keyboard/R.png" alt="keyR"><span class="hvinfo">加载中…</span></span>
+            <span class="kb-img-ctn"><img id="keyT" class="kb-img" src="./keyboard/T.png" alt="keyT"><span class="hvinfo">加载中…</span></span>
+            <span class="kb-img-ctn"><img id="keyY" class="kb-img" src="./keyboard/Y.png" alt="keyY"><span class="hvinfo">加载中…</span></span>
+            <span class="kb-img-ctn"><img id="keyU" class="kb-img" src="./keyboard/U.png" alt="keyU"><span class="hvinfo">加载中…</span></span>
+            <br>
 
-      <span class="kb-img-ctn"><img id="keyA" class="kb-img" src="./keyboard/A.png" alt="keyA"><span class="hvinfo">加载中…</span></span>
-      <span class="kb-img-ctn"><img id="keyS" class="kb-img" src="./keyboard/S.png" alt="keyS"><span class="hvinfo">加载中…</span></span>
-      <span class="kb-img-ctn"><img id="keyD" class="kb-img" src="./keyboard/D.png" alt="keyD"><span class="hvinfo">加载中…</span></span>
-      <span class="kb-img-ctn"><img id="keyF" class="kb-img" src="./keyboard/F.png" alt="keyF"><span class="hvinfo">加载中…</span></span>
-      <span class="kb-img-ctn"><img id="keyG" class="kb-img" src="./keyboard/G.png" alt="keyG"><span class="hvinfo">加载中…</span></span>
-      <span class="kb-img-ctn"><img id="keyH" class="kb-img" src="./keyboard/H.png" alt="keyH"><span class="hvinfo">加载中…</span></span>
-      <span class="kb-img-ctn"><img id="keyJ" class="kb-img" src="./keyboard/J.png" alt="keyJ"><span class="hvinfo">加载中…</span></span>
-      <br>
+            <span class="kb-img-ctn"><img id="keyA" class="kb-img" src="./keyboard/A.png" alt="keyA"><span class="hvinfo">加载中…</span></span>
+            <span class="kb-img-ctn"><img id="keyS" class="kb-img" src="./keyboard/S.png" alt="keyS"><span class="hvinfo">加载中…</span></span>
+            <span class="kb-img-ctn"><img id="keyD" class="kb-img" src="./keyboard/D.png" alt="keyD"><span class="hvinfo">加载中…</span></span>
+            <span class="kb-img-ctn"><img id="keyF" class="kb-img" src="./keyboard/F.png" alt="keyF"><span class="hvinfo">加载中…</span></span>
+            <span class="kb-img-ctn"><img id="keyG" class="kb-img" src="./keyboard/G.png" alt="keyG"><span class="hvinfo">加载中…</span></span>
+            <span class="kb-img-ctn"><img id="keyH" class="kb-img" src="./keyboard/H.png" alt="keyH"><span class="hvinfo">加载中…</span></span>
+            <span class="kb-img-ctn"><img id="keyJ" class="kb-img" src="./keyboard/J.png" alt="keyJ"><span class="hvinfo">加载中…</span></span>
+            <br>
 
-      <span class="kb-img-ctn"><img id="keyZ" class="kb-img" src="./keyboard/Z.png" alt="keyZ"><span class="hvinfo">加载中…</span></span>
-      <span class="kb-img-ctn"><img id="keyX" class="kb-img" src="./keyboard/X.png" alt="keyX"><span class="hvinfo">加载中…</span></span>
-      <span class="kb-img-ctn"><img id="keyC" class="kb-img" src="./keyboard/C.png" alt="keyC"><span class="hvinfo">加载中…</span></span>
-      <span class="kb-img-ctn"><img id="keyV" class="kb-img" src="./keyboard/V.png" alt="keyV"><span class="hvinfo">加载中…</span></span>
-      <span class="kb-img-ctn"><img id="keyB" class="kb-img" src="./keyboard/B.png" alt="keyB"><span class="hvinfo">加载中…</span></span>
-      <span class="kb-img-ctn"><img id="keyN" class="kb-img" src="./keyboard/N.png" alt="keyN"><span class="hvinfo">加载中…</span></span>
-      <span class="kb-img-ctn"><img id="keyM" class="kb-img" src="./keyboard/M.png" alt="keyM"><span class="hvinfo">加载中…</span></span>
-    </div>
-    <div id="tape-input">
-        <div class="column">
-            <label for="bpm">bpm：</label>
-            <input type="number" id="bpm" size=10>
-            <label for="time_sign1">拍号：</label>
-            <input type="number" id="time_sign1" size=5>/<input type="number" id="time_sign2" size=5><br>
-            <p>
-              谱子/主音轨：<br>
-              <textarea id="input" name="input" rows="8" cols="60"></textarea>
-            </p>
-            <p>
-              谱子/副音轨：<br>
-              <textarea id="input2" name="input2" rows="4" cols="60"></textarea>
-            </p>
-            <button id="start">播放</button> <button id="stop">停止</button>&nbsp;&nbsp; <button id="gamestart2">开始游戏</button>
+            <span class="kb-img-ctn"><img id="keyZ" class="kb-img" src="./keyboard/Z.png" alt="keyZ"><span class="hvinfo">加载中…</span></span>
+            <span class="kb-img-ctn"><img id="keyX" class="kb-img" src="./keyboard/X.png" alt="keyX"><span class="hvinfo">加载中…</span></span>
+            <span class="kb-img-ctn"><img id="keyC" class="kb-img" src="./keyboard/C.png" alt="keyC"><span class="hvinfo">加载中…</span></span>
+            <span class="kb-img-ctn"><img id="keyV" class="kb-img" src="./keyboard/V.png" alt="keyV"><span class="hvinfo">加载中…</span></span>
+            <span class="kb-img-ctn"><img id="keyB" class="kb-img" src="./keyboard/B.png" alt="keyB"><span class="hvinfo">加载中…</span></span>
+            <span class="kb-img-ctn"><img id="keyN" class="kb-img" src="./keyboard/N.png" alt="keyN"><span class="hvinfo">加载中…</span></span>
+            <span class="kb-img-ctn"><img id="keyM" class="kb-img" src="./keyboard/M.png" alt="keyM"><span class="hvinfo">加载中…</span></span>
         </div>
-        <div class="column">
-            &nbsp;&nbsp;
-        </div>
-        <div class="column">
-            <div id="preset-buttons">
-                <br>
-                <p>
-                  <button id="tutorial">教程：键位与记谱</button>
-                </p>
-                  <!--button id="tutorial2">教程：自动生成伴奏织体</button-->
-                  <button id="haruhikage">春日影</button> <br>
-                  <button id="bwv846">巴赫 C大调前奏曲</button> <br>
-                  <button id="sad-machine">Sad Machine</button> <br>
-                </p>
-                <p>
-                  <button id="reset">复原</button>
-                </p>
+
+
+        <div id="options" style="flex: 0.5">
+            <h2>音游选项</h2>
+            <p>
+                谱面根据主音轨自动创建，记得在左边输入谱子！<br><br>
+                判定延迟：<input type="number" id="delay" value="0">ms<br><br>
+                选择难度：<select id="difficulty-select">
+                    <option value="easy">简单 | 4键、音符最少</option>
+                    <option value="semi-easy">较简单 | 4键、音符较少</option>
+                    <option value="normal">普通 | 6键、音符较少</option>
+                    <option value="semi-hard">较困难 | 6键、音符较多</option>
+                    <option value="hard">困难 | 6键、音符最多</option>
+                </select></span><br>
+            </p>
+            <button id="gamestart" class="game-start-btn">开始游戏！</button><br><br>
+            <hr>
+            <h2>钢琴选项</h2>
+            <div class="image-container">
+              <form onsubmit="return false">
+                <span id="vel">力度：</span>&nbsp;&nbsp;<button id="vel-add" class="vel-button">+</button>&nbsp;<button id="vel-minus" class="vel-button">-</button><br>
+                移调：
+                <select id="offset_option">
+                  <option value="flex">整体升降key数（简谱）</option>
+                  <option value="fixed">升降号个数（五线谱）</option>
+                </select>
+                <input type="number" id="key_offset" size=5>&nbsp;<span id="key_name"></span><br>
+                <input type="button" value="确定" id="submit">
+              </form>
             </div>
         </div>
     </div>
     <hr>
-    开发中，当前版本 v0.11.1， <a href="https://cauphenuny.github.io/2024/06/14/build-a-windsonglyre-simulator/">开发日志</a>
+    开发中，当前版本 v0.11.2， <a href="https://cauphenuny.github.io/2024/06/14/build-a-windsonglyre-simulator/">开发日志</a>
     <br>
     <p>
     感谢：<br>

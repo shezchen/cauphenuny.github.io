@@ -73,8 +73,8 @@ function decompress(sheet) {
     return sheet;
 }
 function after_load() {
-    document.getElementById("status").style = "color: green;";
-    document.getElementById("status").innerHTML = "准备就绪";
+    const status_element = document.getElementById("status");
+    status_element.parentNode.removeChild(status_element);
     const hovers = document.getElementsByClassName("hvinfo");
     for (var i = 0; i < hovers.length; i++) {
         hovers[i].style.display = "none";
@@ -246,9 +246,9 @@ function gamestart() {
 document.getElementById("gamestart").onclick = () => {
     gamestart();
 }
-document.getElementById("gamestart2").onclick = () => {
-    gamestart();
-}
+//document.getElementById("gamestart2").onclick = () => {
+//    gamestart();
+//}
 document.getElementById("vel-add").onclick = () => {
     if (env.velocity < 9) env.velocity++;
     refresh();
