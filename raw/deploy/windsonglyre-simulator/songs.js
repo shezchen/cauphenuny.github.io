@@ -146,11 +146,11 @@ var haruhikage = `春日影
 [
 
 前奏：
-
+>
 (AGE)...W.Q...W./(VAE)..RE.W.N.M./
 (AGE).S.W.(GQ)...(AW)./(VADE)..R(AE).(FW)...../
 (ZE).B.(AW).(SQ)...(AW)./(VE).ZR(AE).(SW)...A./
-(ZE).B.(AW).(SQ)...(AW)./(VE).ZR(AE).(SW)...(VA)A/
+(ZE).B.(AW).(SQ)...(AW)./(VE).ZR(AE).(SW)...<(VA)A/
 
 主歌：
 
@@ -174,11 +174,11 @@ var haruhikage = `春日影
 (VAH).G.G.G.F.F./(BD).S.S.S...D./
 (CSF).DDDDD.S.D./(NGW).D.(AQ).(BSQ).A.(BQ)./
 
-(ZVJ).(ZH).(VH).(DH).A.V./(ZV).Z.(VH).(DH).(AG).(VF)F/
+(ZVJ).(ZH).(VH).(DH).A.V./(ZV).Z.(VH).(DH).(AG).<(VF)F/
 (XBF).X.(BD).(SD)F(BG).X./(XB).X.B.(MS).B.(XB)./
 
 副歌：
-
+<
 (ZD)S(BD)SDF(ADG).S.(BF)G/(ZVH).Z.HJ(AFQ).N.(VW)Q/
 (CBG).C.B.(MSG).(BF).(CF)./(CND).C.(NF)D(ADG).S.B./
 
@@ -190,11 +190,11 @@ var haruhikage = `春日影
 
 (ZVJ).(ZH).(AH).(FH).A.(VG)./(XBG).X.(MF).(SF).(MD).(BS)./
 (ZBD).B.A.S.A.B./(ZVD).(NF).(AD).(XBF).(XD).(MS)./
-
+>
 (ZBA).AZB.(ZBS)...(ZA)./(ZB).AZB.F.D.AS/
 
 主歌：
-
+>
 (ZBD).D.S.F.D.S./(ZVS).S.AA(SF).(AD).(VS)./
 (ZS).B.AS(AD)...B./(CA)...A.(BD).G.(DQ)./
 (VJ).Z.(AQ).(GJ)...(DQ)./(BJ)H(XG).M.(DG).S.(SF)./
@@ -216,7 +216,7 @@ var haruhikage = `春日影
 (ZVF).(ZH)Q(VE).(AD).(AQ).(VF)./(ZVF).(ZH).(VE).(AD).(AH).(VF)./
 (ZBQ).Z.(BQ)W(ADW).A.(BW)Q/(ZBQ).Z.(BQ).(ADQ).(AQ).(BQ)./
 (ZVF).(ZH)Q(VE).(AD).(AQ).(VF)./(ZVF).(ZH).(VE).(AD).(AH).(VF)./
-(ZBQ).Z.(BQ)W(ADW).A.(BW)Q/(ZBQ).Z.(BQ)E(ADE).A.(BE)W/
+(ZBQ).Z.(BQ)W(ADW).A.(BW)Q/(ZBQ).Z.(BQ)E(ADE).A.<(BE)W/
 
 桥段：
 
@@ -229,12 +229,12 @@ var haruhikage = `春日影
 (BS).....(JW).(JW)(HQ)(JW)./(BSW).(BSE).(BSW).(XBE).(XB).(BR)./
 
 间奏：
-
+<
 (ZBGE).Z.B.(AD).A.B./(ZV).Z.V.(AD).A.V./
 (CBT).(CT).(MT).(DGT).(ME).(CW)./(CNQ).(CJ).(NJ).(ADJ).(NJ).(CJ)./
 (ZBE).Z.(BW).(ADW).(AQ).(BG)./(ZVH).Z.V.(CM).C.M./
 (MD).M.C.(MJ).(CJ).(MJ)./(MDQ).(MDJ).(MD)G(CMG).(CS).(CD)./
-
+>
 副歌：
 
 (ZD)S(BD)SDF(ADG).S.(BF)G/(ZVH).Z.HJ(AFQ).N.(VW)Q/
@@ -357,9 +357,23 @@ var zenzenzense = `前前前世
 ]
 `;
 
-var sad_machine = `Sad Machine
+var sad_machine = {
+    main: 
+`Sad Machine
 [
+>>
 [E..E..]E.[UT]U[TR]/[E..E..]E.[UT]U[TR]/
 [E..E..]E.[UT]U[TR]/[E..(QE)..](QE).[U^Q^]T[TR]/
+[E..E..]E.[UT]U[TR]/[E..E..]E.[UT]U[TR]/
+[E..E..]E.[UT]U[TR]/(QE)... ..../
+<<
+G... ...G/GHJD..../GHJA..(ADF)(AD)/
+
 ]
-`;
+
+`,
+    sub:
+`
+(QE).../(QET).../(JR).../(HE).../
+(QE).../(QET).../(JR).../(HE).../
+`};

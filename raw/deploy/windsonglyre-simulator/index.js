@@ -1,5 +1,5 @@
 import {
-    key, note_name, sharp_name, flat_name,
+    keys, all_keys, note_name, sharp_name, flat_name,
     sharp_note, sharp_scale_name, flat_note, flat_scale_name,
     diff, velocity_levels, velocity_adj, key2note, C1, C2, C3,
     init_constants,
@@ -43,10 +43,9 @@ function init() {
     env.bpm = 90;
     env.time1 = 4, env.time2 = 4;
     document.getElementById('offset_option').selectedIndex = 0;
-    env.fixed_offset.fill(0);
-    env.fix_offset_cnt = 0;
+    env.set_fixed_offset(0);
     document.getElementById("input").value = "在这里的第一行输入曲名，第二行开始写谱子，记谱方法可以看看教程";
-    document.getElementById("input2").value = "副音轨与主音轨同时播放，但不会生成音游谱面";
+    document.getElementById("input2").value = "副音轨与主音轨同时播放，但不会生成音游谱面\n（默认比主音轨低一个八度）";
     refresh();
 }
 function extract(tape) {
@@ -60,17 +59,8 @@ function extract(tape) {
                     i++;
                 }
                 break;
-            case '(': case ')':
-            case '[': case ']':
-            case '{': case '}':
-            case '<': case '>':
-            case '-': case '+':
-            case '^': case '%':
-            case '.': case '/':
-                ext += tape[i];
-                break;
             default: 
-                if (key2note.has(tape.charCodeAt(i))) {
+                if (all_keys.indexOf(tape[i]) != -1) {
                     ext += tape[i];
                 }
                 break;
@@ -96,7 +86,7 @@ function after_load() {
     for (var i = 0; i < key_buttons.length; i++) {
         key_buttons[i].addEventListener('mousedown', function() {
             var key_code = this.id.charCodeAt("key".length);
-            notepress(key_code, key2note.get(key_code), env.velocity);
+            notepress(key_code, key2note[key_code], env.velocity);
         });
         key_buttons[i].addEventListener('mouseenter', function() {
             mouseenter(this.parentNode);
@@ -116,8 +106,8 @@ function after_load() {
         if (key.length > 1) return;
         var code = key.charCodeAt();
         console.log(`${key} ${code} down`);
-        if (key2note.has(code)) {
-            notedown(code, key2note.get(code), env.velocity);
+        if (keys.indexOf(key) != -1) {
+            notedown(code, key2note[code], env.velocity);
         }
         if (key == '-') {
             if (env.velocity > 0) env.velocity--; 
@@ -132,7 +122,7 @@ function after_load() {
         var key = event.key.toUpperCase();
         var code = key.charCodeAt();
         console.log(`${key} ${code} up`);
-        if (key2note.has(code)) {
+        if (keys.indexOf(key) != -1) {
             noteup(code);
         }
     });
@@ -165,21 +155,11 @@ document.getElementById("submit").onclick = () => {
     const selectedOption = selectElement.options[selectElement.selectedIndex];
     if (selectedOption.value == "flex") {
         env.global_offset = parseInt(document.getElementById("key_offset").value);
-        env.fixed_offset.fill(0);
+        env.set_fixed_offset(0);
     } else {
         env.global_offset = 0;
-        env.fixed_offset.fill(0);
         var cnt = parseInt(document.getElementById("key_offset").value);
-        env.fix_offset_cnt = cnt;
-        if (cnt > 0) {
-            for (var i = 0; i < cnt; i++) {
-                env.fixed_offset[sharp_note[i]] = 1;
-            }
-        } else if (cnt < 0) {
-            for (var i = 0; i < (-cnt); i++) {
-                env.fixed_offset[flat_note[i]] = -1;
-            }
-        }
+        env.set_fixed_offset(cnt);
         //console.log(env.fixed_offset);
     }
     env.time1 = parseInt(document.getElementById("time_sign1").value);
@@ -201,14 +181,26 @@ document.getElementById("tutorial").onclick = () => {
 //    document.getElementById("input2").value = tutorial2;
 //    refresh();
 //};
+document.getElementById("sad-machine").onclick = () => {
+    env.bpm = 80;
+    env.time1 = 4;
+    env.time2 = 4;
+    document.getElementById('offset_option').selectedIndex = 1;
+    env.global_offset = 0;
+    env.set_fixed_offset(-3);
+    document.getElementById("input").value = sad_machine.main;
+    document.getElementById("input2").value = sad_machine.sub;
+    refresh();
+    //console.log(sampler.instrumentNames);
+    //context.resume();
+};
 document.getElementById("bwv846").onclick = () => {
     env.bpm = 70;
     env.time1 = 4;
     env.time2 = 4;
     document.getElementById('offset_option').selectedIndex = 0;
-    env.fixed_offset.fill(0);
     env.global_offset = 0;
-    env.fix_offset_cnt = 0;
+    env.set_fixed_offset(0);
     document.getElementById("input").value = bwv846;
     document.getElementById("input2").value = "";
     refresh();
@@ -220,9 +212,8 @@ document.getElementById("haruhikage").onclick = () => {
     env.time1 = 6;
     env.time2 = 8;
     document.getElementById('offset_option').selectedIndex = 0;
-    env.fixed_offset.fill(0);
-    env.fix_offset_cnt = 0;
     env.global_offset = -1;
+    env.set_fixed_offset(0);
     document.getElementById("input").value = haruhikage;
     document.getElementById("input2").value = "";
     refresh();
@@ -238,7 +229,9 @@ document.getElementById("start").onclick = () => {
     //getAttribute();
     var input = fetch_input();
     stop();
-    play(input.main), play(input.sub);
+    var env2 = { ...env };
+    env2.global_offset -= 12;
+    play(input.main), play(input.sub, env2);
 }
 document.getElementById("gamestart").onclick = () => {
     stop();

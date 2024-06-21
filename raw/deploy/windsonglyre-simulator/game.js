@@ -460,26 +460,25 @@ function play() {
     interval_id = setInterval(frame, frame_time);
 }
 
-function code_wrap(code) {
+function code_wrap(code, env) {
     let new_code = code + env.global_offset + env.fixed_offset[code % 12];
     return new_code;
 }
 
-function parse(tape) {
+function parse(tape, check = [], cur_env) {
     console.log("------- start parsing -------");
     console.log(`tape: \n ${tape} \n`);
-    lines = [], triggers = [];
-    let interval = 60 * 4 * 1000 / env.bpm / env.time2;
-    let velc = env.velocity;
+    let interval = 60 * 4 * 1000 / cur_env.bpm / cur_env.time2;
+    let velc = cur_env.velocity;
     let stack = []; stack.push(1);
     let cnt = 0;
     let sum = 0;
     let getTop = arr => arr[arr.length - 1];
     let tmpoffset = 0, octoffset = 0;
-    let startoffset = Math.max(500, drop_time - interval * env.time1);
-    for (let i = 0, drum_note, beat_type; i < env.time1; i++) {
-        if (beat[env.time1] != undefined) {
-            beat_type = beat[env.time1][i];
+    let startoffset = Math.max(500, drop_time - interval * cur_env.time1);
+    for (let i = 0, drum_note, beat_type; i < cur_env.time1; i++) {
+        if (beat[cur_env.time1] != undefined) {
+            beat_type = beat[cur_env.time1][i];
         } else {
             beat_type = (i == 0) ? 2 : 0;
         }
@@ -502,26 +501,10 @@ function parse(tape) {
             time: startoffset + interval * i,
         });
     }
-    sum = env.time1;
+    sum = cur_env.time1;
     let chord_note_cnt = [0, 0, 0, 0, 0, 0, 0, 0];
     console.log(tape);
-    function strong_beat(count) {
-        const tmp = Math.round(count);
-        if (Math.abs(tmp - count) > 1e-10) return false;
-        return beat[env.time1][tmp % env.time1] > 0;
-    }
-    function int_beat(count) {
-        return Math.abs(Math.round(count) - count) <= 1e-10;
-    }
-    function semi_beat(count) {
-        count *= 2;
-        return Math.abs(Math.round(count) - count) <= 1e-10;
-    }
-    function all_beat(count) {
-        return true;
-    }
     let priority = [5, 4, 6, 3, 7, 1]; // 和弦中加入音的优先级
-    let check = [strong_beat, int_beat, int_beat, semi_beat, all_beat];
     let limit = [2, 2, 2, 2, 6];
     for (let i = 0; i < tape.length; i++) {
         let key = tape.charCodeAt(i);
@@ -535,7 +518,7 @@ function parse(tape) {
             case ')':
                 stack.pop();
                 let minid = 10, maxid = 0;
-                if (!check[difficulty](sum)) {
+                if (check.length == 0 || !check[difficulty](sum)) {
                     cnt += getTop(stack);
                     sum += getTop(stack);
                     continue;
@@ -623,7 +606,7 @@ function parse(tape) {
 
             default:
                 let cur_step = getTop(stack);
-                let note_code = code_wrap(key2note.get(key) + tmpoffset + octoffset * 12);
+                let note_code = code_wrap(key2note[key] + tmpoffset + octoffset * 12, cur_env);
                 bgm.notes.push({
                     instrument: "piano",
                     options: {
@@ -636,7 +619,7 @@ function parse(tape) {
                 if (cur_step == 0) {
                     chord_note_cnt[note2col[key]]++;
                 } else {
-                    if (check[difficulty](sum)) {
+                    if (check.length != 0 && check[difficulty](sum)) {
                         triggers.push({
                             column: note2col[key],
                             time: sum * interval + startoffset,
@@ -661,11 +644,43 @@ function parse(tape) {
     console.log(`------- parsed ${triggers.length} / ${lines.length} -------`);
 }
 
+function gameinit() {
+    lines = [], triggers = [];
+}
+
+function gamestart() {
+    gameinit();
+    function strong_beat(count) {
+        const tmp = Math.round(count);
+        if (Math.abs(tmp - count) > 1e-10) return false;
+        if (beat[env.time] != undefined) {
+            return beat[env.time1][tmp % env.time1] > 0;
+        } else {
+            return tmp % env.time1 == 0;
+        }
+    }
+    function int_beat(count) {
+        return Math.abs(Math.round(count) - count) <= 1e-10;
+    }
+    function semi_beat(count) {
+        count *= 2;
+        return Math.abs(Math.round(count) - count) <= 1e-10;
+    }
+    function all_beat(count) {
+        return true;
+    }
+    let check = [strong_beat, int_beat, int_beat, semi_beat, all_beat];
+    parse(tape.main, check, env);
+    var env2 = { ...env };
+    env2.global_offset -= 12;
+    parse(tape.sub, [], env2);
+    new Promise((resolve, reject) => { play() });
+}
+
 const gamestart_button = document.getElementById('gamestart');
 gamestart_button.onclick = () => {
     gamestart_button.parentNode.removeChild(gamestart_button);
-    parse(tape.main);
-    new Promise((resolve, reject) => { play() });
+    gamestart();
 };
 
 window.onload = function() {
