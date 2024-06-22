@@ -38,23 +38,20 @@ function refresh() {
     document.getElementById("time_sign1").value = env.time1;
     document.getElementById("time_sign2").value = env.time2;
 }
-function init() {
+function init_input() {
+    document.getElementById("input").value = "无题\n在这里的第一行输入曲名，第二行开始写谱子，记谱方法可以看看教程\n\n点击右侧预设的谱子可以直接开始玩";
+    document.getElementById("input2").value = "副音轨与主音轨同时播放，但不会生成音游谱面\n（默认比主音轨低一个八度）";
+}
+function init_environment() {
     env.velocity = 4;
     env.global_offset = 0;
     env.bpm = 90;
     env.time1 = 4, env.time2 = 4;
-    document.getElementById('offset_option').selectedIndex = 0;
+    env.offset_option = 0;
     env.set_fixed_offset(0);
-    document.getElementById("input").value = "无题\n在这里的第一行输入曲名，第二行开始写谱子，记谱方法可以看看教程\n\n点击右侧预设的谱子可以直接开始玩";
-    document.getElementById("input2").value = "副音轨与主音轨同时播放，但不会生成音游谱面\n（默认比主音轨低一个八度）";
-    document.getElementById("difficulty-select").selectedIndex = 3;
-    refresh();
 }
-function try_init() {
-    if (document.getElementById('input').value == "加载中……") {
-        init();
-    }
-}
+
+let input_loaded = 0;
 function extract(tape) {
     console.log("------- start extracting -------");
     console.log(`origin: \n ${tape} \n`);
@@ -89,7 +86,9 @@ function after_load() {
     for (var i = 0; i < hovers.length; i++) {
         hovers[i].style.display = "none";
     }
-    try_init();
+    if (input_loaded == 0) {
+        init_input();
+    }
     refresh();
 
     const key_buttons = document.getElementsByClassName("kb-img");
@@ -146,7 +145,22 @@ piano.load.then(() => {
     after_load();
 });
 
-function fetch_input() {
+function save_inputs() {
+    const main = document.getElementById("input");
+    const sub = document.getElementById("input2");
+    localStorage.setItem('raw_main', main.value);
+    localStorage.setItem('raw_sub', sub.value);
+}
+
+function load_inputs() {
+    input_loaded = 1;
+    const main = document.getElementById("input");
+    const sub = document.getElementById("input2");
+    main.value = localStorage.getItem('raw_main');
+    sub.value = localStorage.getItem('raw_sub');
+}
+
+function fetch_inputs() {
     let main_input = document.getElementById("input").value;
     let name = "", content = "";
     for (let i = 0, flag = 0; i < main_input.length; i++) {
@@ -167,6 +181,7 @@ function fetch_input() {
 function read_option() {
     env.bpm = parseInt(document.getElementById("bpm").value);
     const selectElement = document.getElementById('offset_option');
+    env.offset_option = selectElement.selectedIndex;
     const selectedOption = selectElement.options[selectElement.selectedIndex];
     if (selectedOption.value == "flex") {
         env.global_offset = parseInt(document.getElementById("key_offset").value);
@@ -195,7 +210,7 @@ document.getElementById("stop").onclick = () => {
 document.getElementById("tutorial").onclick = () => {
     if (loading) return;
     env.velocity = 4;
-    init();
+    init_environment();
     document.getElementById("input").value = tutorial;
     refresh();
 };
@@ -251,13 +266,15 @@ document.getElementById("haruhikage").onclick = () => {
     //context.resume(); // enable audio context after a user interaction
 };
 document.getElementById("reset").onclick = () => {
-    init();
+    init_environment();
+    init_inputs();
 };
 document.getElementById("start").onclick = () => {
     if (loading) return;
     console.log("click");
     //getAttribute();
-    var input = fetch_input();
+    save_inputs();
+    var input = fetch_inputs();
     stop();
     var env2 = { ...env };
     env2.global_offset -= 12;
@@ -266,7 +283,8 @@ document.getElementById("start").onclick = () => {
 function gamestart() {
     if (loading) return;
     stop();
-    var input = fetch_input();
+    save_inputs();
+    var input = fetch_inputs();
     console.log(input);
     localStorage.setItem('tape', JSON.stringify(input));
     localStorage.setItem('env', JSON.stringify(env));
@@ -294,6 +312,10 @@ document.getElementById("vel-minus").onclick = () => {
     if (env.velocity > 0) env.velocity--;
     refresh();
 }
+document.getElementById("reset-environment").onclick = () => {
+    init_environment();
+    refresh();
+}
 
 window.onload = function() {
     //var str = "";
@@ -303,5 +325,28 @@ window.onload = function() {
     for (var i = 0; i < key_buttons.length; i++) {
         key_buttons[i].draggable = false; // 不可拖动
     }
+    if (localStorage.getItem('env') != undefined) {
+        let prev_env = JSON.parse(localStorage.getItem('env'));
+        env.velocity = prev_env.velocity;
+        env.global_offset = prev_env.global_offset;
+        env.bpm = prev_env.bpm;
+        env.time1 = prev_env.time1, env.time2 = prev_env.time2;
+        env.offset_option = prev_env.offset_option;
+        env.set_fixed_offset(prev_env.fixed_offset);
+        document.getElementById("difficulty-select").selectedIndex = parseInt(localStorage.getItem('difficulty'));
+        console.log("loaded previous environment");
+    } else {
+        init_environment();
+        document.getElementById("difficulty-select").selectedIndex = 3;
+    }
+    if (localStorage.getItem('raw_main') != undefined) {
+        load_inputs();
+    } else {
+        const main = document.getElementById("input");
+        const sub = document.getElementById("input2");
+        main.value = sub.value = "loading...";
+    }
+    document.getElementById('offset_option').selectedIndex = env.offset_option;
+    refresh();
 }
 

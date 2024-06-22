@@ -186,7 +186,7 @@ r_{n-1}&amp;=r_{n}x_{n+1}\\
 <p>音色库来源：<a href="https://space.bilibili.com/243664595">@Colalala_冰阔落落落</a></p>
 <hr />
 <p>6.14</p>
-<p>试了半天，发现没法正常播放这个 sf2 音源，决定先用 smplr 默认的钢琴音源把别的写了。</p>
+<p>试了半天，发现没法正常播放这个风物之诗琴的音源，决定先用 smplr 默认的钢琴音源把别的写了。</p>
 <p>写好了键盘演奏函数、谱子 parser 以及自动播放功能。</p>
 <p>version 0.1.0</p>
 <hr />
@@ -275,6 +275,8 @@ r_{n-1}&amp;=r_{n}x_{n+1}\\
 <p>修了个移调的bug</p>
 <p>1.0.0发布！</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">wc</span> -l *.js</span></span><br><span class="line">      38 constants.js</span><br><span class="line">     871 game.js</span><br><span class="line">     307 index.js</span><br><span class="line">      20 keyboard.js</span><br><span class="line">     170 player.js</span><br><span class="line">     428 songs.js</span><br><span class="line">    1834 total</span><br></pre></td></tr></table></figure>
+<p>加了存储谱子功能</p>
+<p>version 1.1.0</p>
 ]]></content>
       <categories>
         <category>CS</category>

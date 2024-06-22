@@ -8,6 +8,7 @@ import {
 let env = {
     velocity: 4,
     global_offset: 0,
+    offset_option: 0,
     fix_offset_cnt: 0,
     bpm: 90,
     time1: 4, time2: 4,

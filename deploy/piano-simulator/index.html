@@ -12,15 +12,6 @@
     <link rel="stylesheet" href="./index.css">
     <link rel="stylesheet" href="./keyboard.css">
   </head>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N8YFGB7VL2"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-N8YFGB7VL2');
-  </script>
   <body>
     <title>自制谱面音游 / 钢琴模拟器</title>
     <h1>自制谱面音游 / 钢琴模拟器</h1>
@@ -126,6 +117,7 @@
             <h2>钢琴选项</h2>
             <div class="image-container">
               <form onsubmit="return false">
+                <p>
                 <span id="vel">力度：</span>&nbsp;&nbsp;<button id="vel-add" class="vel-button">+</button>&nbsp;<button id="vel-minus" class="vel-button">-</button><br>
                 移调：
                 <select id="offset_option">
@@ -133,7 +125,9 @@
                   <option value="fixed">升降号个数（五线谱）</option>
                 </select>
                 <input type="number" id="key_offset" size=5>&nbsp;<span id="key_name"></span><br>
-                <input type="button" value="确定" id="submit">
+                </p>
+                <input type="button" value="确定" id="submit"> 
+                <input type="button" value="复原" id="reset-environment">
               </form>
             </div>
         </div>
@@ -149,7 +143,7 @@
     背景来自 unsplash.com 和 pixiv.net
     </p>
     <hr>
-    当前版本 v1.0.1， <a href="https://cauphenuny.github.io/2024/06/14/build-a-windsonglyre-simulator/">开发日志</a>
+    当前版本 v1.1.1， <a href="https://cauphenuny.github.io/2024/06/14/build-a-windsonglyre-simulator/">开发日志</a>
     <br>
     <a  href="https://github.com/cauphenuny">
     <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fcauphenuny.github.io%2Fdeploy%2Fpiano-simulator&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false"/></a>
