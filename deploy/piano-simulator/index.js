@@ -13,8 +13,8 @@ function refresh() {
     document.getElementById("bpm").value = env.bpm;
     document.getElementById("vel").textContent = "力度：" + velocity_levels[env.velocity];
     const selectElement = document.getElementById('offset_option');
-    const selectedOption = selectElement.options[selectElement.selectedIndex];
-    if (selectedOption.value == "flex") {
+    selectElement.selectedIndex = env.offset_option;
+    if (env.offset_option == 0) {
         document.getElementById("key_name").innerHTML = "(1=" + note_name[(env.global_offset + 120) % 12] + ")";
         document.getElementById("key_offset").value = env.global_offset;
     } else { 
@@ -49,8 +49,6 @@ function init_environment() {
     env.time1 = 4, env.time2 = 4;
     env.offset_option = 0;
     env.set_fixed_offset(0);
-    const selectElement = document.getElementById('offset_option');
-    selectElement.selectedIndex = 0;
 }
 
 let input_loaded = 0;
@@ -149,6 +147,11 @@ piano.load.then(() => {
     after_load();
 });
 
+function save_environment() {
+    console.log(`saved: ${JSON.stringify(env)}`);
+    localStorage.setItem('env', JSON.stringify(env));
+}
+
 function save_inputs() {
     const main = document.getElementById("input");
     const sub = document.getElementById("input2");
@@ -230,7 +233,7 @@ document.getElementById("sad-machine").onclick = () => {
     env.bpm = 85;
     env.time1 = 4;
     env.time2 = 4;
-    document.getElementById('offset_option').selectedIndex = 1;
+    env.offset_option = 1;
     env.global_offset = 0;
     env.set_fixed_offset(-3);
     document.getElementById("input").value = sad_machine.main;
@@ -245,8 +248,8 @@ document.getElementById("bwv846").onclick = () => {
     env.bpm = 70;
     env.time1 = 4;
     env.time2 = 4;
-    document.getElementById('offset_option').selectedIndex = 0;
     env.global_offset = 0;
+    env.offset_option = 0;
     env.set_fixed_offset(0);
     document.getElementById("input").value = bwv846;
     document.getElementById("input2").value = "";
@@ -260,7 +263,7 @@ document.getElementById("haruhikage").onclick = () => {
     env.bpm = 90;
     env.time1 = 6;
     env.time2 = 8;
-    document.getElementById('offset_option').selectedIndex = 0;
+    env.offset_option = 0;
     env.global_offset = -1;
     env.set_fixed_offset(0);
     document.getElementById("input").value = haruhikage;
@@ -281,6 +284,7 @@ document.getElementById("start").onclick = () => {
     //getAttribute();
     save_inputs();
     var input = fetch_inputs();
+    save_environment();
     stop();
     var env2 = { ...env };
     env2.global_offset -= 12;
@@ -292,10 +296,10 @@ function gamestart() {
     save_inputs();
     var input = fetch_inputs();
     console.log(input);
+    save_environment();
     localStorage.setItem('tape', JSON.stringify(input));
-    localStorage.setItem('env', JSON.stringify(env));
-    localStorage.setItem('delay', document.getElementById("delay").value);
     localStorage.setItem('difficulty', document.getElementById("difficulty-select").selectedIndex);
+    localStorage.setItem('delay', document.getElementById("delay").value);
     window.location.href = './game.html'
 }
 document.getElementById("gamestart").onclick = () => {
@@ -333,20 +337,20 @@ window.onload = function() {
     }
     if (localStorage.getItem('env') != undefined) {
         let prev_env = JSON.parse(localStorage.getItem('env'));
+        console.log(prev_env);
         env.velocity = prev_env.velocity;
         env.global_offset = prev_env.global_offset;
         env.bpm = prev_env.bpm;
         env.time1 = prev_env.time1, env.time2 = prev_env.time2;
         env.offset_option = prev_env.offset_option;
-        env.set_fixed_offset(prev_env.fixed_offset);
+        env.set_fixed_offset(prev_env.fix_offset_cnt);
+        console.log(env);
         document.getElementById("difficulty-select").selectedIndex = parseInt(localStorage.getItem('difficulty'));
         console.log("loaded previous environment");
     } else {
         init_environment();
         document.getElementById("difficulty-select").selectedIndex = 3;
     }
-    main.value = sub.value = "loading...";
-    document.getElementById('offset_option').selectedIndex = env.offset_option;
     refresh();
 }
 
