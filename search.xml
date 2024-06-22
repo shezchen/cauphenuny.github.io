@@ -4059,6 +4059,8 @@ c100.7 8.3 195.3 44 280 108 55.3 42 101.7 93 139 153l9 14c2.7-4 5.7-8.7 9-14
 <hr />
 <p>6.22</p>
 <p>修了个移调的bug</p>
+<p>1.0.0发布！</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">wc</span> -l *.js</span></span><br><span class="line">      38 constants.js</span><br><span class="line">     871 game.js</span><br><span class="line">     307 index.js</span><br><span class="line">      20 keyboard.js</span><br><span class="line">     170 player.js</span><br><span class="line">     428 songs.js</span><br><span class="line">    1834 total</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>CS</category>
