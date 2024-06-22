@@ -356,7 +356,8 @@ var zenzenzense = `前前前世
 
 var sad_machine = {
     main: 
-`Sad Machine（还没写完）
+`Sad Machine
+
 # 原曲：Porter Robinson
 # 钢琴改编：Xeuphoria
 # 扒谱：B站up主蓝莓夹心奥利奥
@@ -366,10 +367,37 @@ var sad_machine = {
 [E..E..]E.[UT]U[TR]/[E..E..]E.[UT]U[TR]/
 [E..E..]E.[UT]U[TR]/[E..(QE)..](QE).[U^Q^]T[TR]/
 [E..E..]E.[UT]U[TR]/[E..E..]E.[UT]U[TR]/
-[E..E..]E.[UT]U[TR]/(QE)... ..../
+[E..E..]E.[UT]U[TR]/(QE)......./
 <<
-G... ...G/GHJD..../GHJA..(ADF)(AD)/
+G......G / GHJD..../
+GHJA..(ADF)(AD) / ......DF /
+G.D....[DF] / [G..D..](DJ).(DH)GD /
+.(DJ)(DH)(DG)FDFG / [(SF)..D..]M..DF/
+F..M.DDF / FDD[JJ]..Q[JJ]/
+..F[.D]..Q[JJ] / ..[(DF)..D..MD]JG/
+G.[[TY]T]E.DDF / FDD[(DJ)(DJ).ADJ]Q[(FJ)(FJ)]/
+..[(DF)..D..]DQJ/J..S<(SF)...(FR)./
 
+<
+[(D>>M<<E)..(DE)..](DE).[(UJ)(GT)](UJ)[(GT)(FR)]/
+[(D>>A<<E)..(DE)..](DE).[(UJ)(GT)](UJ)[(GT)(FR)]/
+[(D>>M<<E)..(DE)..](DE).[(UJ)(GT)](UJ)[(GT)(FR)]/
+[(D>>N<<E)..(AQ)..](AQ).[(UJ)^(AQ)^](GT)[(GT)(FR)]/
+[(D>>M<<E)..(DE)..](DE).[(UJ)(GT)](UJ)[(GT)(FR)]/
+>[(DE)..(DE)..](DE).[(UJ)(GT)](UJ)[(GT)(FR)]/
+
+D....>GGJ/(JQ)[J]JGFDD(DJ)[(DJ)]/
+.......[JJ]/(JQ)(DJ)(DJ)[(DG)](DG)FD[.](DG)/
+(DG)[F]FDM[.]..(JQ)/.(DJ)(DJ)[(DG)](DG)FD(DQ)[(DJ)]/
+...(AD).[.]A(DJ)[(DJ)]/Q(DJ)(DJ)[(DG)](DG)FD[.](DG)/
+(DG)FFD(SF).../
+
+>
+.....^DDF/F..D.DDF/
+FDD[(DJ)](DJ)[.AD]Q[(DJ)(DJ)]/..[(DF)..D..].Q[JJ]/
+..[(DF)..D..]MJG/(DG).[>[TY]T<]E.DDF/
+FDD[(DJ)](DJ).[.]Q[(DJ)(DJ)]/..[(DF)..D..].QJ/
+(DJ)...F./(DC)......./
 ]
 
 `,
@@ -377,4 +405,24 @@ G... ...G/GHJD..../GHJA..(ADF)(AD)/
 `>
 (QE).../(QET).../(JR).../(HE).../
 (QE).../(QET).../(JR).../(HE).../
+
+[DGEJ].[GJ] / [AG]Q.G / MFJ[.M] / [NDHJ].H/
+[DG.J].J / [AG]Q.G / [ND]H.H / [MF].[.F]./
+[DGE.].J / MJ[WE][.J] / [AG]Q[.[GQ]EE] / [MF]J../
+[CM]..D / ZDG. / [MF]J[.FJF]/ [ND]HM.[.F]/
+
+<<
+
+[(CD)M]D[[MD].][.(CD)]/[(ZA)ADGQ[GQ]GQ]/
+[(MJ)F]J[[FJ].][.[FJ]]/[(NH)D]H[[DH].][.[DH]]/
+[(CD)M]D[[MD].][.(CD)]/[(ZA)ADGQ[GQ]GQ]/
+
+(NDH)[.(JQ)]..> / ...[(DH)D] / [CMDF.G]G / A..G/
+(MF).[.[F]]J[[C]]/...D/[ZADG]../M..F/
+(NDF).(MSF)./
+
+>>>
+
+..../^[DG]J../[AG].../[ND]H[.[GQ]]T/
+[MF]J../[DG]..J/[A]G[Q]Q[Q[GQ]]/[MF]J..FQJ/(NH).../(CD).../^
 `};

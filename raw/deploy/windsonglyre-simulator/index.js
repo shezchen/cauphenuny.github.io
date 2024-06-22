@@ -194,6 +194,7 @@ document.getElementById("stop").onclick = () => {
 }
 document.getElementById("tutorial").onclick = () => {
     if (loading) return;
+    env.velocity = 4;
     init();
     document.getElementById("input").value = tutorial;
     refresh();
@@ -205,7 +206,8 @@ document.getElementById("tutorial").onclick = () => {
 //};
 document.getElementById("sad-machine").onclick = () => {
     if (loading) return;
-    env.bpm = 90;
+    env.velocity = 4;
+    env.bpm = 85;
     env.time1 = 4;
     env.time2 = 4;
     document.getElementById('offset_option').selectedIndex = 1;
@@ -219,6 +221,7 @@ document.getElementById("sad-machine").onclick = () => {
 };
 document.getElementById("bwv846").onclick = () => {
     if (loading) return;
+    env.velocity = 4;
     env.bpm = 70;
     env.time1 = 4;
     env.time2 = 4;
@@ -233,6 +236,7 @@ document.getElementById("bwv846").onclick = () => {
 };
 document.getElementById("haruhikage").onclick = () => {
     if (loading) return;
+    env.velocity = 4;
     env.bpm = 90;
     env.time1 = 6;
     env.time2 = 8;
