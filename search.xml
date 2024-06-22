@@ -276,6 +276,9 @@ r_{n-1}&amp;=r_{n}x_{n+1}\\
 <p>加了存储谱子功能</p>
 <p>version 1.1.0</p>
 <p>修了简单模式强弱拍计算在一个小节内节拍变化时出错的问题（改成按小节线对齐了）</p>
+<p>version 1.2.0</p>
+<p>把曲名单独分了个框出来</p>
+<p>version 1.3.0</p>
 ]]></content>
       <categories>
         <category>CS</category>
