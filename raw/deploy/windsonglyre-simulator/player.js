@@ -26,6 +26,7 @@ let env = {
             }
         }
         this.fix_offset_cnt = cnt;
+        console.log(this.fixed_offset);
     },
 };
 // var vel, global_offset, bpm, time1, time2;

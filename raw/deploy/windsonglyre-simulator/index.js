@@ -117,7 +117,12 @@ function after_load() {
         var code = key.charCodeAt();
         console.log(`${key} ${code} down`);
         if (keys.indexOf(key) != -1) {
-            notedown(code, key2note[code], env.velocity);
+            const note = key2note[code];
+            notedown(
+                code, 
+                note + env.global_offset + env.fixed_offset[note % 12], 
+                env.velocity
+            );
         }
         if (key == '-') {
             if (env.velocity > 0) env.velocity--; 
