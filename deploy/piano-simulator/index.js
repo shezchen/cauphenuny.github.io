@@ -38,7 +38,7 @@ function refresh() {
     document.getElementById("time_sign1").value = env.time1;
     document.getElementById("time_sign2").value = env.time2;
 }
-function init_input() {
+function init_inputs() {
     document.getElementById("input").value = "无题\n在这里的第一行输入曲名，第二行开始写谱子，记谱方法可以看看教程\n\n点击右侧预设的谱子可以直接开始玩";
     document.getElementById("input2").value = "副音轨与主音轨同时播放，但不会生成音游谱面\n（默认比主音轨低一个八度）";
 }
@@ -87,7 +87,7 @@ function after_load() {
         hovers[i].style.display = "none";
     }
     if (input_loaded == 0) {
-        init_input();
+        init_inputs();
     }
     refresh();
 
