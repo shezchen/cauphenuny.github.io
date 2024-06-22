@@ -830,7 +830,10 @@ document.addEventListener("keydown", function(event) {
         }
         return;
     }
-    if (key == "ESCAPE" && (is_paused() || is_playing == 0)) {
+    if (key == "ESCAPE") {
+        if (is_playing != 0 && is_paused() == 0) {
+            pause();
+        }
         restart();
     }
     if (key == "BACKSPACE" && (is_paused() || is_playing == 0)) {
