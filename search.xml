@@ -275,6 +275,7 @@ r_{n-1}&amp;=r_{n}x_{n+1}\\
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">wc</span> -l *.js</span></span><br><span class="line">      38 constants.js</span><br><span class="line">     871 game.js</span><br><span class="line">     307 index.js</span><br><span class="line">      20 keyboard.js</span><br><span class="line">     170 player.js</span><br><span class="line">     428 songs.js</span><br><span class="line">    1834 total</span><br></pre></td></tr></table></figure>
 <p>加了存储谱子功能</p>
 <p>version 1.1.0</p>
+<p>修了简单模式强弱拍计算在一个小节内节拍变化时出错的问题（改成按小节线对齐了）</p>
 ]]></content>
       <categories>
         <category>CS</category>
