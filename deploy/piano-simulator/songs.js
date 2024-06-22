@@ -3,7 +3,8 @@ var tutorial = `教程
 （教程也可以播放，点击下方播放按钮）
 教程中拍号4/4，此时一位表示一个四分音符：
 /AAAA/..../
-（斜杠是小节线标记，方便阅读，播放时会忽略）
+（斜杠是小节线标记，播放时会忽略，但影响简单模式的谱面）
+（简单模式只选重音，从小节线后第一个音开始算）
 
 英文句号表示休止符：
 /AA.A/..../
@@ -119,7 +120,7 @@ var tutorial2 = `教程
 
 `;
 var bwv846 = 
-`巴赫C大调前奏曲
+`# 巴赫C大调前奏曲
 [[>>ADGQEGQEADGQEGQE/ASHWRHWRASHWRHWR/
 MSGWRGWRMSGWRGWR/ADGQEGQEADGQEGQE/
 <<ADHEYHEYADHEYHEY/>>AS+FHW+FHWAS+FHW+FHW/
@@ -139,7 +140,7 @@ BSGJRGJRBSGJRGJR/ZAG-JEG-JEZAG-JEG-JE/
 ZAFHQRQHQHFHFSFS/ZM%GJWRWJWJGJSFDS/]
 (%ZA%DGQ)]
 `;
-var haruhikage = `春日影
+var haruhikage = `# 春日影
 # 来源：https://www.bilibili.com/read/cv27118373/
 # 略有修改，使节奏正确。
 
@@ -356,7 +357,7 @@ var zenzenzense = `前前前世
 
 var sad_machine = {
     main: 
-`Sad Machine
+`# Sad Machine
 
 # 原曲：Porter Robinson
 # 钢琴改编：Xeuphoria

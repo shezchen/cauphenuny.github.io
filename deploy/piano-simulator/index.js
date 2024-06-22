@@ -39,7 +39,8 @@ function refresh() {
     document.getElementById("time_sign2").value = env.time2;
 }
 function init_inputs() {
-    document.getElementById("input").value = "无题\n在这里的第一行输入曲名，第二行开始写谱子，记谱方法可以看看教程\n\n点击右侧预设的谱子可以直接开始玩";
+    document.getElementById("song-name").value = "无题";
+    document.getElementById("input").value = "在这里输入谱子，记谱方法可以看看教程\n\n点击右侧预设的谱子可以直接开始玩";
     document.getElementById("input2").value = "副音轨与主音轨同时播放，但不会生成音游谱面\n（默认比主音轨低一个八度）";
 }
 function init_environment() {
@@ -155,8 +156,10 @@ function save_environment() {
 function save_inputs() {
     const main = document.getElementById("input");
     const sub = document.getElementById("input2");
+    const name = document.getElementById("song-name");
     localStorage.setItem('raw_main', main.value);
     localStorage.setItem('raw_sub', sub.value);
+    localStorage.setItem('name', name.value);
 }
 
 function load_inputs() {
@@ -164,24 +167,18 @@ function load_inputs() {
     console.log("loaded previous input");
     const main = document.getElementById("input");
     const sub = document.getElementById("input2");
+    const name = document.getElementById("song-name");
     main.value = localStorage.getItem('raw_main');
     sub.value = localStorage.getItem('raw_sub');
+    name.value = localStorage.getItem('name');
 }
 
 function fetch_inputs() {
     let main_input = document.getElementById("input").value;
-    let name = "", content = "";
-    for (let i = 0, flag = 0; i < main_input.length; i++) {
-        if (main_input[i] == '\n' || main_input[i] == '\r') flag = 1;
-        if (flag == 0) {
-            name += main_input[i];
-        } else {
-            content += main_input[i];
-        }
-    }
+    let name = document.getElementById("song-name").value;
     let inputs = {
         name: name,
-        main: extract(content),
+        main: extract(main_input),
         sub: decompress(extract(document.getElementById("input2").value)),
     };
     return inputs;
@@ -220,6 +217,7 @@ document.getElementById("tutorial").onclick = () => {
     env.velocity = 4;
     init_environment();
     document.getElementById("input").value = tutorial;
+    document.getElementById("song-name").value = "教程";
     refresh();
 };
 //document.getElementById("tutorial2").onclick = () => {
@@ -236,6 +234,7 @@ document.getElementById("sad-machine").onclick = () => {
     env.offset_option = 1;
     env.global_offset = 0;
     env.set_fixed_offset(-3);
+    document.getElementById("song-name").value = "Sad Machine";
     document.getElementById("input").value = sad_machine.main;
     document.getElementById("input2").value = sad_machine.sub;
     refresh();
@@ -251,6 +250,7 @@ document.getElementById("bwv846").onclick = () => {
     env.global_offset = 0;
     env.offset_option = 0;
     env.set_fixed_offset(0);
+    document.getElementById("song-name").value = "巴赫C大调前奏曲";
     document.getElementById("input").value = bwv846;
     document.getElementById("input2").value = "";
     refresh();
@@ -266,6 +266,7 @@ document.getElementById("haruhikage").onclick = () => {
     env.offset_option = 0;
     env.global_offset = -1;
     env.set_fixed_offset(0);
+    document.getElementById("song-name").value = "春日影";
     document.getElementById("input").value = haruhikage;
     document.getElementById("input2").value = "";
     refresh();

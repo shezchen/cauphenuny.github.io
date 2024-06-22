@@ -33,10 +33,12 @@
         <div id="tape-keyboard" style="flex: 1">
             <div id="tape-input">
                 <div class="column">
+                    <label for="song-name">曲名：</label>
+                    <input type="text" id="song-name">
                     <label for="bpm">bpm：</label>
                     <input type="number" id="bpm" size=10>
                     <label for="time_sign1">拍号：</label>
-                    <input type="number" id="time_sign1" size=5>/<input type="number" id="time_sign2" size=5> <button id="bpm-submit" style="padding: 0.1em 0.4em;">确定</button><br>
+                    <input type="number" id="time_sign1" size=5 style="width: 2em">/<input type="number" id="time_sign2" size=5 style="width: 2em"> <button id="bpm-submit" style="padding: 0.1em 0.4em;">确定</button><br>
                     <p>
                       谱子/主音轨：<br>
                       <textarea id="input" name="input" rows="8" cols="60">加载中……</textarea>
