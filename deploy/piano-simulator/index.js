@@ -327,30 +327,28 @@ document.getElementById("reset-environment").onclick = () => {
     refresh();
 }
 
-window.onload = function() {
-    //var str = "";
-    init_constants();
-    //console.log(str);
-    const key_buttons = document.getElementsByClassName("kb-img");
-    for (var i = 0; i < key_buttons.length; i++) {
-        key_buttons[i].draggable = false; // 不可拖动
-    }
-    if (localStorage.getItem('env') != undefined) {
-        let prev_env = JSON.parse(localStorage.getItem('env'));
-        console.log(prev_env);
-        env.velocity = prev_env.velocity;
-        env.global_offset = prev_env.global_offset;
-        env.bpm = prev_env.bpm;
-        env.time1 = prev_env.time1, env.time2 = prev_env.time2;
-        env.offset_option = prev_env.offset_option;
-        env.set_fixed_offset(prev_env.fix_offset_cnt);
-        console.log(env);
-        document.getElementById("difficulty-select").selectedIndex = parseInt(localStorage.getItem('difficulty'));
-        console.log("loaded previous environment");
-    } else {
-        init_environment();
-        document.getElementById("difficulty-select").selectedIndex = 3;
-    }
-    refresh();
+//var str = "";
+init_constants();
+//console.log(str);
+const key_buttons = document.getElementsByClassName("kb-img");
+for (var i = 0; i < key_buttons.length; i++) {
+    key_buttons[i].draggable = false; // 不可拖动
 }
+if (localStorage.getItem('env') != undefined) {
+    let prev_env = JSON.parse(localStorage.getItem('env'));
+    console.log(prev_env);
+    env.velocity = prev_env.velocity;
+    env.global_offset = prev_env.global_offset;
+    env.bpm = prev_env.bpm;
+    env.time1 = prev_env.time1, env.time2 = prev_env.time2;
+    env.offset_option = prev_env.offset_option;
+    env.set_fixed_offset(prev_env.fix_offset_cnt);
+    console.log(env);
+    document.getElementById("difficulty-select").selectedIndex = parseInt(localStorage.getItem('difficulty'));
+    console.log("loaded previous environment");
+} else {
+    init_environment();
+    document.getElementById("difficulty-select").selectedIndex = 3;
+}
+refresh();
 
