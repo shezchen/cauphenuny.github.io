@@ -49,6 +49,8 @@ function init_environment() {
     env.time1 = 4, env.time2 = 4;
     env.offset_option = 0;
     env.set_fixed_offset(0);
+    const selectElement = document.getElementById('offset_option');
+    selectElement.selectedIndex = 0;
 }
 
 let input_loaded = 0;
