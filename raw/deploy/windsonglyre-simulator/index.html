@@ -23,7 +23,7 @@
         alert("请使用电脑网页打开");
     }
     </script>
-    <p><label for="input">使用键盘，或在右框中输入谱子以自动演奏：<br>
+    <p><label for="input">使用键盘/鼠标，或在下框中输入谱子以自动演奏：<br>
     <b>输入谱子后可进入音游模式游玩</b><br> </label></p>
     <p id="status" style="color: red;"><b>加载中，请稍候，第一次加载时间可能较长……</b></p>
     <hr>
@@ -102,7 +102,7 @@
             <h2>音游选项</h2>
             <p>
                 谱面根据主音轨自动创建，记得在左边输入谱子！<br><br>
-                判定延迟：<input type="number" id="delay" value="0">ms<br><br>
+                判定延迟：<input type="number" id="delay" value="0">ms &nbsp;（如果你使用蓝牙耳机，建议调大这个值）<br><br>
                 选择难度：<select id="difficulty-select">
                     <option value="easy">简单 | 4键、音符最少</option>
                     <option value="semi-easy">较简单 | 4键、音符较少</option>
@@ -135,12 +135,15 @@
     https://w3schools.com/<br>
     ChatGPT<br>
     网上的各种资料、博客<br>
-    按钮素材来自原神<br>
-    <!--字体：<a href="https://www.fonts.net.cn/font-32635283155.html")>汉仪文黑</a><br-->
-    钢琴、鼓组音源来自<a href="https://www.npmjs.com/package/smplr">smplr</a>库
+    按钮图片来自原神，徽章来自 shields.io<br>
+    钢琴、鼓组音源来自<a href="https://www.npmjs.com/package/smplr">smplr</a>库<br>
+    背景来自 unsplash.com 和 pixiv.net
     </p>
     开发中，当前版本 v0.14.3， <a href="https://cauphenuny.github.io/2024/06/14/build-a-windsonglyre-simulator/">开发日志</a>
     <br>
+    <a  href="https://github.com/cauphenuny">
+    <img alt="Github Profile" src="https://img.shields.io/badge/Github-Cauphenuny-blue?style=flat&logo=github">
+    </a>
 </body>
 
 </html>
