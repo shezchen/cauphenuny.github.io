@@ -593,7 +593,7 @@ function parse(tape, check = [], cur_env) {
             case ')':
                 stack.pop();
                 let minid = 10, maxid = 0;
-                if (check.length == 0 || check[difficulty](sum) == false) {
+                if (check.length == 0 || check[difficulty](cnt) == false) {
                     cnt += getTop(stack);
                     sum += getTop(stack);
                     continue;
@@ -687,6 +687,7 @@ function parse(tape, check = [], cur_env) {
                 else                octoffset = 0;
                 break;
             case '/':
+                cnt = 0;
                 break;
             case '%':
                 if (octoffset == 0) octoffset = -1;
@@ -714,7 +715,7 @@ function parse(tape, check = [], cur_env) {
                 if (cur_step == 0) {
                     chord_note_cnt[note2col[key]]++;
                 } else {
-                    if (check.length != 0 && check[difficulty](sum)) {
+                    if (check.length != 0 && check[difficulty](cnt)) {
                         triggers.push({
                             column: note2col[key],
                             time: sum * interval + startoffset + delay,
