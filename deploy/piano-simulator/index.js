@@ -86,7 +86,9 @@ function after_load() {
     for (var i = 0; i < hovers.length; i++) {
         hovers[i].style.display = "none";
     }
-    if (input_loaded == 0) {
+    if (localStorage.getItem('raw_main') != undefined) {
+        load_inputs();
+    } else {
         init_inputs();
     }
     refresh();
@@ -154,6 +156,7 @@ function save_inputs() {
 
 function load_inputs() {
     input_loaded = 1;
+    console.log("loaded previous input");
     const main = document.getElementById("input");
     const sub = document.getElementById("input2");
     main.value = localStorage.getItem('raw_main');
@@ -268,6 +271,7 @@ document.getElementById("haruhikage").onclick = () => {
 document.getElementById("reset").onclick = () => {
     init_environment();
     init_inputs();
+    refresh();
 };
 document.getElementById("start").onclick = () => {
     if (loading) return;
@@ -339,13 +343,7 @@ window.onload = function() {
         init_environment();
         document.getElementById("difficulty-select").selectedIndex = 3;
     }
-    if (localStorage.getItem('raw_main') != undefined) {
-        load_inputs();
-    } else {
-        const main = document.getElementById("input");
-        const sub = document.getElementById("input2");
-        main.value = sub.value = "loading...";
-    }
+    main.value = sub.value = "loading...";
     document.getElementById('offset_option').selectedIndex = env.offset_option;
     refresh();
 }
