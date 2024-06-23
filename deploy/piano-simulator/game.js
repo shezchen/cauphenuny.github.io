@@ -837,7 +837,7 @@ document.addEventListener("keydown", function(event) {
         }
         restart();
     }
-    if (key == "BACKSPACE" && (is_paused() || is_playing == 0)) {
+    if (key == "BACKSPACE") {
         back_to_home();
     }
     let index = available_key.indexOf(key);

@@ -43,13 +43,16 @@ function init_inputs() {
     document.getElementById("input").value = "在这里输入谱子，记谱方法可以看看教程\n\n点击右侧预设的谱子可以直接开始玩";
     document.getElementById("input2").value = "副音轨与主音轨同时播放，但不会生成音游谱面\n（默认比主音轨低一个八度）";
 }
-function init_environment() {
+function init_option() {
+    env.offset_option = 0;
     env.velocity = 4;
     env.global_offset = 0;
+    env.set_fixed_offset(0);
+}
+function init_environment() {
+    init_option();
     env.bpm = 90;
     env.time1 = 4, env.time2 = 4;
-    env.offset_option = 0;
-    env.set_fixed_offset(0);
 }
 
 let input_loaded = 0;
@@ -324,7 +327,7 @@ document.getElementById("vel-minus").onclick = () => {
     refresh();
 }
 document.getElementById("reset-environment").onclick = () => {
-    init_environment();
+    init_option();
     refresh();
 }
 
