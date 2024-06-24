@@ -360,8 +360,8 @@ function result() {
     </p>
     <p class="bright" style="font-size: large">
     Normalized Score: ${get_normalized_score().toFixed(2)}<br>
-    All: ${score.hit + score.miss}<br>
-    Miss: ${score.miss}<br>
+    Note Count: ${score.hit + score.miss}<br>
+    Perfect / Good / Miss: ${score.perfect} / ${score.hit - score.perfect} / ${score.miss}<br>
     Max Combo: ${score.max_combo}<br>
     </p>
 </div>
