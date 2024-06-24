@@ -4,7 +4,7 @@ import {
     diff, velocity_levels, velocity_adj, key2note, C1, C2, C3,
     init_constants,
 } from './constants.js'
-import { env, play, notepress, notedown, noteup, piano, stop } from './player.js'
+import { env, play, notepress, notedown, noteup, notestop, piano, stop } from './player.js'
 import { keyup_animation, keydown_animation, mouseenter, mouseleave } from './keyboard.js'
 
 let loading = 1;
@@ -144,6 +144,8 @@ function after_load() {
         console.log(`${key} ${code} up`);
         if (keys.indexOf(key) != -1) {
             noteup(code);
+            const note = key2note[code];
+            notestop(note + env.global_offset + env.fixed_offset[note % 12]);
         }
     });
 }

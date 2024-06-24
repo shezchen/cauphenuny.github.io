@@ -55,6 +55,9 @@ export function notedown(key, note, velc) {
 export function noteup(key) {
     keyup_animation(key);
 }
+export function notestop(key) {
+    piano.stop(key);
+}
 export function notepress(key, note, velc) {
     //console.log(`notepress ${key},${note},${velc}`);
     notedown(key, note, velc);
