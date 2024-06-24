@@ -113,9 +113,6 @@ function after_load() {
         });
     }
     document.addEventListener("keydown", function(event) {
-        if (event.repeat) {
-            return;
-        }
         if (event.ctrlKey || event.altKey || event.metaKey) {
             return;
         }
@@ -146,6 +143,9 @@ function after_load() {
 
             default:
                 if (keys.indexOf(key) != -1) {
+                    if (event.repeat) {
+                        return;
+                    }
                     const note = key2note[code];
                     notedown(
                         code, 
