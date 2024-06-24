@@ -207,10 +207,6 @@ function read_option() {
 document.getElementById("submit").onclick = () => {
     read_option();
 }
-document.getElementById("bpm-submit").onclick = () => {
-    read_option();
-}
-
 document.getElementById("stop").onclick = () => {
     console.log("stop");
     stop();
@@ -286,6 +282,7 @@ document.getElementById("start").onclick = () => {
     if (loading) return;
     console.log("click");
     //getAttribute();
+    read_option();
     save_inputs();
     var input = fetch_inputs();
     save_environment();
@@ -297,6 +294,7 @@ document.getElementById("start").onclick = () => {
 function gamestart() {
     if (loading) return;
     stop();
+    read_option();
     save_inputs();
     var input = fetch_inputs();
     console.log(input);
