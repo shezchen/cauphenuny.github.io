@@ -80,6 +80,8 @@ function decompress(sheet) {
     //TODO
     return sheet;
 }
+let temp_pedal = 0, pedal = 0;
+let lasting = [];
 function after_load() {
     loading = 0;
     const status_element = document.getElementById("status");
@@ -118,34 +120,66 @@ function after_load() {
             return;
         }
         var key = event.key.toUpperCase();
-        if (key.length > 1) return;
         var code = key.charCodeAt();
         console.log(`${key} ${code} down`);
-        if (keys.indexOf(key) != -1) {
-            const note = key2note[code];
-            notedown(
-                code, 
-                note + env.global_offset + env.fixed_offset[note % 12], 
-                env.velocity
-            );
-        }
-        if (key == '-') {
-            if (env.velocity > 0) env.velocity--; 
-            refresh();
-        }
-        if (key == '=' || key == '+') {
-            if (env.velocity < 9) env.velocity++;
-            refresh();
+        switch (key) {
+            case '-':
+                if (env.velocity > 0) env.velocity--; 
+                refresh();
+                break;
+
+            case '=':
+            case '+':
+                if (env.velocity < 9) env.velocity++;
+                refresh();
+                break;
+
+            case ' ':
+                if(event.target == document.body) {
+                    event.preventDefault();
+                }
+                for (let i = 0; i < lasting.length; i++) {
+                    notestop(lasting[i]);
+                }
+                lasting.length = 0;
+                break;
+
+            default:
+                if (keys.indexOf(key) != -1) {
+                    const note = key2note[code];
+                    notedown(
+                        code, 
+                        note + env.global_offset + env.fixed_offset[note % 12], 
+                        env.velocity
+                    );
+                }
+                break;
         }
     });
     document.addEventListener("keyup", function(event) {
-        var key = event.key.toUpperCase();
-        var code = key.charCodeAt();
+        var key = event.key;
+        var code = key.toUpperCase().charCodeAt();
         console.log(`${key} ${code} up`);
-        if (keys.indexOf(key) != -1) {
-            noteup(code);
-            const note = key2note[code];
-            notestop(note + env.global_offset + env.fixed_offset[note % 12]);
+        switch (event.key) {
+            case 'Shift':
+                for (let i = 0; i < lasting.length; i++) {
+                    notestop(lasting[i]);
+                }
+                lasting.length = 0;
+                break;
+            default:
+                if (keys.indexOf(key) != -1) {
+                    noteup(code);
+                    const note = key2note[code];
+                    const wrapped_note = note + env.global_offset + env.fixed_offset[note % 12];
+                    lasting.push(wrapped_note);
+                } else if (keys.indexOf(key.toUpperCase()) != -1) {
+                    noteup(code);
+                    const note = key2note[code];
+                    const wrapped_note = note + env.global_offset + env.fixed_offset[note % 12];
+                    notestop(wrapped_note);
+                }
+                break;
         }
     });
 }
