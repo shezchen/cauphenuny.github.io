@@ -4,7 +4,7 @@ import {
     diff, velocity_levels, velocity_adj, key2note, C1, C2, C3,
     init_constants,
 } from './constants.js'
-import { env, play, note_down, note_up, note_stop, piano, stop } from './player.js'
+import { env, set_offset, play, note_down, note_up, note_stop, piano, stop } from './player.js'
 import { keyup_animation, keydown_animation, mouseenter, mouseleave } from './keyboard.js'
 
 let loading = 1;
@@ -47,7 +47,7 @@ function init_option() {
     env.offset_option = 0;
     env.velocity = 4;
     env.global_offset = 0;
-    env.set_fixed_offset(0);
+    set_offset(env, 0, 0);
 }
 function init_environment() {
     init_option();
@@ -221,6 +221,7 @@ piano.load.then(() => {
 });
 
 function save_environment() {
+    console.log(env);
     console.log(`saved: ${JSON.stringify(env)}`);
     localStorage.setItem('env', JSON.stringify(env));
 }
@@ -258,17 +259,8 @@ function fetch_inputs() {
 function read_option() {
     env.bpm = parseInt(document.getElementById("bpm").value);
     const selectElement = document.getElementById('offset_option');
-    env.offset_option = selectElement.selectedIndex;
-    const selectedOption = selectElement.options[selectElement.selectedIndex];
-    if (selectedOption.value == "flex") {
-        env.global_offset = parseInt(document.getElementById("key_offset").value);
-        env.set_fixed_offset(0);
-    } else {
-        env.global_offset = 0;
-        var cnt = parseInt(document.getElementById("key_offset").value);
-        env.set_fixed_offset(cnt);
-        //console.log(env.fixed_offset);
-    }
+    const offset = document.getElementById("key_offset");
+    set_offset(env, selectElement.selectedIndex, parseInt(offset.value));
     env.time1 = parseInt(document.getElementById("time_sign1").value);
     env.time2 = parseInt(document.getElementById("time_sign2").value);
     refresh();
@@ -301,7 +293,7 @@ document.getElementById("sad-machine").onclick = () => {
     env.time2 = 4;
     env.offset_option = 1;
     env.global_offset = 0;
-    env.set_fixed_offset(-3);
+    set_offset(env, 1, -3);
     document.getElementById("song-name").value = "Sad Machine";
     document.getElementById("input").value = sad_machine.main;
     document.getElementById("input2").value = sad_machine.sub;
@@ -317,7 +309,7 @@ document.getElementById("bwv846").onclick = () => {
     env.time2 = 4;
     env.global_offset = 0;
     env.offset_option = 0;
-    env.set_fixed_offset(0);
+    set_offset(env, 1, 0);
     document.getElementById("song-name").value = "巴赫C大调前奏曲";
     document.getElementById("input").value = bwv846;
     document.getElementById("input2").value = "";
@@ -333,7 +325,7 @@ document.getElementById("haruhikage").onclick = () => {
     env.time2 = 8;
     env.offset_option = 0;
     env.global_offset = -1;
-    env.set_fixed_offset(0);
+    set_offset(env, 1, 0);
     document.getElementById("song-name").value = "春日影";
     document.getElementById("input").value = haruhikage;
     document.getElementById("input2").value = "";
@@ -341,6 +333,22 @@ document.getElementById("haruhikage").onclick = () => {
     //play(haruhikage);
     //console.log(sampler.instrumentNames);
     //context.resume(); // enable audio context after a user interaction
+};
+document.getElementById("sykxmyas").onclick = () => {
+    if (loading) return;
+    env.velocity = 4;
+    env.bpm = 80;
+    env.time1 = 4;
+    env.time2 = 4;
+    env.global_offset = 0;
+    env.offset_option = 0;
+    set_offset(env, 1, 0);
+    document.getElementById("song-name").value = "使一颗心免于哀伤";
+    document.getElementById("input").value = sykxmyas;
+    document.getElementById("input2").value = "";
+    refresh();
+    //console.log(sampler.instrumentNames);
+    //context.resume();
 };
 document.getElementById("reset").onclick = () => {
     init_environment();
@@ -413,7 +421,7 @@ if (localStorage.getItem('env') != undefined) {
     env.bpm = prev_env.bpm;
     env.time1 = prev_env.time1, env.time2 = prev_env.time2;
     env.offset_option = prev_env.offset_option;
-    env.set_fixed_offset(prev_env.fix_offset_cnt);
+    set_offset(env, 1, prev_env.fix_offset_cnt);
     console.log(env);
     document.getElementById("difficulty-select").selectedIndex = parseInt(localStorage.getItem('difficulty'));
     console.log("loaded previous environment");

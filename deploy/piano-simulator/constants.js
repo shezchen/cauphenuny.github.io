@@ -1,5 +1,5 @@
 export const keys = 'ZXCVBNMASDFGHJQWERTYU';
-export const all_keys = keys + '()[]{}<>-+^%./';
+export const all_keys = keys + '()[]{}<>-+^%./@1234567890';
 export const note_name = ["C", "C<sup>♯</sup>/D<sup>♭</sup>", "D", "D<sup>♯</sup>/E<sup>♭</sup>", "E", "F", "F<sup>♯</sup>/G<sup>♭</sup>", 
                           "G", "G<sup>♯</sup>/A<sup>♭</sup>", "A", "A<sup>♯</sup>/B<sup>♭</sup>", "B"];
 export const sharp_name = ["C", "C<sup>♯</sup>", "D", "D<sup>♯</sup>", "E", "F", "F<sup>♯</sup>", "G", "G<sup>♯</sup>", "A", "A<sup>♯</sup>", "B"];

@@ -22,13 +22,16 @@ var tutorial = `教程
 ()内所有音同时发声
 柱式和弦：(ZCB).(CBA).(BAD).(ADG).(ZCBADGQET)......./
 
-{}内三个音占两拍（括号内时值为括号外的 2/3）
-[(ZA)AAA][(ZD)DDD]/{(ZA)AA}[(ZG)GGG]/..../..../
-
 以上的括号均能多层嵌套
 
 例如：
 [(XG)[(MG)H](BJ)(BW)][(RF)[GE](BW)[SQ]][(XJ)[(BJ)Q](BMW)JVGF.]..../
+
+{}内为琶音（内部时值为1/3，整体时值为1）
+{ZCB}.{CBA}.{BAD}.{ADG}.{DGQ}.../
+更快速的琶音（套了两层，内部音时值为1/16）：
+{{ZCB}}.{{CBA}}.{{BAD}}.{{ADG}}.{{ZCBADGQET}}......../
+
 
 自动播放时力度临时调整：< / >
 
@@ -36,19 +39,6 @@ var tutorial = `教程
 渐弱：A > A > A > A > A > A > A > A > A > A > A ....
 渐强：A < A < A < A < A < A....
 是不是很像一个渐强/渐弱符号 （笑
-
-三连音示例：
-[ # 整体套了个中括号，相当于 bpm 翻倍变成180
->[{ASD}QGWGET][.QEQREQ.]
-[{ASD}QGWGET][.QEQREQ.]
-[{ASD}QGWGET][.QEQREQ.]
-[[WETE]WQWGQ.]{(GQET)(GQET)(GQET)(GQET)(GQET)(GQET)}
-[{ASD}QGWGEG][RGEGTGQG]
-[{ASD}QGWGEG][RGEGWGEG]
-[{ASD}QGWGEG][RGEGTGQG]
-[[WETE]WQWGQ.](ADGQET)..B/
-<[A..S]<A./.B{FDS}/A.../..AS/[DSDFDSAS][DSDFD.SA]
->]..../..../
 
 临时升降记号：
 +/- 表示升/降半音，仅影响其后紧跟着的一个音
@@ -59,9 +49,18 @@ var tutorial = `教程
 
 注意：此类变化音无法通过直接通过按键盘奏出
 
+转调：
+简谱模式
+@[-1] [AAGGHHG./FFDDSSA.]
+@[+1] [AAGGHHG./FFDDSSA.]..../
+
+五线谱模式
+@{1} [AAGGHHG./FFDDSSA.]
+@{2} [AAGGHHG./FFDDSSA.]
+
 总结：
 有效字符：
-.()<>{[UYTREWQJHGFDSAMNBVCXZ]}-+%^
+.()<>{[UYTREWQJHGFDSAMNBVCXZ]}-+%^@1234567890
 其他字符在自动播放时均忽略
 
 但是想要忽略特定的有效字符怎么办？
@@ -373,7 +372,7 @@ var sad_machine = {
 [E..E..]E.[UT]U[TR]/(QE)......./
 <<
 G......G / GHJD..../
-GHJA..(ADF)(AD) / ......DF /
+GHJA..{{ADF}}(AD) / ......DF /
 G.D....[DF] / [G..D..](DJ).(DH)GD /
 .(DJ)(DH)(DG)FDFG / [(SF)..D..]M..DF/
 F..M.DDF / FDD[JJ]..Q[JJ]/
@@ -429,3 +428,130 @@ FDD[(DJ)](DJ).[.]Q[(DJ)(DJ)]/..[(DF)..D..].QJ/
 ..../^[DG]J../[AG].../[ND]H[.[GQ]]T/
 [MF]J../[DG]..J/[A]G[Q]Q[Q[GQ]]/[MF]J..FQJ/(NH).../(CD).../^
 `};
+
+var sykxmyas = `# 使一颗心免于哀伤
+
+# 来源：https://www.bilibili.com/read/cv31009369/
+# 校对：我
+
+前奏：
+
+[[
+@[-1]
+^ >>>>
+# 0
+(ZA)QJQ GQFQ DQSQ DQFQ/
+(XA)QJQ (GT)Q(FR)Q (DE)Q(WS)Q (DE)Q(FR)./
+(CA)QJQ (GT)Q(FR)Q (DE)Q(WS)Q (DE)Q(FR)Q/
+(VA)QJQ (GT)Q(FR)Q .... ..../
+<<
+^
+
+第一段：
+# 5
+(AE)QJQ (GE)QFQ (DE)... E.T./
+SQJQ (GR).E. .... ..G./
+(DE)QJQ (GE)QFQ (DE)... E.R./
+FQJQ G... .... ..B./
+# 9
+%
+(AE)QJQ (GE)QFQ (DE)... E.T./
+DQJQ (GR).E. .... R.T./
+FQJQ GQFQ D.QQ .W.Q/
+AQJQ G.Q. .FGQ ..E./
+# 13
+<
+(NSFR).RQ RS(FE)R .(QR).. (SF).E./
+(BADR).RG RC(SE)R .(JE).. (CAS).Q./
+(XNQ)WQ(NSW) ..(VW)(NS) W(NS)QW V.E./
+(CME)... ..S(DJ) .... ..../
+%
+# 17
+@[-4]
+<
+(AF).H. H.J. (SGJ).GG .E.E/
+(DH)... .... E.RE (SG)Q../
+(AFQ)... .... (SGQ).JQ .E.E/
+(DH)... .... .... (XB).../
+
+第二段：
+# 21
+<
+(VAD).H. (ADH).(VJ). (BSGJ).GG (BS)EBE/
+(NDG)... (DG).N. (ADE).(NR)T SQBT/
+(VAD)... (AD)R(VR)E (BSG).RE ..Q./
+@[-1]
+(AFHQ)... (FH)JQ. (SGQ)... J.../
+# 25
+(ZVN)... (FH)JQ. (BSQ)... {{GQW}}.../
+.... .... .... ..../
+
+>
+>>>
+第三段：
+# 27
+(ZE)QJQ (GE)QFQ (DE)... E.T./
+XQJQ (GR).E. .... ..G./
+(CE)QJQ (GE)QFQ (DE)... E.R./
+VQJQ F... .... ..../
+# 31
+(ZE)QJQ (GE)QFQ (DE)... E.T./
+XQJQ (GR).E. .... R.T./
+VQJQ GQFQ D.QQ .W.Q/
+ZGWQ EGWQ .... AS(DE)G/
+<<
+# 35
+(NSFR).R. R.(NSFE)R .RN. (SF).E./
+(BADR).R. R.(BADE)R .EB. (AD).Q./
+(XNQ)WQ(NSW) .(VW)(NS). W(NS)QW V.E./
+(CME)... .... RTE. (JW).../
+# 39
+.... ..(AQ). ]]{(MJ)(AQ)(SW)}[[ ..../
+.... .... .... ..../
+
+第四段：
+# 41
+@[-4]
+<
+(ZVN).(HY). (NADHY).(VJU). (XBMJU).(GT)(GT) (MS)^(DE)^B^(DE)^/
+(CNA)... (AD).N. (AD^DE^).(N^FR)(DE)^ (XM)^(AQ)^B./
+(ZVN^AQ^)... (NAD).(V^AQ)(AQ)^ (XBM).(JU)^(AQ)^ (MSG)^(DE)^B^(DE)^/
+(CNA)... (AD).N. (AD)W(NE)W (XM).(BQ)./
+# 45
+(ZVN).H. (NADH).(VJ). (XBMJ).GG (MS)EBE/
+(CNA)... (AD).N. (ADE).(NR)T (XM)QBT/
+(ZVN)..(AD) .R(VR)E (XBM).R(SGE) .BQ./
+
+>>
+间奏：
+# 48
+@[-1]
+(ZVNQ).W. W.E. (XBME).W. W.H./
+(VNA).E. E.R. (BMSR).E. Q.W./
+@[-4]
+(ZV).(AQ). T.(VADR). E..Q (VF).G./
+(XBAQ)... ..(BSGW). .... ..../
+
+Q... ..(JW). .... ..../
+
+第五段：
+# 53
+(AF).H. H.J. (DGJ).GG .E.E/
+(NAG)... .... E.RE (AG)Q../
+(ZVQ)AGA HA(GQ)(AQ) (XB)A(DJ)(AQ) G(AE)D(AE)/
+(CN)ADA GADA (CN)A(DGT)A (XB)A(DGE)A/
+# 57
+(ZVN).H. (NADH).(VJ). (XBMJ).GG (MSG)EBE/
+(CNA)... (AD).N. (ADE).(NR)T (XM)QBT/
+(ZVN)..(AD) .R(VR)E (XBM).R(SGE) .B../
+.... .... .... J.../
+# 61
+^
+(AQ)QJQ GQFQ DQSQ DQFQ/
+SQJQ (GT)Q(FR)Q (DE)... J.../
+(DQ)QJQ (GT)Q(FR)Q (DE)Q(SW)Q (DE)Q(FR)Q/
+FQJQ (GT).(FR). ..F. T.R./
+
+..F. T.R. .... ..../
+^
+`;

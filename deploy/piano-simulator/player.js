@@ -13,23 +13,32 @@ let env = {
     bpm: 90,
     time1: 4, time2: 4,
     fixed_offset: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    set_fixed_offset: function(cnt) {
-        this.fixed_offset.fill(0);
+};
+export function set_offset(env, mode = 0, cnt = 0) {
+    env.offset_option = mode;
+    if (mode == 0) {
+        env.fixed_offset.fill(0);
+        env.fix_offset_cnt = 0;
+        env.global_offset = cnt;
+        console.log(`set offset to ${cnt}`);
+    } else {
+        env.fixed_offset.fill(0);
+        env.global_offset = 0;
         if (cnt > 0) {
             if (cnt > 6) cnt = 6;
             for (var i = 0; i < cnt; i++) {
-                this.fixed_offset[sharp_note[i]] = 1;
+                env.fixed_offset[sharp_note[i]] = 1;
             }
         } else if (cnt < 0) {
             if (cnt < -6) cnt = -6;
             for (var i = 0; i < (-cnt); i++) {
-                this.fixed_offset[flat_note[i]] = -1;
+                env.fixed_offset[flat_note[i]] = -1;
             }
         }
-        this.fix_offset_cnt = cnt;
-        console.log(this.fixed_offset);
-    },
-};
+        env.fix_offset_cnt = cnt;
+        console.log(`set offsets to [${env.fixed_offset}]`);
+    }
+}
 // var vel, global_offset, bpm, time1, time2;
 export { env };
 import { keyup_animation, keydown_animation, mouseenter, mouseleave } from './keyboard.js'
@@ -88,39 +97,49 @@ export function play(tape, cur_env = env) {
     console.log(`tape: \n ${tape} \n`);
     var interval = 60 * 4 * 1000 / cur_env.bpm / cur_env.time2;
     var velc = cur_env.velocity;
-    var stack = [];
-    stack.push(1);
+    var beat_stack = [1];
     var cnt = 0;
     var sum = 0;
     var now = context.currentTime;
     var start_offset = 100;
     var getTop = arr => arr[arr.length - 1];
     var tmpoffset = 0, octoffset = 0;
+    var in_arpeggio = [0];
+    function step() {
+        cnt += getTop(beat_stack);
+        sum += getTop(beat_stack);
+        in_arpeggio[in_arpeggio.length - 1] += getTop(beat_stack);
+    }
     for (var i = 0; i < tape.length; i++) {
         var key = tape.charCodeAt(i);
         //console.log(i, tape[i], key);
         switch (tape[i]) {
             case '(':
                 //console.log("chord start", tape[i + 1]);
-                stack.push(0);
+                beat_stack.push(0);
                 break;
             case ')':
-                stack.pop();
-                cnt += getTop(stack);
-                sum += getTop(stack);
+                beat_stack.pop();
                 //console.log("chord end");
+                step();
                 break;
             case '[':
-                stack.push(getTop(stack) / 2);
+                beat_stack.push(getTop(beat_stack) / 2);
                 break;
             case ']':
-                stack.pop();
+                beat_stack.pop();
                 break;
             case '{':
-                stack.push(getTop(stack) * 2 / 3);
+                beat_stack.push(getTop(beat_stack) / 3);
+                in_arpeggio.push(0);
                 break;
             case '}':
-                stack.pop();
+                cnt -= getTop(in_arpeggio);
+                sum -= getTop(in_arpeggio);
+                //console.log(`roll back ${getTop(in_arpeggio)}`)
+                beat_stack.pop();
+                in_arpeggio.pop();
+                step();
                 break;
             case '>':
                 if (velc > 0) velc--;
@@ -150,25 +169,42 @@ export function play(tape, cur_env = env) {
                 if (octoffset == 0) octoffset = -1;
                 else                octoffset = 0;
                 break;
+            case '@':
+                i++;
+                let mode = 0, str = "";
+                switch (tape[i]) {
+                    case '[':
+                        mode = 0;
+                        while (tape[++i] != ']') str += tape[i];
+                        break;
+                    case '{':
+                        mode = 1;
+                        while (tape[++i] != '}') str += tape[i];
+                        break;
+                }
+                let num = parseInt(str);
+                set_offset(cur_env, mode, num);
+                break;
 
             case '.':
                 //console.log("interval", interval, sum);
-                cnt += getTop(stack);
-                sum += getTop(stack);
+                step();
                 break;
 
             default:
-                const note = key2note[key];
-                arrange_press(
-                    key, 
-                    note + tmpoffset + octoffset * 12 + cur_env.global_offset + cur_env.fixed_offset[note % 12], 
-                    velc, 
-                    sum * interval + start_offset,
-                );
-                tmpoffset = 0;
-                cnt += getTop(stack);
-                sum += getTop(stack);
-                //cnt++, sum++;
+                if (key2note[key] != undefined) {
+                    const note = key2note[key];
+                    arrange_press(
+                        tape[i],
+                        note + tmpoffset + octoffset * 12 + cur_env.global_offset + cur_env.fixed_offset[note % 12], 
+                        velc, 
+                        sum * interval + start_offset,
+                    );
+                    tmpoffset = 0;
+                    step();
+                    //console.log(`current ${getTop(in_arpeggio)}`);
+                    //cnt++, sum++;
+                }
         }
     }
 }

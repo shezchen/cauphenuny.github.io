@@ -3,13 +3,14 @@ let env = JSON.parse(localStorage.getItem('env'));
 let delay = parseInt(localStorage.getItem('delay'));
 let is_tutorial = parseInt(localStorage.getItem('is_tutorial'));
 let difficulty = parseInt(localStorage.getItem('difficulty'));
-console.log(`环境：${env}`);
+console.log("环境：", env);
 console.log(`谱子：${tape}`);
 console.log(`延迟：${delay}`);
 tape = JSON.parse(tape);
 
 import { key2note, velocity_levels, velocity_adj, init_constants, beat } from './constants.js'
 init_constants();
+import { set_offset } from './player.js'
 import { keyup_animation, keydown_animation } from './keyboard.js'
 
 const colors = {
@@ -546,7 +547,7 @@ function parse(tape, check = [], cur_env) {
     console.log(`tape: \n ${tape} \n`);
     let interval = 60 * 4 * 1000 / cur_env.bpm / cur_env.time2;
     let velc = cur_env.velocity;
-    let stack = []; stack.push(1);
+    let stack = [1], in_arpeggio = [0];
     let cnt = 0;
     let sum = 0;
     let getTop = arr => arr[arr.length - 1];
@@ -578,6 +579,11 @@ function parse(tape, check = [], cur_env) {
         });
     }
     sum = cur_env.time1;
+    function step() {
+        cnt += getTop(stack);
+        sum += getTop(stack);
+        in_arpeggio[in_arpeggio.length - 1] += getTop(stack);
+    }
     let chord_note_cnt = [0, 0, 0, 0, 0, 0, 0, 0];
     console.log(tape);
     let priority = [5, 3, 6, 2, 7, 1]; // 和弦中加入音的优先级
@@ -595,8 +601,7 @@ function parse(tape, check = [], cur_env) {
                 stack.pop();
                 let minid = 10, maxid = 0;
                 if (check.length == 0 || check[difficulty](cnt) == false) {
-                    cnt += getTop(stack);
-                    sum += getTop(stack);
+                    step();
                     continue;
                 }
                 let chord_cnt = 0;
@@ -655,8 +660,7 @@ function parse(tape, check = [], cur_env) {
                         time: sum * interval + startoffset + delay,
                     });
                 }
-                cnt += getTop(stack);
-                sum += getTop(stack);
+                step();
                 //console.log("chord end");
                 break;
             case '[':
@@ -666,10 +670,16 @@ function parse(tape, check = [], cur_env) {
                 stack.pop();
                 break;
             case '{':
-                stack.push(getTop(stack) * 2 / 3);
+                stack.push(getTop(stack) / 3);
+                in_arpeggio.push(0);
                 break;
             case '}':
+                cnt -= getTop(in_arpeggio);
+                sum -= getTop(in_arpeggio);
+                //console.log(`roll back ${getTop(in_arpeggio)}`)
                 stack.pop();
+                in_arpeggio.pop();
+                step();
                 break;
             case '>':
                 if (velc > 0) velc--;
@@ -699,6 +709,23 @@ function parse(tape, check = [], cur_env) {
                 //console.log("interval", interval, sum);
                 cnt += getTop(stack);
                 sum += getTop(stack);
+                break;
+
+            case '@':
+                i++;
+                let mode = 0, str = "";
+                switch (tape[i]) {
+                    case '[':
+                        mode = 0;
+                        while (tape[++i] != ']') str += tape[i];
+                        break;
+                    case '{':
+                        mode = 1;
+                        while (tape[++i] != '}') str += tape[i];
+                        break;
+                }
+                let num = parseInt(str);
+                set_offset(env, mode, num)
                 break;
 
             default:
@@ -733,8 +760,7 @@ function parse(tape, check = [], cur_env) {
                             });
                         }
                     }
-                    cnt += cur_step;
-                    sum += cur_step;
+                    step();
                 }
                 break;
         }
