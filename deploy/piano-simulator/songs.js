@@ -487,7 +487,7 @@ AQJQ G.Q. .FGQ ..E./
 .... .... .... ..../
 
 >
->>>
+>>
 第三段：
 # 27
 (ZE)QJQ (GE)QFQ (DE)... E.T./
@@ -516,13 +516,13 @@ ZGWQ EGWQ .... AS(DE)G/
 (ZVN).(HY). (NADHY).(VJU). (XBMJU).(GT)(GT) (MS)^(DE)^B^(DE)^/
 (CNA)... (AD).N. (AD^DE^).(N^FR)(DE)^ (XM)^(AQ)^B./
 (ZVN^AQ^)... (NAD).(V^AQ)(AQ)^ (XBM).(JU)^(AQ)^ (MSG)^(DE)^B^(DE)^/
+<
 (CNA)... (AD).N. (AD)W(NE)W (XM).(BQ)./
 # 45
 (ZVN).H. (NADH).(VJ). (XBMJ).GG (MS)EBE/
 (CNA)... (AD).N. (ADE).(NR)T (XM)QBT/
 (ZVN)..(AD) .R(VR)E (XBM).R(SGE) .BQ./
 
->
 间奏：
 # 48
 @[-1]
@@ -544,7 +544,7 @@ Q... ..(JW). .... ..../
 (ZVN).H. (NADH).(VJ). (XBMJ).GG (MSG)EBE/
 (CNA)... (AD).N. (ADE).(NR)T (XM)QBT/
 (ZVN)..(AD) .R(VR)E (XBM).R(SGE) .B../
-.... .... >> ^ .... J.../
+.... .... > ^ .... J.../
 # 61
 (AQ)QJQ GQFQ DQSQ DQFQ/
 SQJQ (GT)Q(FR)Q (DE)... J.../
