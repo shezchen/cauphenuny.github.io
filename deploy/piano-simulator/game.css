@@ -217,7 +217,7 @@ span, p {
     z-index: 100;
     display: block;
     position: absolute;
-    top: 85%;
+    top: 90%;
     left: 0%;
     width: 100%;
     opacity: 1;
@@ -236,8 +236,8 @@ span, p {
     z-index: 100;
 }
 .fullscreen-div {
-    width: 100vw; /* 宽度为视口宽度 */
-    height: 100vh; /* 高度为视口高度 */
+    width: 100%; /* 宽度为视口宽度 */
+    height: 100%; /* 高度为视口高度 */
     margin: 0; /* 取消外边距 */
     padding: 0; /* 取消内边距 */
     position: fixed; /* 固定定位 */
