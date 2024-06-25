@@ -1,4 +1,4 @@
-.kb-img{
+.kb-img, .pd-img{
   transition: transform 0.1s, filter 0.1s;
   height: 5em;
   margin: 0.5em;
@@ -12,17 +12,19 @@
   from: https://html-css-js.com/css/generator/box-shadow/*/
 }
 .kb-img-ctn:hover .hvinfo {
-  display: block;
+  opacity: 1;
 }
 
 .hvinfo {
   position: absolute;
   bottom: 100%;
-  left: 0;
   background-color: #fff;
   color: #000;
-  padding: 10px;
-  display: none;
+  padding: 0.5em;
+  display: block;
+  opacity: 0;
   text-align: center;
   pointer-events: none; /* 防止鼠标事件影响到下层元素 */
+  transition: opacity 0.2s;
+  border-radius: 0.5em;
 }

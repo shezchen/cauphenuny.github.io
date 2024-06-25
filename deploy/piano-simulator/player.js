@@ -47,27 +47,27 @@ export function stroke(note, velc) {
     });
 }
 
-export function notedown(key, note, velc) {
+export function note_down(key, note, velc) {
     //console.log(`notedown ${key},${note},${velc}`);
     stroke(note, velc, context.currentTime);
     keydown_animation(key);
 }
-export function noteup(key) {
+export function note_up(key) {
     keyup_animation(key);
 }
-export function notestop(key) {
+export function note_stop(key) {
     piano.stop(key);
 }
-export function notepress(key, note, velc) {
+export function note_press(key, note, velc) {
     //console.log(`notepress ${key},${note},${velc}`);
-    notedown(key, note, velc);
-    setTimeout(function() {noteup(key);}, 100);
+    note_down(key, note, velc);
+    setTimeout(function() {note_up(key);}, 100);
 }
 
 function arrange_press(key, code, velc, delay) {
     //console.log("a_p ", key);
     timers.push(
-        setTimeout(function() {notepress(key, code, velc);}, delay - 10)
+        setTimeout(function() {note_press(key, code, velc);}, delay - 10)
     );
 }
 

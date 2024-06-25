@@ -851,7 +851,7 @@ document.addEventListener("keydown", function(event) {
         //    stat_ele.style.opacity = 0;
         //}, 100);
         //point_ele.style.boxShadow = "0 0 40px 10px #0f0, 0 0 20px 0px #0f0 inset";
-        keydown_animation(code);
+        keydown_animation(key);
         //draw_note(index + 1);
     }
 });
@@ -867,7 +867,7 @@ document.addEventListener("keyup", function(event) {
         const stat_ele = document.getElementById("status" + index);
         const point_ele = document.getElementById("ptn" + index);
         point_ele.style.boxShadow = "";
-        keyup_animation(code);
+        keyup_animation(key);
     }
 });
 

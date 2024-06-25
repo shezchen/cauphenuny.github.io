@@ -1,6 +1,4 @@
-<!DOCTYPE HTML>
-<html>
-  <head>
+<!DOCTYPE HTML> <html> <head>
     <meta charset="UTF-8" >
     <!--
       - 一个能奏出曲子，并且达到了“好听”程度的钢琴模拟器
@@ -41,19 +39,46 @@
                     <input type="number" id="time_sign1" size=5 style="width: 2em">/<input type="number" id="time_sign2" size=5 style="width: 2em"> <br>
                     <p>
                       谱子/主音轨：<br>
-                      <textarea id="input" name="input" rows="8" cols="60">加载中……</textarea>
+                      <textarea id="input" name="input" rows="8" style="width: 45em">加载中……</textarea>
                     </p>
                     <p>
                       谱子/副音轨：<br>
-                      <textarea id="input2" name="input2" rows="4" cols="60">加载中……</textarea>
+                      <textarea id="input2" name="input2" rows="4" style="width: 45em">加载中……</textarea>
                     </p>
                     <button id="start">播放</button> <button id="stop">停止</button>
                     <button id="gamestart2" class="game-start-btn">开始游戏</button>
+                    <div id="keyboard" style="text-align: center;">
+                        <span class="kb-img-ctn"><img id="Q" class="kb-img" src="./keyboard/Q.png" alt="Q"><span class="hvinfo disable-when-loaded">加载中…</span></span>
+                        <span class="kb-img-ctn"><img id="W" class="kb-img" src="./keyboard/W.png" alt="W"><span class="hvinfo disable-when-loaded">加载中…</span></span>
+                        <span class="kb-img-ctn"><img id="E" class="kb-img" src="./keyboard/E.png" alt="E"><span class="hvinfo disable-when-loaded">加载中…</span></span>
+                        <span class="kb-img-ctn"><img id="R" class="kb-img" src="./keyboard/R.png" alt="R"><span class="hvinfo disable-when-loaded">加载中…</span></span>
+                        <span class="kb-img-ctn"><img id="T" class="kb-img" src="./keyboard/T.png" alt="T"><span class="hvinfo disable-when-loaded">加载中…</span></span>
+                        <span class="kb-img-ctn"><img id="Y" class="kb-img" src="./keyboard/Y.png" alt="Y"><span class="hvinfo disable-when-loaded">加载中…</span></span>
+                        <span class="kb-img-ctn"><img id="U" class="kb-img" src="./keyboard/U.png" alt="U"><span class="hvinfo disable-when-loaded">加载中…</span></span>
+                        <br>
+
+                        <span class="kb-img-ctn"><img id="A" class="kb-img" src="./keyboard/A.png" alt="A"><span class="hvinfo disable-when-loaded">加载中…</span></span>
+                        <span class="kb-img-ctn"><img id="S" class="kb-img" src="./keyboard/S.png" alt="S"><span class="hvinfo disable-when-loaded">加载中…</span></span>
+                        <span class="kb-img-ctn"><img id="D" class="kb-img" src="./keyboard/D.png" alt="D"><span class="hvinfo disable-when-loaded">加载中…</span></span>
+                        <span class="kb-img-ctn"><img id="F" class="kb-img" src="./keyboard/F.png" alt="F"><span class="hvinfo disable-when-loaded">加载中…</span></span>
+                        <span class="kb-img-ctn"><img id="G" class="kb-img" src="./keyboard/G.png" alt="G"><span class="hvinfo disable-when-loaded">加载中…</span></span>
+                        <span class="kb-img-ctn"><img id="H" class="kb-img" src="./keyboard/H.png" alt="H"><span class="hvinfo disable-when-loaded">加载中…</span></span>
+                        <span class="kb-img-ctn"><img id="J" class="kb-img" src="./keyboard/J.png" alt="J"><span class="hvinfo disable-when-loaded">加载中…</span></span>
+                        <br>
+
+                        <span class="kb-img-ctn"><img id="Z" class="kb-img" src="./keyboard/Z.png" alt="Z"><span class="hvinfo disable-when-loaded">加载中…</span></span>
+                        <span class="kb-img-ctn"><img id="X" class="kb-img" src="./keyboard/X.png" alt="X"><span class="hvinfo disable-when-loaded">加载中…</span></span>
+                        <span class="kb-img-ctn"><img id="C" class="kb-img" src="./keyboard/C.png" alt="C"><span class="hvinfo disable-when-loaded">加载中…</span></span>
+                        <span class="kb-img-ctn"><img id="V" class="kb-img" src="./keyboard/V.png" alt="V"><span class="hvinfo disable-when-loaded">加载中…</span></span>
+                        <span class="kb-img-ctn"><img id="B" class="kb-img" src="./keyboard/B.png" alt="B"><span class="hvinfo disable-when-loaded">加载中…</span></span>
+                        <span class="kb-img-ctn"><img id="N" class="kb-img" src="./keyboard/N.png" alt="N"><span class="hvinfo disable-when-loaded">加载中…</span></span>
+                        <span class="kb-img-ctn"><img id="M" class="kb-img" src="./keyboard/M.png" alt="M"><span class="hvinfo disable-when-loaded">加载中…</span></span>
+                        <br>
+
+                        <span class="kb-img-ctn"><img id="Pedal" class="pd-img" src="./keyboard/Pedal.png" alt="Pedal"><span class="hvinfo" id="pedal-hover">加载中…</span></span>
+                    </div>
                 </div>
-                <div class="column">
-                    &nbsp;&nbsp;
-                </div>
-                <div class="column">
+                <div class="column" style="padding: 2em">
                     <div id="preset-buttons">
                         <br>
                         <p>
@@ -77,38 +102,13 @@
                     </p>
                 </div>
             </div>
-            <span class="kb-img-ctn"><img id="keyQ" class="kb-img" src="./keyboard/Q.png" alt="keyQ"><span class="hvinfo">加载中…</span></span>
-            <span class="kb-img-ctn"><img id="keyW" class="kb-img" src="./keyboard/W.png" alt="keyW"><span class="hvinfo">加载中…</span></span>
-            <span class="kb-img-ctn"><img id="keyE" class="kb-img" src="./keyboard/E.png" alt="keyE"><span class="hvinfo">加载中…</span></span>
-            <span class="kb-img-ctn"><img id="keyR" class="kb-img" src="./keyboard/R.png" alt="keyR"><span class="hvinfo">加载中…</span></span>
-            <span class="kb-img-ctn"><img id="keyT" class="kb-img" src="./keyboard/T.png" alt="keyT"><span class="hvinfo">加载中…</span></span>
-            <span class="kb-img-ctn"><img id="keyY" class="kb-img" src="./keyboard/Y.png" alt="keyY"><span class="hvinfo">加载中…</span></span>
-            <span class="kb-img-ctn"><img id="keyU" class="kb-img" src="./keyboard/U.png" alt="keyU"><span class="hvinfo">加载中…</span></span>
-            <br>
-
-            <span class="kb-img-ctn"><img id="keyA" class="kb-img" src="./keyboard/A.png" alt="keyA"><span class="hvinfo">加载中…</span></span>
-            <span class="kb-img-ctn"><img id="keyS" class="kb-img" src="./keyboard/S.png" alt="keyS"><span class="hvinfo">加载中…</span></span>
-            <span class="kb-img-ctn"><img id="keyD" class="kb-img" src="./keyboard/D.png" alt="keyD"><span class="hvinfo">加载中…</span></span>
-            <span class="kb-img-ctn"><img id="keyF" class="kb-img" src="./keyboard/F.png" alt="keyF"><span class="hvinfo">加载中…</span></span>
-            <span class="kb-img-ctn"><img id="keyG" class="kb-img" src="./keyboard/G.png" alt="keyG"><span class="hvinfo">加载中…</span></span>
-            <span class="kb-img-ctn"><img id="keyH" class="kb-img" src="./keyboard/H.png" alt="keyH"><span class="hvinfo">加载中…</span></span>
-            <span class="kb-img-ctn"><img id="keyJ" class="kb-img" src="./keyboard/J.png" alt="keyJ"><span class="hvinfo">加载中…</span></span>
-            <br>
-
-            <span class="kb-img-ctn"><img id="keyZ" class="kb-img" src="./keyboard/Z.png" alt="keyZ"><span class="hvinfo">加载中…</span></span>
-            <span class="kb-img-ctn"><img id="keyX" class="kb-img" src="./keyboard/X.png" alt="keyX"><span class="hvinfo">加载中…</span></span>
-            <span class="kb-img-ctn"><img id="keyC" class="kb-img" src="./keyboard/C.png" alt="keyC"><span class="hvinfo">加载中…</span></span>
-            <span class="kb-img-ctn"><img id="keyV" class="kb-img" src="./keyboard/V.png" alt="keyV"><span class="hvinfo">加载中…</span></span>
-            <span class="kb-img-ctn"><img id="keyB" class="kb-img" src="./keyboard/B.png" alt="keyB"><span class="hvinfo">加载中…</span></span>
-            <span class="kb-img-ctn"><img id="keyN" class="kb-img" src="./keyboard/N.png" alt="keyN"><span class="hvinfo">加载中…</span></span>
-            <span class="kb-img-ctn"><img id="keyM" class="kb-img" src="./keyboard/M.png" alt="keyM"><span class="hvinfo">加载中…</span></span>
         </div>
 
-        <div id="options" style="flex: 0.5; padding: 2em">
+        <div id="options" style="flex: 0.35">
             <h2>音游选项</h2>
             <p>
                 谱面根据主音轨自动创建，记得在左边输入谱子！<br><br>
-                判定延迟：<input type="number" id="delay" value="0">ms &nbsp;（如果你使用蓝牙耳机，建议调大这个值）<br><br>
+                判定延迟：<input type="number" id="delay" value="0">ms<br>（如果你使用蓝牙耳机，建议调大这个值）<br><br>
                 选择难度：<select id="difficulty-select">
                     <option value="easy">简单 | 4键、音符最少</option>
                     <option value="semi-easy">较简单 | 4键、音符较少</option>
@@ -151,7 +151,7 @@
     背景来自 unsplash.com 和 pixiv.net
     </p>
     <hr>
-    当前版本 v1.4.2， <a href="https://cauphenuny.github.io/2024/06/14/build-a-windsonglyre-simulator/">开发日志</a>
+    当前版本 v1.5.0， <a href="https://cauphenuny.github.io/2024/06/14/build-a-windsonglyre-simulator/">开发日志</a>
     <br>
     <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fcauphenuny.github.io%2Fdeploy%2Fpiano-simulator&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=Hits&edge_flat=false"/></a>
     <a  href="https://github.com/cauphenuny/diy-rhythm-game">

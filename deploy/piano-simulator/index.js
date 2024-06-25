@@ -4,7 +4,7 @@ import {
     diff, velocity_levels, velocity_adj, key2note, C1, C2, C3,
     init_constants,
 } from './constants.js'
-import { env, play, notepress, notedown, noteup, notestop, piano, stop } from './player.js'
+import { env, play, note_down, note_up, note_stop, piano, stop } from './player.js'
 import { keyup_animation, keydown_animation, mouseenter, mouseleave } from './keyboard.js'
 
 let loading = 1;
@@ -80,18 +80,25 @@ function decompress(sheet) {
     //TODO
     return sheet;
 }
-let temp_pedal = 0, pedal = 0;
-let lasting = [];
+function wrap_note(original) {
+    return original + env.global_offset + env.fixed_offset[original % 12];
+}
+let lasting = [], caps_lock = 0;
+let terminate = note_stop;
 function after_load() {
     loading = 0;
     const status_element = document.getElementById("status");
     //status_element.parentNode.removeChild(status_element);
     status_element.style.color = "green";
     status_element.innerHTML = "准备就绪";
-    const hovers = document.getElementsByClassName("hvinfo");
+    const hovers = document.getElementsByClassName("disable-when-loaded");
     for (var i = 0; i < hovers.length; i++) {
         hovers[i].style.display = "none";
     }
+    const pedal = document.getElementById('pedal-hover');
+    pedal.innerHTML = "按Shift或CapsLock";
+    pedal.style.top = "100%";
+    pedal.style.height = "3em";
     if (localStorage.getItem('raw_main') != undefined) {
         load_inputs();
     } else {
@@ -102,15 +109,42 @@ function after_load() {
     const key_buttons = document.getElementsByClassName("kb-img");
     for (var i = 0; i < key_buttons.length; i++) {
         key_buttons[i].addEventListener('mousedown', function() {
-            var key_code = this.id.charCodeAt("key".length);
-            notepress(key_code, key2note[key_code], env.velocity);
+            var name = this.id, code = name.charCodeAt();
+            note_down(name, wrap_note(key2note[code]), env.velocity);
         });
         key_buttons[i].addEventListener('mouseenter', function() {
             mouseenter(this.parentNode);
         });
-        key_buttons[i].addEventListener('mouseleave', function() {
+        key_buttons[i].addEventListener('mouseleave', function(event) {
             mouseleave(this.parentNode);
+            var name = this.id, note = wrap_note(key2note[name.charCodeAt()]);
+            note_up(name);
+            terminate(note);
         });
+    }
+    const pedal_button = document.getElementById('Pedal');
+    pedal_button.addEventListener('mouseenter', function() {
+        mouseenter(this.parentNode);
+    });
+    pedal_button.addEventListener('mouseleave', function() {
+        mouseleave(this.parentNode);
+    });
+    function note_restore(note) {
+        console.log(`restore ${note}`);
+        lasting.push(note);
+    }
+    function pedal_down() {
+        keydown_animation("Pedal");
+        terminate = note_restore;
+    }
+    function pedal_up() {
+        console.log("pedal up");
+        for (let i = 0; i < lasting.length; i++) {
+            note_stop(lasting[i]);
+        }
+        lasting.length = 0;
+        terminate = note_stop;
+        keyup_animation("Pedal");
     }
     document.addEventListener("keydown", function(event) {
         if (event.ctrlKey || event.altKey || event.metaKey) {
@@ -118,27 +152,33 @@ function after_load() {
         }
         var key = event.key.toUpperCase();
         var code = key.charCodeAt();
-        console.log(`${key} ${code} down`);
+        console.log(`${key} ${code} down caps:${caps_lock}`);
         switch (key) {
             case '-':
                 if (env.velocity > 0) env.velocity--; 
                 refresh();
-                break;
+            break;
 
             case '=':
             case '+':
                 if (env.velocity < 9) env.velocity++;
                 refresh();
-                break;
+            break;
 
-            case ' ':
-                if(event.target == document.body) {
-                    event.preventDefault();
+            case 'CAPSLOCK':
+                caps_lock ^= 1;
+                if (caps_lock) {
+                    pedal_down();
+                } else {
+                    pedal_up();
                 }
-                for (let i = 0; i < lasting.length; i++) {
-                    notestop(lasting[i]);
+                break;
+            case 'SHIFT':
+                if (caps_lock) {
+                    pedal_up();
+                } else {
+                    pedal_down();
                 }
-                lasting.length = 0;
                 break;
 
             default:
@@ -146,38 +186,31 @@ function after_load() {
                     if (event.repeat) {
                         return;
                     }
-                    const note = key2note[code];
-                    notedown(
-                        code, 
-                        note + env.global_offset + env.fixed_offset[note % 12], 
+                    note_down(
+                        key,
+                        wrap_note(key2note[code]),
                         env.velocity
                     );
                 }
-                break;
+            break;
         }
     });
     document.addEventListener("keyup", function(event) {
-        var key = event.key;
-        var code = key.toUpperCase().charCodeAt();
-        console.log(`${key} ${code} up`);
-        switch (event.key) {
-            case 'Shift':
-                for (let i = 0; i < lasting.length; i++) {
-                    notestop(lasting[i]);
+        var key = event.key.toUpperCase();
+        var code = key.charCodeAt();
+        console.log(`${key} ${code} up caps:${caps_lock}`);
+        switch (key) {
+            case 'SHIFT':
+                if (caps_lock) {
+                    pedal_down();
+                } else {
+                    pedal_up();
                 }
-                lasting.length = 0;
                 break;
             default:
                 if (keys.indexOf(key) != -1) {
-                    noteup(code);
-                    const note = key2note[code];
-                    const wrapped_note = note + env.global_offset + env.fixed_offset[note % 12];
-                    lasting.push(wrapped_note);
-                } else if (keys.indexOf(key.toUpperCase()) != -1) {
-                    noteup(code);
-                    const note = key2note[code];
-                    const wrapped_note = note + env.global_offset + env.fixed_offset[note % 12];
-                    notestop(wrapped_note);
+                    note_up(key);
+                    terminate(wrap_note(key2note[code]));
                 }
                 break;
         }
