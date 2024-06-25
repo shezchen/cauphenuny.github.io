@@ -358,7 +358,7 @@ function result() {
     <p>
     <span class="bright" style="font-size: x-large">${song_info}</span>
     </p>
-    <p class="bright" style="font-size: large">
+    <p class="bright">
     Normalized Score: ${get_normalized_score().toFixed(2)}<br>
     Note Count: ${score.hit + score.miss}<br>
     Perfect / Good / Miss: ${score.perfect} / ${score.hit - score.perfect} / ${score.miss}<br>

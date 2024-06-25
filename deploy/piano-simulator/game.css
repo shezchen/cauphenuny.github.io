@@ -141,10 +141,11 @@ span, p {
 #playing-song-name {
     position: absolute;
     top: 0%;
-    font-size: large;
+    font-size: 1.3em;
 }
 .bright {
-    text-shadow: 0 0 3px rgba(255, 255, 255, 0.6), 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.8);
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.9), 0 0 15px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 255, 255, 0.8);
+    font-size: large;
 }
 #screen {
     background-image: url('./background/2-blur18px.jpg');
@@ -245,8 +246,8 @@ span, p {
 }
 
 .title {
-    font-size: 3em;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 255, 255, 0.6)
+    font-size: 4em;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.9), 0 0 30px rgba(255, 255, 255, 0.8), 0 0 60px rgba(255, 255, 255, 0.8)
 }
 
 #result-window {
