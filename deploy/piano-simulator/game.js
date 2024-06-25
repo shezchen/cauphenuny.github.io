@@ -44,20 +44,6 @@ const start_pos = 0, end_pos = 85, trigger_pos = (trigger_time / drop_time) * (e
 const trigger_duration = trigger_pos - start_pos, all_duration = end_pos - start_pos;
 let is_playing = 0;
 
-for (let i = 1; i <= 7; i++) {
-    const pos = (i - 4) * 10 + 50;
-    position[i] = pos;
-    const buttom = document.getElementById("btm" + i);
-    buttom.style.left = "50%";
-    const line = document.getElementById('line' + i);
-    line.style.left = "50%";
-    const point = document.getElementById('ptn' + i);
-    point.style.left = "50%";
-    const column= document.getElementById('column' + i);
-    column.style.left = pos + "%";
-    const trigger_ptn = document.getElementById('ptn' + i);
-    trigger_ptn.style.top = trigger_pos + "%";
-}
 const trigger_line = document.getElementById('trigger-line');
 const screen = document.getElementById('screen');
 const info_window = document.getElementById('info-window');
@@ -71,6 +57,21 @@ if (is_tutorial == 1) {
     song_info = `${level2name[difficulty]} | bpm ${env.bpm} | 演示模式`;
 } else {
     song_info = `${level2name[difficulty]} | bpm ${env.bpm}`;
+}
+for (let i = 1; i <= 7; i++) {
+    const pos = (i - 4) * 10 + 50;
+    position[i] = pos;
+    const buttom = document.getElementById("btm" + i);
+    buttom.style.left = "50%";
+    const line = document.getElementById('line' + i);
+    line.style.left = "50%";
+    line.style.bottom = (100 - trigger_pos) + "%";
+    const point = document.getElementById('ptn' + i);
+    point.style.left = "50%";
+    const column= document.getElementById('column' + i);
+    column.style.left = pos + "%";
+    const trigger_ptn = document.getElementById('ptn' + i);
+    trigger_ptn.style.top = trigger_pos + "%";
 }
 
 song_info_element.innerHTML = song_info;
