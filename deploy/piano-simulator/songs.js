@@ -522,7 +522,7 @@ ZGWQ EGWQ .... AS(DE)G/
 (CNA)... (AD).N. (ADE).(NR)T (XM)QBT/
 (ZVN)..(AD) .R(VR)E (XBM).R(SGE) .BQ./
 
->>
+>
 间奏：
 # 48
 @[-1]
@@ -544,7 +544,7 @@ Q... ..(JW). .... ..../
 (ZVN).H. (NADH).(VJ). (XBMJ).GG (MSG)EBE/
 (CNA)... (AD).N. (ADE).(NR)T (XM)QBT/
 (ZVN)..(AD) .R(VR)E (XBM).R(SGE) .B../
-.... .... >>> ^ .... J.../
+.... .... >> ^ .... J.../
 # 61
 (AQ)QJQ GQFQ DQSQ DQFQ/
 SQJQ (GT)Q(FR)Q (DE)... J.../
