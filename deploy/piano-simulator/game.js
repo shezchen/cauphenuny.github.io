@@ -354,7 +354,7 @@ function result() {
 </div>
 <div id="result-window-info" style="padding: 3em"> 
     <p>
-    <span class="title" style="font-size: 3em">${tape.name}</span>
+    <span class="title" style="font-size: 2.5em">${tape.name}</span>
     </p>
     <p>
     <span class="bright" style="font-size: x-large">${song_info}</span>
