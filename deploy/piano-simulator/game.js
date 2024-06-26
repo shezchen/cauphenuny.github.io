@@ -391,7 +391,7 @@ function result() {
     const rank = get_rank();
     result_window.innerHTML = 
 `
-<div id="result-level" style="padding: 2em; text-align: center;"> 
+<div id="result-level" style="padding: 3em; text-align: center;"> 
     <img src=./scores/${rank.name}.png id="result-level-img">
     <p id="level-info" class="bright"></p>
 </div>
