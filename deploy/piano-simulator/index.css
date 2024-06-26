@@ -1,8 +1,9 @@
 input[type='number']{
     width: 3em;
 }
-#song-name-input{
-    width: 6em;
+#song-name{
+    font-size: 1.0em;
+    width: 10em;
 }
 @font-face {
   font-family: 'ConsolasHybrid';
