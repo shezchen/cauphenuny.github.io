@@ -588,7 +588,7 @@ FQJQ (GT).(FR). ..F. T.R./
 export var canon = {
     name: "卡农",
     sub: "",
-    env: new environment({ bpm: 60 }),
+    env: new environment({ bpm: 70 }),
     main: `# 卡农
 # 来源：https://www.bilibili.com/video/BV1CF411H71o
 # 校对：我
