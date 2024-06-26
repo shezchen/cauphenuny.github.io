@@ -830,7 +830,7 @@ function gamestart() {
     gameinit();
     function strong_beat(count) {
         const tmp = Math.round(count);
-        if (Math.abs(tmp - count) > 1e-10) return false;
+        if (Math.abs(tmp - count) > 1e-8) return false;
         if (beat[env.time1] != undefined) {
             return beat[env.time1][tmp % env.time1] > 0;
         } else {
@@ -838,12 +838,12 @@ function gamestart() {
         }
     }
     function int_beat(count) {
-        return Math.abs(Math.round(count) - count) <= 1e-10;
+        return Math.abs(Math.round(count) - count) <= 1e-8;
     }
     function semi_beat(count) {
         count *= 2;
         console.log(count);
-        if (Math.abs(Math.round(count) - count) <= 1e-10) return true;
+        if (Math.abs(Math.round(count) - count) <= 1e-8) return true;
         else {
             //console.log("check failed");
             return 0;

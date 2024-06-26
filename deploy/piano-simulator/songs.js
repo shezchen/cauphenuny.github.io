@@ -568,7 +568,7 @@ Q... ..(JW). .... ..../
 # 53
 @[+8]
 (AF).H. H.J. (DGJ).GG .E.E/
-(NAG)... .... E.RE (AG)Q../
+(NAG)... .... >E.RE (AG)Q../
 (ZVQ)AGA HA(GQ)(AQ) (XB)A(DJ)(AQ) G(AE)D(AE)/
 (CN)ADA GADA (CN)A(DGT)A (XB)A(DGE)A/
 # 57
