@@ -320,6 +320,10 @@ document.getElementById("gametutorial").onclick = () => {
     localStorage.setItem('is_tutorial', "1");
     gamestart();
 }
+document.getElementById("gametutorial2").onclick = () => {
+    localStorage.setItem('is_tutorial', "1");
+    gamestart();
+}
 document.getElementById("vel-add").onclick = () => {
     if (env.velocity < 9) env.velocity++;
     refresh();
