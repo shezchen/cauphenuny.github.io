@@ -115,7 +115,7 @@ if (difficulty >= 2) {
 
 import { context, drum, piano, stroke } from "./player.js";
 
-const frame_rate = 60;
+const frame_rate = 120;
 
 let bgm = {
     notes: [],
@@ -256,7 +256,7 @@ function get_normalized_score() {
 
 function get_rank() {
     const normalized = get_normalized_score();
-    console.log(`normalized score: ${normalized}`);
+    //console.log(`normalized score: ${normalized}`);
     for (let i = 0; i < levels.length; i++) {
         if (normalized >= levels[i].score) {
             return levels[i];
@@ -298,7 +298,7 @@ function refresh() {
             border_color = `hsl(${hue}, ${sat}%, 50%)`;
         }
     }
-    console.log(color);
+    //console.log(color);
     combo_element.style.color = color;
     combo_num_element.style.color = color;
     brighten(combo_num_element, [[2, border_color], [20, shadow_color]]);
@@ -367,7 +367,6 @@ function hit(col) {
                 setTimeout(() => {remove_element(status_ele)}, 1000);
             }
         }
-        refresh();
     }
 }
 
@@ -460,7 +459,8 @@ function play() {
     const progress_line = document.getElementById("progress-line");
     function frame() {
         if (clock.is_paused()) return;
-        console.log(`frame ${clock.get()} start`);
+        const start_time = clock.get();
+        refresh();
         while (events.length - event_pos > 0) {
             const eve = events[event_pos];
             if (clock.get() > eve.time) {
@@ -574,7 +574,10 @@ function play() {
                 }
             });
         }
-        //console.log(`frame ${clock.get()} done`);
+        const duration = clock.get() - start_time;
+        if (duration >= 5) {
+            console.log(`warning: spent ${duration}ms`);
+        }
     }
     clock.start();
     interval_id = setInterval(frame, frame_time);

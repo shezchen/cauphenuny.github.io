@@ -65,8 +65,8 @@ import { DrumMachine, SplendidGrandPiano } from "https://unpkg.com/smplr/dist/in
 export const context = new AudioContext();
 export const piano = new SplendidGrandPiano(context);
 export const drum = new DrumMachine(context);
-piano.output.setVolume(120);
-drum.output.setVolume(30);
+piano.output.setVolume(100);
+drum.output.setVolume(40);
 
 var timers = [];
 export function stroke(note, velc) {

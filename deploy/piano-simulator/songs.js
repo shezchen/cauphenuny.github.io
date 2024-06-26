@@ -467,13 +467,13 @@ export var sykxmyas = {
 
 [[
 @[-1]
-^ >>>>
+^ >>>
 # 0
 (ZA)QJQ GQFQ DQSQ DQFQ/
 (XA)QJQ (GT)Q(FR)Q (DE)Q(WS)Q (DE)Q(FR)./
 (CA)QJQ (GT)Q(FR)Q (DE)Q(WS)Q (DE)Q(FR)Q/
 (VA)QJQ (GT)Q(FR)Q .... ..../
-<<
+<
 ^
 
 第一段：
@@ -493,7 +493,7 @@ AQJQ G.Q. .FGQ ..E./
 (NSFR).RQ RS(FE)R .(QR).. (SF).E./
 (BADR).RG RC(SE)R .(JE).. (CAS).Q./
 (XNQ)WQ(NSW) ..(VW)(NS) W(NS)QW V.E./
-(CME)... ..S(DJ) .... ..../
+(CME)... ..(SDJ). .... ..../
 %
 # 17
 @[-4]
@@ -546,20 +546,20 @@ ZGWQ EGWQ .... AS(DE)G/
 (ZVN).(HY). (NADHY).(VJU). (XBMJU).(GT)(GT) (MS)^(DE)^B^(DE)^/
 (CNA)... (AD).N. (AD^DE^).(N^FR)(DE)^ (XM)^(AQ)^B./
 (ZVN^AQ^)... (NAD).(V^AQ)(AQ)^ (XBM).(JU)^(AQ)^ (MSG)^(DE)^B^(DE)^/
-<<
+
 (CNA)... (AD).N. (AD)W(NE)W (XM).(BQ)./
 # 45
-(ZVN).H. (NADH).(VJ). (XBMJ).GG (MS)EBE/
+(ZVN).<H. (NADH).(VJ). (XBMJ).GG (MS)EBE/
 (CNA)... (AD).N. (ADE).(NR)T (XM)QBT/
 (ZVN)..(AD) .R(VR)E (XBM).R(SGE) .BQ./
->
+>>
 间奏：
 # 48
 @[-1]
 (ZVNQ).W. W.E. (XBME).W. W.H./
 (VNA).E. E.R. (BMSR).E. Q.W./
 @[-4]
-(ZV).(AQ). T.(VADR). E..Q (VF).G./
+(ZV).>^(AQ)^<. T.(VADR). E..Q (VF).G./
 (XBAQ)... ..(BSGW). .... ..../
 
 Q... ..(JW). .... ..../
@@ -575,7 +575,7 @@ Q... ..(JW). .... ..../
 (ZVN).H. (NADH).(VJ). (XBMJ).GG (MSG)EBE/
 (CNA)... (AD).N. (ADE).(NR)T (XM)QBT/
 (ZVN)..(AD) .R(VR)E (XBM).R(SGE) .B../
-.... .... >>> .... J.../
+.... .... >> .... J.../
 # 61
 (AQ)QJQ GQFQ DQSQ DQFQ/
 SQJQ (GT)Q(FR)Q (DE)... J.../
