@@ -2,15 +2,15 @@ import { environment } from './player.js'
 
 export var init = {
     name: "无题",
-    main: "在这里输入谱子，记谱方法可以看看教程\n\n点击右侧预设的谱子可以直接开始玩",
-    sub: "副音轨与主音轨同时播放，但不会生成音游谱面\n（默认比主音轨低一个八度）",
+    main: "在这里输入谱子，记谱方法可以看看教程\n点击右侧预设的谱子可以直接开始玩",
+    sub: "",
     env: new environment(),
 }
 
 export var tutorial = {
     env: new environment(),
     name: "教程：键位与记谱",
-    sub: "",
+    sub: "副音轨与主音轨同时播放，但不会生成音游谱面\n（默认比主音轨低一个八度）",
     main: `（教程也可以播放，点击下方播放按钮）
 教程中拍号4/4，此时一位表示一个四分音符：
 /AAAA/..../
@@ -584,3 +584,133 @@ FQJQ (GT).(FR). ..F. T.R./
 
 ..F. T.R. .... ..../
 `};
+
+export var canon = {
+    name: "卡农",
+    sub: "",
+    env: new environment({ bpm: 60 }),
+    main: `# 卡农
+# 来源：https://www.bilibili.com/video/BV1CF411H71o
+# 校对：我
+[
+(ZBD)...(XBM).../(CNA)...(CBM).../
+(ZVN)...(ZBA).../(ZVN)...(XBM).../
+
+(ZBQE)...(BSJW).../(NDHQ)...(CMGJ).../
+(VAFH)...(ZBDG).../(VAFH)...(BSGJ).../
+(ZBQE)...(BSJW).F./(NDHQ)...(CMGJ).S./
+(VAFH)...(ZBDG).D./(VAFH)...(BSGJ).F./
+]
+
+[
+(ZDQ)BA.(BGJ)X(MF)./
+(NDQ)C(AHE).(CET)M(DWY)./
+(VHR)Z(NQ).(ZGE)B(AD)./
+(VSF)Z(NHQ).(BGQ)X(MFQ)J/
+
+(ZQ)(BJ)(AQ)(BD)(BG)X(MGJ)X/
+(NDQ)C(AHE)C(CT)(ME)(DT)(MY)/
+(VHR)(ZGE)(NFW)(ZHR)(ZE)(BW)(AQ)(BJ)/
+(VFH)(ZSF)(NHQ)Z(BGQ)(XF)(MDQ)(XSJ)/
+
+(ZQ)(BJ)(AQ)(BF)(BG)X(MGJ)X/
+(NDQ)C(AHE)C(CT)(ME)(DT)(MY)/
+(VHR)(ZGE)(NFW)(ZHR)(ZE)(BW)(AQ)(BJ)/
+(VFH)(ZDG)(NSF)(ZHQ)(BGQ)[X(SMJ)](XW)G/
+]
+
+[[
+(ZQE).BG(AE).(BQ)WB.XE(MR)E(XW)./
+(NW).CQA.(CJ)Q(CJ).(BG)DMG(BM)A/
+(VFH).Z(GJ)N.(ZHQ).(ZDG).B.A.(BA)A/
+(VH)AZA(NF)H(ZQ)W(BQ).XJMQ(XW)G/
+
+(ZQE).BG(AE).(BQ)WB.XE(MR)E(XW)./
+(NW).CQA.(CJ)Q(CJ).(BG)DMG(BM)A/
+(VFH).Z(HQ)NH(ZR).(ZE).(BW)QA.(BA)A/
+(VH)AZA(NF)H(ZQ)W(BJ)X.QM.(XW)Q/
+]]
+
+
+
+
+[[
+(ZT).(BE)R(AT).(BE)R(BT)G(XH)J(MQ)W(XE)R/
+(NE).(CQ)W(AE).(CD)F(CG)H(BG)F(MG)Q(BJ)Q/
+(VH).(ZQ)J(NH).(ZG)F(ZG)F(BD)F(AG)H(BJ)Q/
+(VH).(ZQ)J(NQ).(ZJ)Q(BJ)H(XJ)Q(MW)E(XR)T/
+<
+(ZT).(BE)R(AT).(BE)R(BT)G(XH)J(MQ)W(XE)R/
+(NE).(CQ)W(AE).(CD)F(CG)H(BG)F(MG)Q(BJ)Q/
+(VH).(ZQ)J(NH).(ZG)F(ZG)F(BD)F(AG)H(BJ)Q/
+(VH).(ZQ)J(NQ).(ZJ)Q(BJ)H(XJ)Q(MW)E(XR)T/
+<
+(ZT).(BE)R(AT).(BE)R(BT)G(XH)J(MQ)W(XE)R/
+(NE).(CQ)W(AE).(CD)F(CG)H(BG)F(MG)Q(BJ)Q/
+(VH).(ZQ)J(NH).(ZG)F(ZG)F(BD)F(AG)H(BJ)Q/
+(VH).(ZQ)J(NQ).(ZJ)Q(BJ)H(XJ)Q(MW)E(XR)T/
+>>
+(ZE).(BQ)W(AE).(BW)Q(BW)J(XQ)W(ME)W(XQ)J/
+(NQ).(CH)J(AQ).(CA)S(CD)F(BD)S(MD)Q(BJ)Q/
+(VH).(ZQ)J(NH).(ZG)F(ZG)F(BD)F(AG)H(BJ)Q/
+(VH).(ZQ)J(NQ).(ZJ)Q(BJ)H(XJ)Q(MW)Q(XH)J/
+]]
+
+[
+(ZQ)BADBXMS/NCNACBMD/
+VZNAZCBA/VZNABXMS/
+]
+
+[[
+Z.(BQE)(WR)(AET).(BQE).B.(XGJ)(HQ)(MJW).(XGJ)./
+N.(CHQ)(JW)(NQE).(CHQ).C.(BQE)(JW)(MHQ).(BGJ)./
+V.(ZFH)(GJ)(NHQ).(ZFH).Z.(CAD)(SF)(BDG).(CAD)./
+V.(ZFH)(GJ)(NHQ).(ZFH).B.(XGJ)(HQ)(MJW).(XGJ)./
+
+Z.(BQE)(WR)(AET).(BQE).B.(XGJ)(HQ)(MJW).(XGJ)./
+N.(CHQ)(JW)(NQE).(CHQ).C.(BET)(WR)(MQE).(BET)./
+V.(ZRY)(ET)(NWR).(ZRY).Z.(BET)(WR)(ZQE).(BET)./
+(VY)T(ZR)Y(NT)R(ZY)W(BU)Y(XT)W(MJ)Q(XW)G/
+]]
+
+[[
+(ZQE).BG(AE).(BQ)WB.XE(MR)E(XW)./
+(NW).CQA.(CJ)Q(CJ).(BG)DMG(BM)A/
+(VFH).Z(GJ)N.(ZHQ).(ZDG).B.A.(BA)A/
+(VH)AZA(NF)H(ZQ)W(BQ).XJMQ(XW)G/
+
+(ZQE).BG(AE).(BQ)WB.XE(MR)E(XW)./
+(NW).CQA.(CJ)Q(CD)G(BJ)Q(ME)T(BU)Q/
+(VU)Y(ZT)R(NT)R(ZE)W(ZE)W(BQ)J(AQ)J(BH)G/
+(VH)G(ZF)G(NH)F(ZQ)G(BJ)H(XG)H(MJ)Q(XW)G/
+]]
+
+[[
+(ZQE).B.(AE).(BR).(BT).(XY).(MT).(XR)./
+(NE).C.(AQ).(CW).(CE).(BR).(ME).(BW)./
+(VQ).Z.(NH)J(ZQ).(ZDG).B.A.(BA)A/
+(VH)AZA(NF)H(ZQ)W(BQ).XJMQ(XW)G/
+
+(ZQE).B.(AE).(BR).(BT).(XY).(MT).(XR)./
+(NE).C.(AQ).(CW).(CE).(BR).(ME).(BW)./
+(VQ).Z.(NH)J(ZQ).(ZDG)Q(BJ)Q(AG)Q(BJ)Q/
+(VH)Q(ZJ)Q(NH)Q(ZJ)Q(BJ)G(XS)G(MJ)Q(XW)G/
+
+(ZQE).B.(AE).(BR).(BT).(XY).(MT).(XR)./
+(NE).C.(AQ).(CW).(CE).(BR).(ME).(BW)./
+(VQ).Z.(NH)J(ZQ).(ZDG)Q(BJ)Q(AG)Q(BJ)Q/
+(VH)Q(ZJ)Q(NH)Q(ZJ)Q(BJ)G(XS)G(MJ)Q(XW)G/
+
+(ZQE).B.(AE).(BR).(BT).(XY).(MT).(XR)./
+(NE).C.(AQ).(CW).(CE).(BR).(ME).(BW)./
+(VQ).Z.(NH)J(ZQ).(ZDG)Q(BJ)Q(AG)Q(BJ)Q/
+(VH)Q(ZJ)Q(NH)Q(ZJ)Q(BJ)G(XS)G(MJ)Q(XW)G/
+]]
+
+[
+(ZE)BAB(BW)XMX/(NQ)CAC(CJ)BMB/
+(VH)ZNZ(ZG)BAB/(VH)ZNZ(BJ)XMX/
+]
+(ZBDQ).../
+`,
+}

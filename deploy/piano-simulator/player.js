@@ -70,7 +70,7 @@ drum.output.setVolume(50);
 
 var timers = [];
 export function stroke(note, velc) {
-    console.log(`stroke ${note},${velc} /${velocity_adj[note]}`);
+    //console.log(`stroke ${note},${velc} /${velocity_adj[note]}`);
     piano.start({ note: note, 
                   velocity: velocity_levels[velc] + velocity_adj[note], 
     });
