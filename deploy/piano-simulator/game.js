@@ -887,6 +887,11 @@ function back_to_home() {
     window.history.back();
 }
 
+{
+    let id = Math.floor(Math.random() * 7);
+    document.getElementById('screen').style.backgroundImage = `url('./background/${id}-blur.jpg')`;
+}
+
 window.onload = function() {
     gamestart();
     pause();
