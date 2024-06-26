@@ -345,7 +345,7 @@ for (var i = 0; i < key_buttons.length; i++) {
     key_buttons[i].draggable = false; // 不可拖动
 }
 const prev_env = JSON.parse(localStorage.getItem('env'));
-if (env_verify(prev_env)) {
+if (localStorage.getItem('env') != undefined && env_verify(prev_env)) {
     env = prev_env;
     document.getElementById("difficulty-select").selectedIndex = parseInt(localStorage.getItem('difficulty'));
     console.log("loaded previous environment");

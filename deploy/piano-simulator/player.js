@@ -52,7 +52,7 @@ export function set_offset(env, mode = 0, offset = 0) {
 export function env_verify(env) {
     const std = new environment;
     for (const key in std) {
-        if (env[key] == undefined) {
+        if (!(key in env)) {
             return false;
         }
     }
