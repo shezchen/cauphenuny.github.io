@@ -888,7 +888,7 @@ function back_to_home() {
 }
 
 {
-    let id = Math.floor(Math.random() * 7);
+    let id = Math.floor(Math.random() * 6);
     document.getElementById('screen').style.backgroundImage = `url('./background/${id}-blur.jpg')`;
 }
 
