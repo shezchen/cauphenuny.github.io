@@ -217,15 +217,15 @@ function remove_line(id) {
 const status_elements = document.getElementsByClassName('status');
 const perfect_time = 50, miss_time = 100, catch_time = 350;
 const levels = [
-    { score: 147, name: "SS", sat: 80, hue: 0},
-    { score: 120, name: "S" , sat: 80, hue: 0},
-    { score:  97, name: "A+", sat: 80, hue: 10},
-    { score:  93, name: "A" , sat: 80, hue: 10},
-    { score:  87, name: "A-", sat: 80, hue: 10},
-    { score:  83, name: "B+", sat: 80, hue: 25},
-    { score:  78, name: "B" , sat: 80, hue: 25},
-    { score:  70, name: "B-", sat: 80, hue: 25},
-    { score:  60, name: "C" , sat: 80, hue: 40},
+    { score: 147, name: "SS", sat: 50, hue: 0},
+    { score: 120, name: "S" , sat: 50, hue: 0},
+    { score:  97, name: "A+", sat: 50, hue: 10},
+    { score:  93, name: "A" , sat: 50, hue: 10},
+    { score:  87, name: "A-", sat: 50, hue: 10},
+    { score:  83, name: "B+", sat: 50, hue: 25},
+    { score:  78, name: "B" , sat: 50, hue: 25},
+    { score:  70, name: "B-", sat: 50, hue: 25},
+    { score:  60, name: "C" , sat: 50, hue: 40},
     { score:   0, name: "D" , sat: 0,  hue: 0},
 ];
 
@@ -280,7 +280,7 @@ function refresh() {
     //score_element.innerHTML = `score: ${score.sum}, combo: ${score.combo}, rank: ${get_rank()}`
     let rank = get_rank();
     score_element.innerHTML = `${score.sum}&nbsp; <img class="playing-level-img" src=./scores/${rank.name}.png></img> `;
-    brighten(score_element, [[8, `hsla(${rank.hue}, ${rank.sat}%, 85%, 85%)`]]);
+    brighten(score_element, [[2, `hsla(${rank.hue}, ${rank.sat}%, 85%, 90%)`]]);
     const diff_element = document.getElementById('avg-diff');
     diff_element.innerHTML = `avg: ${(score.diff_sum / score.hit).toFixed(2)}ms`;
     const combo_element = document.getElementById('combo-title');
