@@ -391,10 +391,11 @@ function result() {
     const rank = get_rank();
     result_window.innerHTML = 
 `
-<div id="result-level" style="padding: 3em; text-align: center;"> 
+<div id="result-level" style="padding: 2em; text-align: center;"> 
     <img src=./scores/${rank.name}.png id="result-level-img">
+    <p id="level-info" class="bright"></p>
 </div>
-<div id="result-window-info" style="padding: 3em"> 
+<div id="result-window-info" style="padding: 2em"> 
     <p>
     <span class="title" style="font-size: 2.5em">${tape.name}</span>
     </p>
@@ -410,6 +411,9 @@ function result() {
 </div>
 `;
     brighten(document.getElementById('result-level-img'), [[16, `hsla(${rank.hue}, ${rank.sat}%, 70%, 0.8)`]]);
+    if (rank.score < 80) {
+        document.getElementById('level-info').innerHTML = "分数太低？<br>降低bpm或降低难度再试一次吧";
+    }
 }
 
 function resume() {
