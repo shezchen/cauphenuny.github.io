@@ -223,6 +223,14 @@ span, p {
     opacity: 1;
     animation: moveDown 0.5s linear forwards;
 }
+.playing-level-img {
+    height: 1.3em;
+    padding: 0.2em;
+}
+.playing-score {
+    display: inline-flex;
+    align-items: center;
+}
 .stat-img {
     position: absolute;
     z-index: 100;
@@ -244,6 +252,12 @@ span, p {
     top: 0; /* 顶部对齐 */
     left: 0; /* 左边对齐 */
 }
+#combo {
+    position: absolute;
+    left: 50%;
+    top: 1%;
+    transform: translate(-50%, 0);
+}
 
 .title {
     font-size: 4em;
@@ -261,9 +275,9 @@ span, p {
     background-color: rgba(255,255,255,0.1);
 }
 
-.result-level-img {
+#result-level-img {
     width: 10em;
-    filter: drop-shadow(0px 0px 10px rgba(255,255,255,0.8));
+    /*filter: drop-shadow(0px 0px 16px rgba(255,255,255,0.4)) drop-shadow(0px 0px 8px rgba(255,255,255,0.8));*/
 }
 
 .center-box {

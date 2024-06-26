@@ -5,48 +5,68 @@ import {
     init_constants,
 } from './constants.js'
 
-let env = {
-    velocity: 4,
-    global_offset: 0,
-    offset_option: 0,
-    fix_offset_cnt: 0,
-    bpm: 90,
-    time1: 4, time2: 4,
-    fixed_offset: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+export class environment {
+    constructor(options) {
+        this.velocity = 4;
+        this.offset_mode = 0;
+        this.global_offset = 0;
+        this.bpm = 90;
+        this.time1 = 4, this.time2 = 4;
+        this.shift_cnt = 0;
+        this.note_shift = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        for (const key in options) {
+            this[key] = options[key];
+        }
+        if (this.offset_mode == 1) {
+            set_offset(this, 1, this.shift_cnt);
+        }
+    }
 };
-export function set_offset(env, mode = 0, cnt = 0) {
-    env.offset_option = mode;
+
+export function set_offset(env, mode = 0, offset = 0) {
+    env.offset_mode = mode;
     if (mode == 0) {
-        env.fixed_offset.fill(0);
-        env.fix_offset_cnt = 0;
-        env.global_offset = cnt;
-        console.log(`set offset to ${cnt}`);
+        env.note_shift.fill(0);
+        env.shift_cnt = 0;
+        env.global_offset = offset;
+        console.log(`set offset to ${offset}`);
     } else {
-        env.fixed_offset.fill(0);
         env.global_offset = 0;
-        if (cnt > 0) {
-            if (cnt > 6) cnt = 6;
-            for (var i = 0; i < cnt; i++) {
-                env.fixed_offset[sharp_note[i]] = 1;
+        env.shift_cnt = offset;
+        env.note_shift.fill(0);
+        if (offset > 0) {
+            if (offset > 6) offset = 6;
+            for (var i = 0; i < offset; i++) {
+                env.note_shift[sharp_note[i]] = 1;
             }
-        } else if (cnt < 0) {
-            if (cnt < -6) cnt = -6;
-            for (var i = 0; i < (-cnt); i++) {
-                env.fixed_offset[flat_note[i]] = -1;
+        } else if (offset < 0) {
+            if (offset < -6) offset = -6;
+            for (var i = 0; i < (-offset); i++) {
+                env.note_shift[flat_note[i]] = -1;
             }
         }
-        env.fix_offset_cnt = cnt;
-        console.log(`set offsets to [${env.fixed_offset}]`);
+        console.log(`set offsets to [${env.note_shift}]`);
     }
 }
+
+export function env_verify(env) {
+    const std = new environment;
+    for (const key in std) {
+        if (env[key] == undefined) {
+            return false;
+        }
+    }
+    return true;
+}
+
 // var vel, global_offset, bpm, time1, time2;
-export { env };
 import { keyup_animation, keydown_animation, mouseenter, mouseleave } from './keyboard.js'
 import { DrumMachine, SplendidGrandPiano } from "https://unpkg.com/smplr/dist/index.mjs";
 export const context = new AudioContext();
 export const piano = new SplendidGrandPiano(context);
 export const drum = new DrumMachine(context);
-drum.output.setVolume(50);
+piano.output.setVolume(120);
+drum.output.setVolume(30);
 
 var timers = [];
 export function stroke(note, velc) {
@@ -92,11 +112,11 @@ export function stop() {
     timers.length = 0;
     piano.stop();
 }
-export function play(tape, cur_env = env) {
+export function play(tape, env) {
     console.log("------- start playing -------");
     console.log(`tape: \n ${tape} \n`);
-    var interval = 60 * 4 * 1000 / cur_env.bpm / cur_env.time2;
-    var velc = cur_env.velocity;
+    var interval = 60 * 4 * 1000 / env.bpm / env.time2;
+    var velc = env.velocity;
     var beat_stack = [1];
     var cnt = 0;
     var sum = 0;
@@ -154,8 +174,8 @@ export function play(tape, cur_env = env) {
                 tmpoffset++;
                 break;
             case '/':
-                if (cur_env.time1 != cnt) {
-                    console.log("warning: rhythm not correct: expect " + cur_env.time1 + ", read " + cnt + " .");
+                if (env.time1 != cnt) {
+                    console.log("warning: rhythm not correct: expect " + env.time1 + ", read " + cnt + " .");
                 } else {
                     console.log("success.");
                 }
@@ -183,7 +203,7 @@ export function play(tape, cur_env = env) {
                         break;
                 }
                 let num = parseInt(str);
-                set_offset(cur_env, mode, num);
+                set_offset(env, mode, num);
                 break;
 
             case '.':
@@ -196,7 +216,7 @@ export function play(tape, cur_env = env) {
                     const note = key2note[key];
                     arrange_press(
                         tape[i],
-                        note + tmpoffset + octoffset * 12 + cur_env.global_offset + cur_env.fixed_offset[note % 12], 
+                        note + tmpoffset + octoffset * 12 + env.global_offset + env.note_shift[note % 12], 
                         velc, 
                         sum * interval + start_offset,
                     );

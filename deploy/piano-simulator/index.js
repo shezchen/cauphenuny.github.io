@@ -4,55 +4,46 @@ import {
     diff, velocity_levels, velocity_adj, key2note, C1, C2, C3,
     init_constants,
 } from './constants.js'
-import { env, set_offset, play, note_down, note_up, note_stop, piano, stop } from './player.js'
+import { set_offset, env_verify, environment } from './player.js';
+import { play, note_down, note_up, note_stop, piano, stop } from './player.js'
 import { keyup_animation, keydown_animation, mouseenter, mouseleave } from './keyboard.js'
 
 let loading = 1;
+let env = {};
 
 function refresh() {
     document.getElementById("bpm").value = env.bpm;
     document.getElementById("vel").textContent = "力度：" + velocity_levels[env.velocity];
     const selectElement = document.getElementById('offset_option');
-    selectElement.selectedIndex = env.offset_option;
-    if (env.offset_option == 0) {
-        document.getElementById("key_name").innerHTML = "(1=" + note_name[(env.global_offset + 120) % 12] + ")";
+    selectElement.selectedIndex = env.offset_mode;
+    if (env.offset_mode == 0) {
         document.getElementById("key_offset").value = env.global_offset;
+        document.getElementById("key_name").innerHTML = `(1=${note_name[(env.global_offset + 120) % 12]})`;
     } else { 
-        document.getElementById("key_offset").value = env.fix_offset_cnt;
-        var cnt = parseInt(document.getElementById("key_offset").value);
+        var cnt = env.shift_cnt;
+        document.getElementById("key_offset").value = cnt;
         if (cnt >= 0) {
             if (cnt > 6) cnt = 6;
             document.getElementById("key_name").innerHTML = sharp_scale_name[cnt] + "大调 <img alt=\"调号\" class=\"keysgn-img\"" + 
                                                                                               "align=\"center\" " + 
                                                                                               "src=\"./keysignature/" + cnt + ".png\"" + 
                                                                                          ">";
-        } else if (cnt < 0) {
+        } else {
             if (cnt < -6) cnt = -6;
             document.getElementById("key_name").innerHTML = flat_scale_name[-cnt] + "大调 <img alt=\"调号\" class=\"keysgn-img\"" + 
                                                                                               "align=\"center\" " + 
                                                                                               "src=\"./keysignature/" + cnt + ".png\"" + 
                                                                                          ">";
-        } else {
         }
     }
     document.getElementById("time_sign1").value = env.time1;
     document.getElementById("time_sign2").value = env.time2;
 }
-function init_inputs() {
-    document.getElementById("song-name").value = "无题";
-    document.getElementById("input").value = "在这里输入谱子，记谱方法可以看看教程\n\n点击右侧预设的谱子可以直接开始玩";
-    document.getElementById("input2").value = "副音轨与主音轨同时播放，但不会生成音游谱面\n（默认比主音轨低一个八度）";
-}
 function init_option() {
-    env.offset_option = 0;
+    env.offset_mode = 0;
     env.velocity = 4;
     env.global_offset = 0;
     set_offset(env, 0, 0);
-}
-function init_environment() {
-    init_option();
-    env.bpm = 90;
-    env.time1 = 4, env.time2 = 4;
 }
 
 let input_loaded = 0;
@@ -81,7 +72,7 @@ function decompress(sheet) {
     return sheet;
 }
 function wrap_note(original) {
-    return original + env.global_offset + env.fixed_offset[original % 12];
+    return original + env.global_offset + env.note_shift[original % 12];
 }
 let lasting = [], caps_lock = 0;
 let terminate = note_stop;
@@ -102,7 +93,7 @@ function after_load() {
     if (localStorage.getItem('raw_main') != undefined) {
         load_inputs();
     } else {
-        init_inputs();
+        load_preset(presets.init);
     }
     refresh();
 
@@ -272,89 +263,23 @@ document.getElementById("stop").onclick = () => {
     console.log("stop");
     stop();
 }
-document.getElementById("tutorial").onclick = () => {
-    if (loading) return;
-    env.velocity = 4;
-    init_environment();
-    document.getElementById("input").value = tutorial;
-    document.getElementById("song-name").value = "教程";
-    refresh();
-};
-//document.getElementById("tutorial2").onclick = () => {
-//    init();
-//    document.getElementById("input2").value = tutorial2;
-//    refresh();
-//};
-document.getElementById("sad-machine").onclick = () => {
-    if (loading) return;
-    env.velocity = 4;
-    env.bpm = 85;
-    env.time1 = 4;
-    env.time2 = 4;
-    env.offset_option = 1;
-    env.global_offset = 0;
-    set_offset(env, 1, -3);
-    document.getElementById("song-name").value = "Sad Machine";
-    document.getElementById("input").value = sad_machine.main;
-    document.getElementById("input2").value = sad_machine.sub;
-    refresh();
-    //console.log(sampler.instrumentNames);
-    //context.resume();
-};
-document.getElementById("bwv846").onclick = () => {
-    if (loading) return;
-    env.velocity = 4;
-    env.bpm = 70;
-    env.time1 = 4;
-    env.time2 = 4;
-    env.global_offset = 0;
-    env.offset_option = 0;
-    set_offset(env, 1, 0);
-    document.getElementById("song-name").value = "巴赫C大调前奏曲";
-    document.getElementById("input").value = bwv846;
-    document.getElementById("input2").value = "";
-    refresh();
-    //console.log(sampler.instrumentNames);
-    //context.resume();
-};
-document.getElementById("haruhikage").onclick = () => {
-    if (loading) return;
-    env.velocity = 4;
-    env.bpm = 90;
-    env.time1 = 6;
-    env.time2 = 8;
-    env.offset_option = 0;
-    env.global_offset = -1;
-    set_offset(env, 1, 0);
-    document.getElementById("song-name").value = "春日影";
-    document.getElementById("input").value = haruhikage;
-    document.getElementById("input2").value = "";
-    refresh();
-    //play(haruhikage);
-    //console.log(sampler.instrumentNames);
-    //context.resume(); // enable audio context after a user interaction
-};
-document.getElementById("sykxmyas").onclick = () => {
-    if (loading) return;
-    env.velocity = 4;
-    env.bpm = 80;
-    env.time1 = 4;
-    env.time2 = 4;
-    env.global_offset = 0;
-    env.offset_option = 0;
-    set_offset(env, 1, 0);
-    document.getElementById("song-name").value = "使一颗心免于哀伤";
-    document.getElementById("input").value = sykxmyas;
-    document.getElementById("input2").value = "";
-    refresh();
-    //console.log(sampler.instrumentNames);
-    //context.resume();
-};
-document.getElementById("reset").onclick = () => {
-    init_environment();
-    init_inputs();
-    refresh();
-};
+import * as presets from './songs.js'
+function load_preset(preset) {
+    env = preset.env;
+    document.getElementById("song-name").value = preset.name;
+    document.getElementById("input").value = preset.main;
+    document.getElementById("input2").value = preset.sub;
+}
+
+let preset_elements = document.getElementsByClassName('preset');
+for (let i = 0; i < preset_elements.length; i++) {
+    preset_elements[i].onclick = () => {
+        if (loading) return;
+        load_preset(presets[preset_elements[i].id]);
+        refresh();
+    }
+}
+
 document.getElementById("start").onclick = () => {
     if (loading) return;
     console.log("click");
@@ -366,7 +291,7 @@ document.getElementById("start").onclick = () => {
     stop();
     var env2 = { ...env };
     env2.global_offset -= 12;
-    play(input.main), play(input.sub, env2);
+    play(input.main, env), play(input.sub, env2);
 }
 function gamestart() {
     if (loading) return;
@@ -413,20 +338,14 @@ const key_buttons = document.getElementsByClassName("kb-img");
 for (var i = 0; i < key_buttons.length; i++) {
     key_buttons[i].draggable = false; // 不可拖动
 }
-if (localStorage.getItem('env') != undefined) {
-    let prev_env = JSON.parse(localStorage.getItem('env'));
-    console.log(prev_env);
-    env.velocity = prev_env.velocity;
-    env.global_offset = prev_env.global_offset;
-    env.bpm = prev_env.bpm;
-    env.time1 = prev_env.time1, env.time2 = prev_env.time2;
-    env.offset_option = prev_env.offset_option;
-    set_offset(env, 1, prev_env.fix_offset_cnt);
-    console.log(env);
+const prev_env = JSON.parse(localStorage.getItem('env'));
+if (env_verify(prev_env)) {
+    env = prev_env;
     document.getElementById("difficulty-select").selectedIndex = parseInt(localStorage.getItem('difficulty'));
     console.log("loaded previous environment");
 } else {
-    init_environment();
+    env = new environment();
+    console.log("created environment");
     document.getElementById("difficulty-select").selectedIndex = 3;
 }
 refresh();

@@ -1,5 +1,17 @@
-var tutorial = `教程
-（教程也可以播放，点击下方播放按钮）
+import { environment } from './player.js'
+
+export var init = {
+    name: "无题",
+    main: "在这里输入谱子，记谱方法可以看看教程\n\n点击右侧预设的谱子可以直接开始玩",
+    sub: "副音轨与主音轨同时播放，但不会生成音游谱面\n（默认比主音轨低一个八度）",
+    env: new environment(),
+}
+
+export var tutorial = {
+    env: new environment(),
+    name: "教程：键位与记谱",
+    sub: "",
+    main: `（教程也可以播放，点击下方播放按钮）
 教程中拍号4/4，此时一位表示一个四分音符：
 /AAAA/..../
 （斜杠是小节线标记，播放时会忽略，但影响简单模式的谱面）
@@ -68,8 +80,10 @@ var tutorial = `教程
 使用注释符号：#
 一行中 # 后的内容全部忽略！
 
-`;
-var tutorial2 = `教程
+`
+};
+
+export var tutorial2 = `教程
 副音轨在播放时会跟主音轨同时播放
 本节将展示在副音轨中根据和弦自动创建伴奏的方法。
 
@@ -120,8 +134,11 @@ var tutorial2 = `教程
 
 
 `;
-var bwv846 = 
-`# 巴赫C大调前奏曲
+export var bwv846 = {
+    env: new environment({ bpm: 70 }),
+    name: "巴赫C大调前奏曲",
+    sub: "",
+    main: `# 巴赫C大调前奏曲
 [[>>ADGQEGQEADGQEGQE/ASHWRHWRASHWRHWR/
 MSGWRGWRMSGWRGWR/ADGQEGQEADGQEGQE/
 <<ADHEYHEYADHEYHEY/>>AS+FHW+FHWAS+FHW+FHW/
@@ -140,8 +157,14 @@ BDGQTGQTBDGQTGQT/BSGQRGQRBSGQRGQR/
 BSGJRGJRBSGJRGJR/ZAG-JEG-JEZAG-JEG-JE/
 ZAFHQRQHQHFHFSFS/ZM%GJWRWJWJGJSFDS/]
 (%ZA%DGQ)]
-`;
-var haruhikage = `# 春日影
+`
+};
+
+export var haruhikage = {
+    env: new environment({ bpm: 90, time1: 6, time2: 8, global_offset: -1}),
+    name: "春日影",
+    sub: "",
+    main: `# 春日影
 # 来源：https://www.bilibili.com/read/cv27118373/
 # 略有修改，使节奏正确。
 
@@ -254,9 +277,9 @@ var haruhikage = `# 春日影
 (AGQE)...W.Q...W./(VAE)..RE.W.N.M./(AGE).S.W.
 (GQ)...(AW)./(VADE)..RE.(FW)...../](ZBDQ)...../
 
-`;
+`};
 
-var komorebi = `komorebi
+export var komorebi = `komorebi
 a段：
 (VH).AE/D.W./(BDJT).../(JE).../
 (NGW).AE/D.(GQ)./(CGJ).M./(SG).../
@@ -342,7 +365,7 @@ a1段：
 
 `;
 
-var zenzenzense = `前前前世
+export var zenzenzense = `前前前世
 [
 >[{ASD}QGWGET][.QEQREQ.]
 [{ASD}QGWGET][.QEQREQ.]
@@ -356,7 +379,9 @@ var zenzenzense = `前前前世
 ]
 `;
 
-var sad_machine = {
+export var sadmachine = {
+    name: "Sad Machine",
+    env: new environment( { bpm: 85, offset_mode: 1, shift_cnt: -3 } ),
     main: 
 `# Sad Machine
 
@@ -429,7 +454,11 @@ FDD[(DJ)](DJ).[.]Q[(DJ)(DJ)]/..[(DF)..D..].QJ/
 [MF]J../[DG]..J/[A]G[Q]Q[Q[GQ]]/[MF]J..FQJ/(NH).../(CD).../^
 `};
 
-var sykxmyas = `# 使一颗心免于哀伤
+export var sykxmyas = {
+    env: new environment( { bpm: 80} ),
+    name: "使一颗心免于哀伤",
+    sub: "",
+    main: `# 使一颗心免于哀伤
 
 # 来源：https://www.bilibili.com/read/cv31009369/
 # 校对：我
@@ -476,13 +505,13 @@ AQJQ G.Q. .FGQ ..E./
 
 第二段：
 # 21
-<
 (VAD).H. (ADH).(VJ). (BSGJ).GG (BS)EBE/
 (NDG)... (DG).N. (ADE).(NR)T SQBT/
 (VAD)... (AD)R(VR)E (BSG).RE ..Q./
 @[-1]
 (AFHQ)... (FH)JQ. (SGQ)... J.../
 # 25
+<
 (ZVN)... (FH)JQ. (BSQ)... {{GQW}}.../
 .... .... .... ..../
 
@@ -501,13 +530,14 @@ VQJQ GQFQ D.QQ .W.Q/
 ZGWQ EGWQ .... AS(DE)G/
 <<
 # 35
+%
 (NSFR).R. R.(NSFE)R .RN. (SF).E./
 (BADR).R. R.(BADE)R .EB. (AD).Q./
 (XNQ)WQ(NSW) .(VW)(NS). W(NS)QW V.E./
 (CME)... .... RTE. (JW).../
 # 39
+%
 .... ..(AQ). ]]{(MJ)(AQ)(SW)}[[ ..../
-.... .... .... ..../
 
 第四段：
 # 41
@@ -516,13 +546,13 @@ ZGWQ EGWQ .... AS(DE)G/
 (ZVN).(HY). (NADHY).(VJU). (XBMJU).(GT)(GT) (MS)^(DE)^B^(DE)^/
 (CNA)... (AD).N. (AD^DE^).(N^FR)(DE)^ (XM)^(AQ)^B./
 (ZVN^AQ^)... (NAD).(V^AQ)(AQ)^ (XBM).(JU)^(AQ)^ (MSG)^(DE)^B^(DE)^/
-<
+<<
 (CNA)... (AD).N. (AD)W(NE)W (XM).(BQ)./
 # 45
 (ZVN).H. (NADH).(VJ). (XBMJ).GG (MS)EBE/
 (CNA)... (AD).N. (ADE).(NR)T (XM)QBT/
 (ZVN)..(AD) .R(VR)E (XBM).R(SGE) .BQ./
-
+>
 间奏：
 # 48
 @[-1]
@@ -533,9 +563,10 @@ ZGWQ EGWQ .... AS(DE)G/
 (XBAQ)... ..(BSGW). .... ..../
 
 Q... ..(JW). .... ..../
-
+>
 第五段：
 # 53
+@[+8]
 (AF).H. H.J. (DGJ).GG .E.E/
 (NAG)... .... E.RE (AG)Q../
 (ZVQ)AGA HA(GQ)(AQ) (XB)A(DJ)(AQ) G(AE)D(AE)/
@@ -544,7 +575,7 @@ Q... ..(JW). .... ..../
 (ZVN).H. (NADH).(VJ). (XBMJ).GG (MSG)EBE/
 (CNA)... (AD).N. (ADE).(NR)T (XM)QBT/
 (ZVN)..(AD) .R(VR)E (XBM).R(SGE) .B../
-.... .... > ^ .... J.../
+.... .... >>> .... J.../
 # 61
 (AQ)QJQ GQFQ DQSQ DQFQ/
 SQJQ (GT)Q(FR)Q (DE)... J.../
@@ -552,5 +583,4 @@ SQJQ (GT)Q(FR)Q (DE)... J.../
 FQJQ (GT).(FR). ..F. T.R./
 
 ..F. T.R. .... ..../
-^
-`;
+`};

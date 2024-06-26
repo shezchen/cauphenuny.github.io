@@ -23,9 +23,9 @@
     <b>输入谱子后可进入音游模式游玩</b><br> </label></p>
     <p id="status" style="color: red;"><b>加载中，请稍候，第一次加载时间可能较长……</b></p>
     <hr>
+    <script type="module" src="songs.js"> </script>
     <script type="module" src="index.js"> </script>
     <script type="module" src="player.js"> </script>
-    <script src="songs.js"> </script>
 
     <div class='container'>
         <div id="tape-keyboard" style="flex: 1">
@@ -82,16 +82,16 @@
                     <div id="preset-buttons">
                         <br>
                         <p>
-                          <button id="tutorial">教程：键位与记谱</button>
+                          <button id="tutorial" class="preset">教程：键位与记谱</button>
                         </p>
                           <!--button id="tutorial2">教程：自动生成伴奏织体</button-->
-                          <button id="haruhikage">春日影</button> 
-                          <button id="bwv846">巴赫 C大调前奏曲</button> <br>
-                          <button id="sad-machine">Sad Machine</button> 
-                          <button id="sykxmyas">使一颗心免于哀伤</button> 
+                          <button id="haruhikage" class="preset">春日影</button> 
+                          <button id="bwv846" class="preset">巴赫 C 大调前奏曲</button> <br>
+                          <button id="sadmachine" class="preset">Sad Machine</button> 
+                          <button id="sykxmyas" class="preset">使一颗心免于哀伤</button> 
                         </p>
                         <p>
-                          <button id="reset">复原</button>
+                          <button id="init" class="preset">复原</button>
                         </p>
                     </div>
                     <p style="text-align: left">
@@ -153,7 +153,7 @@
     背景来自 unsplash.com 和 pixiv.net
     </p>
     <hr>
-    当前版本 v1.6.0， <a href="https://cauphenuny.github.io/2024/06/14/build-a-windsonglyre-simulator/">开发日志</a>
+    当前版本 v1.7.0， <a href="https://cauphenuny.github.io/2024/06/14/build-a-windsonglyre-simulator/">开发日志</a>
     <br>
     <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fcauphenuny.github.io%2Fdeploy%2Fpiano-simulator&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=Hits&edge_flat=false"/></a>
     <a  href="https://github.com/cauphenuny/diy-rhythm-game">
