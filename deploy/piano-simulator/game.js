@@ -583,7 +583,7 @@ function play() {
     }
     clock.start();
     interval_id = setInterval(frame, frame_time);
-    refresh_id = setInterval(refresh, frame_time * 12);
+    refresh_id = setInterval(refresh, frame_time * 24);
 }
 
 function code_wrap(code, env) {
