@@ -1,6 +1,7 @@
 let tape = localStorage.getItem('tape');
 let env = JSON.parse(localStorage.getItem('env'));
 let delay = parseInt(localStorage.getItem('delay'));
+let drop_time = parseInt(localStorage.getItem('drop_time'));
 let is_tutorial = parseInt(localStorage.getItem('is_tutorial'));
 let difficulty = parseInt(localStorage.getItem('difficulty'));
 console.log("环境：", env);
@@ -38,7 +39,6 @@ let key2col = [];
 let position = [];
 let available_key = "";
 
-const drop_time = 1200;
 const trigger_time = drop_time * 0.85 + delay;
 const start_pos = 0, end_pos = 90, trigger_pos = (trigger_time / drop_time) * (end_pos - start_pos) + start_pos;
 const trigger_duration = trigger_pos - start_pos, all_duration = end_pos - start_pos;
@@ -138,8 +138,10 @@ function create_clock() {
         pause_time = new Date().getTime();
     }
     function resume() {
-        start_time += new Date().getTime() - pause_time;
-        pause_time = 0;
+        if (pause_time != 0) {
+            start_time += new Date().getTime() - pause_time;
+            pause_time = 0;
+        }
     }
     function is_paused() {
         return pause_time != 0;
@@ -455,12 +457,11 @@ function play() {
     //for (let i = 0; i < events.length; i++) console.log(events[i]);
     let event_pos = 0, bgm_pos = 0;
     let frame_time = 1000 / frame_rate;
-    let interval_id;
+    let interval_id, refresh_id;
     const progress_line = document.getElementById("progress-line");
     function frame() {
         if (clock.is_paused()) return;
         const start_time = clock.get();
-        refresh();
         while (events.length - event_pos > 0) {
             const eve = events[event_pos];
             if (clock.get() > eve.time) {
@@ -495,6 +496,7 @@ function play() {
         }
         if (event_pos >= events.length) {
             clearInterval(interval_id);
+            clearInterval(refresh_id);
             if (is_playing == 1) {
                 is_playing = 0;
                 result();
@@ -581,6 +583,7 @@ function play() {
     }
     clock.start();
     interval_id = setInterval(frame, frame_time);
+    refresh_id = setInterval(refresh, frame_time * 12);
 }
 
 function code_wrap(code, env) {

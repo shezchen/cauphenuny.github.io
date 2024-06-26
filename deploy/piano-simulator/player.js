@@ -61,7 +61,7 @@ export function env_verify(env) {
 
 // var vel, global_offset, bpm, time1, time2;
 import { keyup_animation, keydown_animation, mouseenter, mouseleave } from './keyboard.js'
-import { DrumMachine, SplendidGrandPiano } from "https://unpkg.com/smplr/dist/index.mjs";
+import { DrumMachine, SplendidGrandPiano } from "./library/smplr@0.15.1.mjs";
 export const context = new AudioContext();
 export const piano = new SplendidGrandPiano(context);
 export const drum = new DrumMachine(context);

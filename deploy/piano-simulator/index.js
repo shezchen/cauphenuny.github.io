@@ -303,7 +303,9 @@ function gamestart() {
     save_environment();
     localStorage.setItem('tape', JSON.stringify(input));
     localStorage.setItem('difficulty', document.getElementById("difficulty-select").selectedIndex);
-    localStorage.setItem('delay', document.getElementById("delay").value);
+    localStorage.setItem('delay', document.getElementById("delay-slider").value);
+    const raw = document.getElementById("drop-slider").value;
+    localStorage.setItem('drop_time', 1500 / raw);
     window.location.href = './game.html'
 }
 document.getElementById("gamestart").onclick = () => {
