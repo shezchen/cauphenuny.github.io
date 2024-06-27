@@ -194,6 +194,16 @@ function after_load() {
             pedal_up();
         }
     });
+    document.getElementById('Pedal').addEventListener('mouseenter', function() {
+        if (pedal_lock) {
+            pedal_up();
+        }
+    });
+    document.getElementById('Pedal').addEventListener('mouseleave', function() {
+        if (pedal_lock) {
+            pedal_down();
+        }
+    });
     document.addEventListener("keyup", function(event) {
         var key = event.key.toUpperCase();
         var code = key.charCodeAt();
