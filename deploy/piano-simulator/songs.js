@@ -573,11 +573,11 @@ Q... ..(JW). .... ..../
 (ZVN).H. (NADH).(VJ). (XBMJ).GG (MSG)EBE/
 (CNA)... (AD).N. (ADE).(NR)T (XM)QBT/
 (ZVN)..(AD) .R(VR)E (XBM).R(SGE) .B../
-.... .... >> .... J.../
+.... .... > .... J.../
 # 61
-(AQ)QJQ GQFQ DQSQ DQFQ/
+(AZ)QJQ GQFQ DQSQ DQFQ/
 SQJQ (GT)Q(FR)Q (DE)... J.../
-(DQ)QJQ (GT)Q(FR)Q (DE)Q(SW)Q (DE)Q(FR)Q/
+(AC)QJQ (GT)Q(FR)Q (DE)Q(SW)Q (DE)Q(FR)Q/
 FQJQ (GT).(FR). ..F. T.R./
 
 ..F. T.R. .... ..../
