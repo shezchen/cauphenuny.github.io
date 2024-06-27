@@ -166,7 +166,7 @@ export var haruhikage = {
     sub: "",
     main: `# 春日影
 # 来源：https://www.bilibili.com/read/cv27118373/
-# 略有修改，使节奏正确。
+# 校对：我
 
 [
 前奏：
@@ -588,7 +588,7 @@ FQJQ (GT).(FR). ..F. T.R./
 export var canon = {
     name: "卡农",
     sub: "",
-    env: new environment({ bpm: 70 }),
+    env: new environment({ bpm: 72, global_offset: 2 }),
     main: `# 卡农
 # 来源：https://www.bilibili.com/video/BV1CF411H71o
 # 校对：我

@@ -265,7 +265,8 @@ document.getElementById("stop").onclick = () => {
 }
 import * as presets from './songs.js'
 function load_preset(preset) {
-    env = preset.env;
+    //console.log(preset.env);
+    env = { ...preset.env };
     document.getElementById("song-name").value = preset.name;
     document.getElementById("input").value = preset.main;
     document.getElementById("input2").value = preset.sub;
