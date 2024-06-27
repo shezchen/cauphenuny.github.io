@@ -54,9 +54,9 @@ title_element.innerHTML = tape.name;
 const level2name = ['简单','较简单','普通','较困难','困难'];
 let song_info = "";
 if (is_tutorial == 1) {
-    song_info = `${level2name[difficulty]} | bpm ${env.bpm} | 演示模式`;
+    song_info = `${level2name[difficulty]} | bpm: ${env.bpm} | 演示模式`;
 } else {
-    song_info = `${level2name[difficulty]} | bpm ${env.bpm}`;
+    song_info = `${level2name[difficulty]} | bpm: ${env.bpm}`;
 }
 for (let i = 1; i <= 7; i++) {
     const pos = (i - 4) * 10 + 50;
@@ -78,7 +78,7 @@ song_info_element.innerHTML = song_info;
 trigger_line.style.top = trigger_pos + "%";
 const playing_song_name = document.getElementById('playing-song-name');
 playing_song_name.style.opacity = 0;
-playing_song_name.innerHTML = tape.name;
+playing_song_name.innerHTML = `${tape.name}<br><span style='font-size: medium'>难度：${song_info}</span>`;
 
 if (difficulty >= 2) {
     available_key = "SDF JKL";
@@ -268,13 +268,13 @@ function get_rank() {
 }
 
 let keyframes = [
-    { combo: 0,    hue: 220, sat: 0 , radius: 15},
-    { combo: 30,   hue: 220, sat: 50, radius: 15},
-    { combo: 80,   hue: 60,  sat: 50, radius: 15},
-    { combo: 150,  hue: 0,   sat: 50, radius: 15},
-    { combo: 500,  hue: 0,   sat: 50, radius: 50},
+    { combo: 1e10, hue: 0,   sat: 50, radius: 20}, //inf
 
-    { combo: 1e10, hue: 0,   sat: 50, radius: 50}, //inf
+    { combo: 300,  hue: 0,   sat: 50, radius: 15},
+    { combo: 150,  hue: 0,   sat: 50, radius: 5},
+    { combo: 80,   hue: 60,  sat: 50, radius: 5},
+    { combo: 30,   hue: 220, sat: 50, radius: 5},
+    { combo: 0,    hue: 220, sat: 0 , radius: 0},
 ];
 
 function refresh() {
@@ -288,22 +288,23 @@ function refresh() {
     const combo_element = document.getElementById('combo-title');
     const combo_num_element = document.getElementById('combo-num');
     combo_num_element.innerHTML = score.combo;
-    let color = "", shadow_color = "", border_color = "";
+    let color = "", shadow_color = "", border_color = "", radius = 0;
     let len = keyframes.length
-    for (let i = 0; i < len; i++) {
+    for (let i = 1; i < len; i++) {
         if (score.combo >= keyframes[i].combo) {
-            let proportion = (score.combo - keyframes[i].combo) / (keyframes[i + 1].combo - keyframes[i].combo);
-            let hue = keyframes[i].hue + proportion * (keyframes[i + 1].hue - keyframes[i].hue);
-            let sat = keyframes[i].sat + proportion * (keyframes[i + 1].sat - keyframes[i].sat);
+            let proportion = (score.combo - keyframes[i].combo) / (keyframes[i - 1].combo - keyframes[i].combo);
+            let hue = keyframes[i].hue + proportion * (keyframes[i - 1].hue - keyframes[i].hue);
+            let sat = keyframes[i].sat + proportion * (keyframes[i - 1].sat - keyframes[i].sat);
+            radius = keyframes[i].radius + proportion * (keyframes[i - 1].radius - keyframes[i].radius);
             color = `hsl(${hue}, ${sat}%, 90%)`;
             shadow_color = `hsl(${hue}, ${sat}%, 80%)`;
             border_color = `hsl(${hue}, ${sat}%, 50%)`;
+            break;
         }
     }
-    //console.log(color);
     combo_element.style.color = color;
     combo_num_element.style.color = color;
-    brighten(combo_num_element, [[2, border_color], [20, shadow_color]]);
+    brighten(combo_num_element, [[2, border_color], [radius, shadow_color]]);
 }
 
 function draw_status(col, name) {
