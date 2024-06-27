@@ -20,7 +20,7 @@ function refresh() {
         document.getElementById("key_offset").value = env.global_offset;
         document.getElementById("key_name").innerHTML = `(1=${note_name[(env.global_offset + 120) % 12]})`;
     } else { 
-        var cnt = env.shift_cnt;
+        let cnt = env.shift_cnt;
         document.getElementById("key_offset").value = cnt;
         if (cnt >= 0) {
             if (cnt > 6) cnt = 6;
@@ -50,8 +50,8 @@ let input_loaded = 0;
 function extract(tape) {
     console.log("------- start extracting -------");
     console.log(`origin: \n ${tape} \n`);
-    var ext = "";
-    for (var i = 0; i < tape.length; i++) {
+    let ext = "";
+    for (let i = 0; i < tape.length; i++) {
         switch (tape[i]) {
             case '#':
                 while (i < tape.length && tape[i] != '\n' && tape[i] != '\r') {
@@ -81,7 +81,7 @@ function after_load() {
     status_element.style.color = "green";
     status_element.innerHTML = "准备就绪";
     const hovers = document.getElementsByClassName("disable-when-loaded");
-    for (var i = 0; i < hovers.length; i++) {
+    for (let i = 0; i < hovers.length; i++) {
         hovers[i].style.display = "none";
     }
     const pedal = document.getElementById('pedal-hover');
@@ -98,9 +98,9 @@ function after_load() {
     let lasting = [], pedal_lock = 0;
     let terminate = note_stop;
     const key_buttons = document.getElementsByClassName("kb-img");
-    for (var i = 0; i < key_buttons.length; i++) {
+    for (let i = 0; i < key_buttons.length; i++) {
         key_buttons[i].addEventListener('mousedown', function() {
-            var name = this.id, code = name.charCodeAt();
+            let name = this.id, code = name.charCodeAt();
             note_down(name, wrap_note(key2note[code]), env.velocity);
         });
         key_buttons[i].addEventListener('mouseenter', function() {
@@ -108,7 +108,7 @@ function after_load() {
         });
         key_buttons[i].addEventListener('mouseleave', function(event) {
             mouseleave(this.parentNode);
-            var name = this.id, note = wrap_note(key2note[name.charCodeAt()]);
+            let name = this.id, note = wrap_note(key2note[name.charCodeAt()]);
             note_up(name);
             terminate(note);
         });
@@ -141,8 +141,8 @@ function after_load() {
         if (event.ctrlKey || event.altKey || event.metaKey) {
             return;
         }
-        var key = event.key.toUpperCase();
-        var code = key.charCodeAt();
+        let key = event.key.toUpperCase();
+        let code = key.charCodeAt();
         console.log(`${key} ${code} down caps:${pedal_lock}`);
         switch (key) {
             case '-':
@@ -205,8 +205,8 @@ function after_load() {
         }
     });
     document.addEventListener("keyup", function(event) {
-        var key = event.key.toUpperCase();
-        var code = key.charCodeAt();
+        let key = event.key.toUpperCase();
+        let code = key.charCodeAt();
         console.log(`${key} ${code} up caps:${pedal_lock}`);
         switch (key) {
             case 'SHIFT':
@@ -305,10 +305,10 @@ document.getElementById("start").onclick = () => {
     //getAttribute();
     read_option();
     save_inputs();
-    var input = fetch_inputs();
+    let input = fetch_inputs();
     save_environment();
     stop();
-    var env2 = { ...env };
+    let env2 = { ...env };
     env2.global_offset -= 12;
     play(input.main, env), play(input.sub, env2);
 }
@@ -317,7 +317,7 @@ function gamestart() {
     stop();
     read_option();
     save_inputs();
-    var input = fetch_inputs();
+    let input = fetch_inputs();
     console.log(input);
     save_environment();
     localStorage.setItem('tape', JSON.stringify(input));
@@ -356,11 +356,11 @@ document.getElementById("reset-environment").onclick = () => {
     refresh();
 }
 
-//var str = "";
+//let str = "";
 init_constants();
 //console.log(str);
 const key_buttons = document.getElementsByClassName("kb-img");
-for (var i = 0; i < key_buttons.length; i++) {
+for (let i = 0; i < key_buttons.length; i++) {
     key_buttons[i].draggable = false; // 不可拖动
 }
 const prev_env = JSON.parse(localStorage.getItem('env'));

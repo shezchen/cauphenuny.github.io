@@ -36,12 +36,12 @@ export function set_offset(env, mode = 0, offset = 0) {
         env.note_shift.fill(0);
         if (offset > 0) {
             if (offset > 6) offset = 6;
-            for (var i = 0; i < offset; i++) {
+            for (let i = 0; i < offset; i++) {
                 env.note_shift[sharp_note[i]] = 1;
             }
         } else if (offset < 0) {
             if (offset < -6) offset = -6;
-            for (var i = 0; i < (-offset); i++) {
+            for (let i = 0; i < (-offset); i++) {
                 env.note_shift[flat_note[i]] = -1;
             }
         }
@@ -59,7 +59,7 @@ export function env_verify(env) {
     return true;
 }
 
-// var vel, global_offset, bpm, time1, time2;
+// let vel, global_offset, bpm, time1, time2;
 import { keyup_animation, keydown_animation, mouseenter, mouseleave } from './keyboard.js'
 import { DrumMachine, SplendidGrandPiano } from "./library/smplr@0.15.1.mjs";
 export const context = new AudioContext();
@@ -68,7 +68,7 @@ export const drum = new DrumMachine(context);
 piano.output.setVolume(120);
 drum.output.setVolume(50);
 
-var timers = [];
+let timers = [];
 export function stroke(note, velc) {
     //console.log(`stroke ${note},${velc} /${velocity_adj[note]}`);
     piano.start({ note: note, 
@@ -106,7 +106,7 @@ function sleep(milliseconds) {
   });
 }
 export function stop() {
-    for (var i = 0; i < timers.length; i++) {
+    for (let i = 0; i < timers.length; i++) {
         clearTimeout(timers[i]);
     }
     timers.length = 0;
@@ -115,23 +115,23 @@ export function stop() {
 export function play(tape, env) {
     console.log("------- start playing -------");
     console.log(`tape: \n ${tape} \n`);
-    var interval = 60 * 4 * 1000 / env.bpm / env.time2;
-    var velc = env.velocity;
-    var beat_stack = [1];
-    var cnt = 0;
-    var sum = 0;
-    var now = context.currentTime;
-    var start_offset = 100;
-    var getTop = arr => arr[arr.length - 1];
-    var tmpoffset = 0, octoffset = 0;
-    var in_arpeggio = [0];
+    let interval = 60 * 4 * 1000 / env.bpm / env.time2;
+    let velc = env.velocity;
+    let beat_stack = [1];
+    let cnt = 0;
+    let sum = 0;
+    let now = context.currentTime;
+    let start_offset = 100;
+    let getTop = arr => arr[arr.length - 1];
+    let tmpoffset = 0, octoffset = 0;
+    let in_arpeggio = [0];
     function step() {
         cnt += getTop(beat_stack);
         sum += getTop(beat_stack);
         in_arpeggio[in_arpeggio.length - 1] += getTop(beat_stack);
     }
-    for (var i = 0; i < tape.length; i++) {
-        var key = tape.charCodeAt(i);
+    for (let i = 0; i < tape.length; i++) {
+        let key = tape.charCodeAt(i);
         //console.log(i, tape[i], key);
         switch (tape[i]) {
             case '(':
