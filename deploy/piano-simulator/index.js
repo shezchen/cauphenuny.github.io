@@ -74,8 +74,6 @@ function decompress(sheet) {
 function wrap_note(original) {
     return original + env.global_offset + env.note_shift[original % 12];
 }
-let lasting = [], caps_lock = 0;
-let terminate = note_stop;
 function after_load() {
     loading = 0;
     const status_element = document.getElementById("status");
@@ -97,6 +95,8 @@ function after_load() {
     }
     refresh();
 
+    let lasting = [], pedal_lock = 0;
+    let terminate = note_stop;
     const key_buttons = document.getElementsByClassName("kb-img");
     for (var i = 0; i < key_buttons.length; i++) {
         key_buttons[i].addEventListener('mousedown', function() {
@@ -143,7 +143,7 @@ function after_load() {
         }
         var key = event.key.toUpperCase();
         var code = key.charCodeAt();
-        console.log(`${key} ${code} down caps:${caps_lock}`);
+        console.log(`${key} ${code} down caps:${pedal_lock}`);
         switch (key) {
             case '-':
                 if (env.velocity > 0) env.velocity--; 
@@ -157,15 +157,15 @@ function after_load() {
             break;
 
             case 'CAPSLOCK':
-                caps_lock ^= 1;
-                if (caps_lock) {
+                pedal_lock ^= 1;
+                if (pedal_lock) {
                     pedal_down();
                 } else {
                     pedal_up();
                 }
                 break;
             case 'SHIFT':
-                if (caps_lock) {
+                if (pedal_lock) {
                     pedal_up();
                 } else {
                     pedal_down();
@@ -186,13 +186,21 @@ function after_load() {
             break;
         }
     });
+    document.getElementById('Pedal').addEventListener('mousedown', function() {
+        pedal_lock ^= 1;
+        if (pedal_lock) {
+            pedal_down();
+        } else {
+            pedal_up();
+        }
+    });
     document.addEventListener("keyup", function(event) {
         var key = event.key.toUpperCase();
         var code = key.charCodeAt();
-        console.log(`${key} ${code} up caps:${caps_lock}`);
+        console.log(`${key} ${code} up caps:${pedal_lock}`);
         switch (key) {
             case 'SHIFT':
-                if (caps_lock) {
+                if (pedal_lock) {
                     pedal_down();
                 } else {
                     pedal_up();
