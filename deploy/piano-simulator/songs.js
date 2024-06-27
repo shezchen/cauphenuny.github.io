@@ -139,6 +139,7 @@ export var bwv846 = {
     name: "巴赫C大调前奏曲",
     sub: "",
     main: `# 巴赫C大调前奏曲
+# 转写：我
 [[>>ADGQEGQEADGQEGQE/ASHWRHWRASHWRHWR/
 MSGWRGWRMSGWRGWR/ADGQEGQEADGQEGQE/
 <<ADHEYHEYADHEYHEY/>>AS+FHW+FHWAS+FHW+FHW/
@@ -382,9 +383,7 @@ export var zenzenzense = `前前前世
 export var sadmachine = {
     name: "Sad Machine",
     env: new environment( { bpm: 85, offset_mode: 1, shift_cnt: -3 } ),
-    main: 
-`# Sad Machine
-
+    main: `# Sad Machine
 # 原曲：Porter Robinson
 # 钢琴改编：Xeuphoria
 # 扒谱：B站up主蓝莓夹心奥利奥
@@ -459,7 +458,6 @@ export var sykxmyas = {
     name: "使一颗心免于哀伤",
     sub: "",
     main: `# 使一颗心免于哀伤
-
 # 来源：https://www.bilibili.com/read/cv31009369/
 # 校对：我
 
