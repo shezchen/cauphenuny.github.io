@@ -184,22 +184,22 @@ r_{n-1}&amp;=r_{n}x_{n+1}\\
     <url>/2024/06/14/build-a-windsonglyre-simulator/</url>
     <content><![CDATA[<p>试玩链接: <a href="/deploy/piano-simulator">原琴模拟器</a></p>
 <p>音色库来源：<a href="https://space.bilibili.com/243664595">@Colalala_冰阔落落落</a></p>
-<hr />
+<hr>
 <p>6.14</p>
 <p>试了半天，发现没法正常播放这个风物之诗琴的音源，决定先用 smplr 默认的钢琴音源把别的写了。</p>
 <p>写好了键盘演奏函数、谱子 parser 以及自动播放功能。</p>
 <p>version 0.1.0</p>
-<hr />
+<hr>
 <p>6.15</p>
 <p>加入 <code>[]</code> <code>&#123;&#125;</code> 表示时值变化。</p>
 <p>添加临时升降记号 <code>-/+</code> 以及临时高/低八度记号。</p>
 <p>重写了教程</p>
 <p>version 0.3.0</p>
-<hr />
+<hr>
 <p>6.16</p>
 <p>添加了固定调转调方式，更适合对着五线谱演奏。</p>
 <p>version 0.4.0</p>
-<hr />
+<hr>
 <p>6.17</p>
 <p>优化了调号显示。</p>
 <p>version 0.4.4</p>
@@ -209,7 +209,7 @@ r_{n-1}&amp;=r_{n}x_{n+1}\\
 <p>version 0.6.0</p>
 <p>加了个加载时的提示悬浮窗</p>
 <p>version 0.6.1</p>
-<hr />
+<hr>
 <p>6.18</p>
 <p>重构了代码</p>
 <p>version 0.7.0</p>
@@ -223,14 +223,14 @@ r_{n-1}&amp;=r_{n}x_{n+1}\\
 <p>加上了音游模式，判定还没写</p>
 <p>（似乎跑题写成音游了）</p>
 <p>version 0.8.0</p>
-<hr />
+<hr>
 <p>6.19</p>
 <p>重构了代码</p>
 <p>version 0.9.0</p>
 <p>加上了判定</p>
 <p>总代码行数 1000 行纪念（仅计算 js 文件、不含预设谱子）</p>
 <p>version 0.10.1</p>
-<hr />
+<hr>
 <p>6.20</p>
 <p>加了个分数评级</p>
 <p>version 0.10.5</p>
@@ -254,7 +254,7 @@ r_{n-1}&amp;=r_{n}x_{n+1}\\
 </ul>
 <p>同时按下的音数量限制：简单 1 ，较简单/普通/较困难 2，困难 6</p>
 <p>version 0.11.0</p>
-<hr />
+<hr>
 <p>6.21</p>
 <p>添加了副音轨</p>
 <p>version 0.11.1</p>
@@ -268,7 +268,7 @@ r_{n-1}&amp;=r_{n}x_{n+1}\\
 <p>version 0.14.0</p>
 <p>修了下判定延迟失效的bug</p>
 <p>version 0.14.3</p>
-<hr />
+<hr>
 <p>6.22</p>
 <p>修了个移调的bug</p>
 <p>1.0.0发布！</p>
@@ -279,7 +279,7 @@ r_{n-1}&amp;=r_{n}x_{n+1}\\
 <p>version 1.2.0</p>
 <p>把曲名单独分了个框出来</p>
 <p>version 1.3.0</p>
-<hr />
+<hr>
 <p>6.25</p>
 <p>键盘抬起时制音，从而支持断奏</p>
 <p>version 1.4.0</p>
@@ -298,6 +298,7 @@ r_{n-1}&amp;=r_{n}x_{n+1}\\
 <p>找到了个好教程</p>
 <p><a href="https://wangdoc.com/javascript/">JavaScript 教程</a></p>
 <p><a href="https://www.zmln1021.cn/note/git/">git笔记</a></p>
+<p>发现拿 vim 默认的 bash 的高亮写谱子有奇效（不是</p>
 ]]></content>
       <categories>
         <category>CS</category>

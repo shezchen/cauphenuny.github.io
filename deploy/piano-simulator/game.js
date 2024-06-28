@@ -785,7 +785,7 @@ function parse(tape, check = [], cur_env) {
 
             default:
                 let cur_step = getTop(stack);
-                let note_code = code_wrap(key2note[key] + tmpoffset + octoffset * 12, cur_env);
+                let note_code = code_wrap(key2note[key], cur_env) + tmpoffset + octoffset * 12;
                 bgm.notes.push({
                     instrument: "piano",
                     options: {

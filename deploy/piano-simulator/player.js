@@ -174,7 +174,7 @@ export function play(tape, env) {
                 tmpoffset++;
                 break;
             case '/':
-                if (env.time1 != cnt) {
+                if (Math.abs(env.time1 - cnt) > 1e-8) {
                     console.log("warning: rhythm not correct: expect " + env.time1 + ", read " + cnt + " .");
                 } else {
                     console.log("success.");

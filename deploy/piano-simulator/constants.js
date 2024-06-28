@@ -11,7 +11,7 @@ export const sharp_scale_name = ["C", "G", "D", "A", "E", "B", "F<sup>♯</sup>"
 export const flat_note = [11, 4, 9, 2, 7, 0, 5];
 export const flat_scale_name = ["C", "F", "B<sup>♭</sup>", "E<sup>♭</sup>", "A<sup>♭</sup>", "D<sup>♭</sup>", "G<sup>♭</sup>"];
 export const diff = [2, 2, 1, 2, 2, 2, 1];
-export const velocity_levels = [32, 48, 56, 64, 68, 72, 76, 84, 96, 108];
+export const velocity_levels = [36, 48, 56, 64, 68, 72, 76, 84, 96, 108];
 export const velocity_adj = [];
 export const key2note = [];
 export const C1 = 48, C2 = 60, C3 = 72;
@@ -24,7 +24,11 @@ export const beat = [
 [2, 0, 0, 0, 0],
 [2, 0, 0, 1, 0, 0],
 [2, 0, 1, 0, 1, 0, 0],
-[2, 0, 0, 1, 0, 0, 1, 0],
+[2, 0, 0, 1, 0, 0, 1, 0], // 8
+[2, 0, 0, 1, 0, 0, 1, 0, 0],
+[2, 0, 0, 1, 0, 0, 1, 0, 1, 0],
+[2, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0],
+[2, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0], //12
 ]; //强弱拍
 export function init_constants() {
     for (var i = 0; i <= 120; i++) {

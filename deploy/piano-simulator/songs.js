@@ -711,4 +711,289 @@ V.(ZRY)(ET)(NWR).(ZRY).Z.(BET)(WR)(ZQE).(BET)./
 ]
 (ZBDQ).../
 `,
-}
+};
+
+export let flowerdance = {
+    name: "Flower Dance",
+    sub: "",
+    env: new environment( { bpm: 90, global_offset: -1 } ),
+    main: `# Flower Dance
+# 来源：https://www.bilibili.com/read/cv27418165/
+# 校对：我
+第一段：
+[
+(VE)(AW)(FY)(GW) (HE)WHW/
+(BE)(SW)(GY)(HW) (JE)WHW/
+(NE)(DW)(HY)(JW) (QE)WHW/
+EWYW EWHW/
+(VE)(AW)(FY)(GW) (HE)WHW/
+(BE)(SW)(GY)(HW) (JE)WHW/
+(NE)(DW)(HY)(JW) (QE)WYW/
+]
+{{NDHWE}}.../
+第二段：
+# 9
+[[
+D.A.  .NAD  (BS).X.  (MG).../
+(CS).MJ  (DH).MG  (NH).D.  (HE).D./
+(VH).A.  (FE).A.  (BW).]{(SW)EW}[  (GJ).(SG)./
+(NH).C.  N.M.  A.C.  N.D./
+(VD).Z.  VNAD  (BS).X.  (MG).../
+(CS).(MG).  (DH).J.  (ND)Q(CD)J  (AD)HDG/
+(VH)E(AW)E  (FH)EWE  (BH)E(SW)E  (GH)EWE/
+(NH)E(CW)E  (NH)E(MW)E  (AH)E(NW)E  (CH).D./
+第三段：
+# 17
+(NQ)D(CJ)D  (AQ)D(CW)D  (BJ)M(XH)M  (MG).DG/
+(VH)A(ZG)A  (NH)A(ZQ)A  (CG)A(BF)A  (CD).ET/
+(XR)H(NE)H  (SW)H(NR)H  (ZE)D(BW)D  (SQ)D(BE)D/
+(MW)F(SQ)F  JF(SH)F  C.(MH).  (SJ).(MD)./
+(NQ)D(CJ)D  (AQ)D(CW)D  (BJ)M(XH)M  (MG).DG/
+(VH)A(ZG)A  (NH)A(ZQ)A  (CG)A(ZF)A  (CD).DG/
+(XF).(NR)E  (SW)Q(NJ).  (ZE)W(BE)R  (SE)W(BQ)J/
+(MSFH).E.  (CMD).E.  (NH).D.  H.../
+第四段：
+# 25
+(VD).Z.  VNAD  (BS).X.  (MG).../
+(CS).MJ  (DH).MG  (NH).D.  (HE).D./
+(VH).A.  (FE).A.  (BW).]{(SW)EW}[  (GJ).(SG)./
+(NH).C.  N.M.  A.C.  N.D./
+(VD).Z.  VNAD  (BS).X.  (MG).../
+(CS).(MG).  (DH).J.  (ND)Q(CD)J  (AD)HDG/
+(VH)E(AW)E  (FH)EWE  (BH)E(SW)E  (GH)EWE/
+(NH)E(CW)E  (NH)E(MW)E  (AH)E(NW)E  (CH).../
+(VD).Z.  VNAD  (BS).X.  (MG).../
+(CS).MJ  (DH).MG  (NH).D.  (HE).D./
+(VH).A.  (FE).A.  (BW).]{(SW)EW}[  (GJ).(SG)./
+(NH).C.  N.M.  A.C.  N.D./
+(VD).Z.  VNAD  (BS).X.  (MG).../
+(CS).(MG).  (DH).J.  (ND)Q(CD)J  (AD)HDG/
+(VH)E(AW)E  (FH)EWE  (BH)E(SW)E  (GH)EWE/
+(NH)E(CW)E  (NH)E(MW)E  (AH)E(NW)E  (CH).D./
+第五段：
+# 41
+(NQ)D(CJ)D  (AQ)D(CW)D  (BJ)M(XH)M  (MG).DG/
+(VH)A(ZG)A  (NH)A(ZQ)A  (CG)A(BF)A  (CD).ET/
+(XR)H(NE)H  (SW)H(NR)H  (ZE)D(BW)D  (SQ)D(BE)D/
+(MW)F(SQ)F  JF(SH)F  C.(MH).  (SJ).(MD)./
+(NQ)D(CJ)D  (AQ)D(CW)D  (BJ)M(XH)M  (MG).DG/
+(VH)A(ZH)G  (NH)J(ZQ)H  (CG)A(BF)A  (CD).DG/
+(XF).(NR)E  (SW)Q(NJ).  (ZE)W(BE)R  (SE)W(BQ)J/
+(MSFH).E.  (CMD).E.  (NH).D.  H.../
+第六段：
+# 49
+(VH)NAD  (VH)ADH  (BJ)SDH  (CJ)SQJ/
+(NH)AQA  (CJ)AGA  (NH)AGA  (CD)AGA/
+(VH)NAD  (VH)ADH  (BJ)SDH  (CJ)SQJ/
+(NH)AQA  (CW)SED  (AW)SQ.  C.H./
+(VH)NAD  (VH)ADH  (BJ)SDH  (CJ)SQJ/
+(NH)AQA  (CJ)AGA  (NH)AGA  (CD)AGA/
+(VH)NAD  (VH)ADH  (BJ)SDH  (CJ)SQJ/
+(NH).C.  N.M.  A.C.  N.H./
+# 57
+(VH)N(ZA)D  (NH)A(ZD)H  (BJ)S(XD)H  (MJ)S(XQ)J/
+(NH)A(CQ)A  JA(CG)A  (NH)A(CG)A  DA(CG)A/
+(VH)N(ZA)D  (NH)A(ZD)H  (BJ)S(XD)H  (MJ)S(XQ)J/
+(NH)A(CQ)A  WS(CE)D  (NW)S(CQ).  A.(CH)./
+(VH)N(ZA)D  (NH)A(ZD)H  (BJ)S(XD)H  (MJ)S(XQ)J/
+(NH)A(CQ)A  JA(CG)A  (NH)A(CG)A  DA(CG)A/
+(VH)N(ZA)D  (NH)A(ZD)H  (BJ)S(XD)H  (MJ)S(XQ)J/
+(NH).C.  N.M.  A.C.  N.../
+# 65
+(VH)N(ZA)D  (NH)A(ZD)H  (BJ)S(XD)H  (MJ)S(XQ)J/
+(NH)A(CQ)A  JA(CG)A  (NH)A(CG)A  DA(CG)A/
+(VH)N(ZA)D  (NH)A(ZD)H  (BJ)S(XD)H  (MJ)S(XQ)J/
+(NH)A(CQ)A  WS(CE)D  (NW)S(CQ).  A.(CH)./
+(VH)N(ZA)D  (NH)A(ZD)H  (BJ)S(XD)H  (MJ)S(XQ)J/
+(NH)A(CQ)A  JA(CG)A  (NH)A(CG)A  DA(CG)A/
+(VH)N(ZA)D  (NH)A(ZD)H  (BJ)S(XD)H  (MJ)S(XQ)J/
+(NH)CNA  NADH  DHQE  (QEY).../
+(VH)N(ZA)D  (NH)A(ZD)H  (BJ)S(XD)H  (MJ)S(XQ)J/
+(NH)A(CQ)A  JA(CG)A  (NH)A(CG)A  DA(CG)A/
+(VH)N(ZA)D  (NH)A(ZD)H  (BJ)S(XD)H  (MJ)S(XQ)J/
+(NH)A(CQ)A  WS(CE)D  (NE)D(CE)D  (AE)D(CT)G/
+(VY)H(ZQ)E  (NY)Q(ZE)Y  (BU)W(XE)Y  (MU)W(XQ)J/
+(NH)A(CQ)A  JA(CG)A  (NH)A(CG)A  DA(CG)A/
+(VH)N(ZA)D  (NH)A(ZD)H  (BJ)S(XD)H  (MJ)S(XQ)J/
+(NH)CNA  NADH  DHQE  (QEY).../
+第七段：
+# 81
+(NDH)...  ....  .SDQ  JHQG/
+(NQ)D(CJ)D  (AQ)D(CW)D  (BJ)M(XH)M  (MG).DG/
+(VH)A(ZG)A  (NH)A(ZQ)A  (CG)A(BF)A  (CD).ET/
+(XR)H(NE)H  (SW)H(NR)H  (ZE)D(BW)D  (SQ)D(BE)D/
+(MW)F(SQ)F  JF(SH)F  C.(MH).  (SJ).(MD)./
+(NQ)D(CJ)D  (AQ)D(CW)D  (BJ)M(XH)M  (MG).DG/
+(VH)A(ZH)G  (NH)J(ZQ)H  (CG)A(BF)A  (CD).DG/
+(XF).(NR)E  (SW)Q(NJ).  (ZE)W(BE)R  (SE)W(BQ)J/
+(MSFH).E.  (CMD).E.  (NH).D.  H.D./
+(NQ)D(CJ)D  (AQ)D(CW)D  (BJ)M(XH)M  (MG).DG/
+(VH)A(ZH)G  (NH)J(ZQ)H  (CG)A(BF)A  (CD).DG/
+(XF).(NR)E  (SW)Q(NJ).  Z.(BE)W  (SQ)J(BH)./
+M.(SR)E  (FW)Q(SJ)H  (VM)FDS  (CA)MN./
+(NQ)D(CJ)D  (AQ)D(CW)D  (BJ)M(XH)M  (MG).DG/
+(VH)A(ZH)G  (NH)J(ZQ)H  (CG)A(BF)A  (CD).DG/
+(XF).(NR)E  (SW)Q(NJ).  (ZE)W(BE)R  (SE)W(BQ)J/
+(MSFH).E.  (CMD).E.  (NH).D.  H.../
+]]
+结尾：
+[
+# 98
+(VE)(AW)  (FY)(GW)  (HE)W  HW/
+(BE)(SW)  (GY)(HW)  (JE)W  HW/
+(NE)(DW)  (HY)(JW)  (QE)W  HW/
+EW  YW  EW  HW/
+(VE)(AW)  (FY)(GW)  (HE)W  HW/
+(BE)(SW)  (GY)(HW)  (JE)W  HW/
+(NE)(DW)  (HY)(JW)  (QE)W  YW/
+EW  YW  EW  HW/
+]
+`
+
+};
+
+export let sparkle = {
+    name: "火花",
+    env: new environment({ time1: 12, time2: 16, bpm: 90, global_offset: -1}),
+    main: `# 火花
+# 听说你的名字 7.19 要重映了？
+# 主体：https://www.bilibili.com/video/BV1b5411T79r
+# 根据A叔版本做了一些改编
+ 
+前奏：
+^
+C.. ... ... .../ V.. ... ... .../
+B.. ... ... .../ N.. ... ... B../
+主歌：
+C.. ... Q.. .../ V.. ... ... .../
+B.. ... Q.. .../ ... Z.. B.. A../
+^
+
+C.. DDD (CD).S S.A /(VA).. ... V.. .../
+B.. DDD (BD).S S.A /(ND).. D.G (NS).. (BA)../
+C.. DDD (CD).S S.A /(VA).. ... V.. .../
+B.. DDD (BD).S S.A /(BA).. Z.. B.. (AU)^QW/
+
+(Q^C).. EEE (CE).R E.W /(VQ).. ... V.. .../
+B.. EEE (BE).W W.Q /(NE).. E.T (NW).. (BQ)../
+C.. EEE (CE).W W.Q /(VQ).. Q.. (VQ).. Q../
+B.. WWW (BW).E W.Q /(VQ).. ... ... .../
+
+(CDQ)WQ ... {(C^A)GW}.Q .G. /(F^V).. ... V.. ... /(BD).. B.. B.. B../
+(CDQ)WQ ... {(C^A)GW}.Q .G. /(F^V).. ... V.. ... /(BD).. B.. B.. {{QWT}}../
+C.. EEE (CE).R E.W /(VQ).. ... V.. .../
+B.. EEE (BE).W W.Q /(NE).. E.T (NW).. (BQ)../
+C.. EEE (CE)ER E.W /(VQ).. ... V.. .../
+B.. W.W (BW).E W.Q /(BQ).. Z.. B.. A../
+
+C.. E.E (CE).R E.W /(VQ).. ... V.. .../
+B.. EEE (BE).W W.Q /(NE).. E.T (NW).. (BQ)../
+C.. EEE (CE).W W.Q /(VQ).. ... (VQ).. Q../
+B.. WWW (BW)WE W.Q /(BQ).. ... ... .../
+
+(VAT)TT T.T (BST).R E.W /(NDQ).Q Q.W (BSE).W W../
+(VAT)TT T.T (BST).R E.E /(XNE).. .WQ (BSW).. .../
+(VAQ).W E.R (BS).E W.Q /(ND).E Q.W (BS).. .../
+(VAQ).W E.R (BS).E R.T /(XN).E W.W (BS).E W. (ZBQ)/
+(ZBQ).. ... Z.. .../(ZB).. (ZB).. (BST).. .../
+
+副歌：
+... ... ... Q.J /
+(VAQ).. ..T (BST).. Q.J /
+(CMQ).. ..Y (BST).. .QQ/
+(VAW).. .WE (BSR).. .EW/
+(ZBQ).. ... Q.. ..G/
+
+(VAQ).. ..Q (BSQ).G G../
+(CMQ).Q .W. (NDQ).. .G./
+(VAW).. .WE (BSR).. .EW/
+(XNQ).. .JQ (BSW).. ..G/
+ 
+(VAQ).. ..T (BST).. Q.J/
+(CMQ).. ..Y (NDT).. ..Q/
+(VAW).. .WE (BSR).. .EW/
+(ZBQ).. Q.. (VAQ).. ..Q/
+ 
+(BSQ).. G.G (CMQ).Q .W./
+(NDQ).. T.. (VAQ).. .H./
+Q.. T.. (BSQ).H Q.. .QW/
+(XNE).. .WQ (BSW).. .../
+ 
+(ZBQ).. ... ... .../
+
+结尾：
+C.. EEE (CE).W W.Q /(VQ).. ... V.. .../
+B.. EEE (BE).W W.Q /(NE).. E.T (NW).. (BQ)../
+C.. EEE (CE).R E.W /(VQ).. ... V.. .../
+B.. WWW (BW).E W.Q /Q.. ... ... .../
+ 
+`,
+    sub: `>>>>
+ 
+^
+QWT QWT QWT QWT/ QWT QWT QWT QWT/
+QWT QWT QWT QWT/ QWT QWT QWT QWT/
+QWT QWT QWT QWT/ QWT QWT QWT QWT/
+QWT QWT QWT QWT/ QWT QWT QWT QWT/
+
+QWT QWT QWT QWT/ QWT QWT QWT QWT/
+QWT QWT QWT QWT/ QWT QWT QWT QWT/
+QWT QWT QWT QWT/ QWT QWT QWT QWT/
+QWT QWT QWT QWT/ QWT <QWE <RTY .../
+
+
+^
+QWT QWT QWT QWT/ QWT QWT QWT QWT/
+QWT QWT QWT QWT/ QWT QWT QWT QWT/
+QWT QWT QWT QWT/ QWT QWT QWT QWT/
+QWT QWT QWT QWT/ QWT QWT QWT QWT/
+
+QWT QWT QWT QWT/ QWT QWT QWT QWT/ QWT QWT QWT QWT/
+QWT QWT QWT QWT/ QWT QWT QWT QWT/ QWT QWT QWT QWT/
+QWT QWT QWT QWT/ QWT QWT QWT QWT/
+QWT QWT QWT QWT/ QWT QWT QWT QWT/
+QWT QWT QWT QWT/ QWT QWT QWT QWT/
+QWT QWT QWT QWT/ QWT QWT QWT QWT/
+
+QWT QWT QWT QWT/ QWT QWT QWT QWT/
+QWT QWT QWT QWT/ QWT QWT QWT QWT/
+QWT QWT QWT QWT/ QWT QWT QWT QWT/
+QWT QWT QWT QWT/ QWT QWT QWT QWT/
+
+... ... ... .../... ... ... .../
+... ... ... .../... ... ... .../
+... ... ... .../... ... ... .../
+... ... ... .../... ... ... .../
+... ... ... .../... ... ... .../
+<<
+... ... ... .../
+VAF HQH BSG JWJ/
+CMD GJD DGJ ETD/
+VAF HQH BSG JWJ/
+ZBA DGQ ETQ DGA/
+
+VNA FHQ BMS GJQ/
+CMD GJD DGJ ETD/
+VAF HQH BSG JWJ/
+XNS FHW BSG JWJ/
+
+VAF HQH BSG JWJ/
+CMD GJD DGJ ETD/
+VAF HQH BSG JWJ/
+ZBA DGQ ETQ DGA/
+
+XNS FHW BSG JWJ/
+CMD GJD DGJ ETD/
+VAF HQH BSG JWJ/
+XNS FHW BSG JWJ/
+>>
+^
+QWT QWT QWT QWT/
+QWT QWT QWT QWT/ QWT QWT QWT QWT/
+QWT QWT QWT QWT/ QWT QWT QWT QWT/
+QWT QWT QWT QWT/ QWT QWT QWT QWT/
+QWT QWT QWT QWT/ QWT QWT QWT QWT/
+^
+ 
+`,
+};
