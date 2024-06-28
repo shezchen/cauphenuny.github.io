@@ -182,10 +182,11 @@ r_{n-1}&amp;=r_{n}x_{n+1}\\
   <entry>
     <title>从零开始打造一个原琴模拟器</title>
     <url>/2024/06/14/build-a-windsonglyre-simulator/</url>
-    <content><![CDATA[<p>试玩链接: <a href="/deploy/piano-simulator">原琴模拟器</a></p>
-<p>音色库来源：<a href="https://space.bilibili.com/243664595">@Colalala_冰阔落落落</a></p>
+    <content><![CDATA[<p>计科导大作业</p>
+<p>试玩链接: <a href="/deploy/piano-simulator">原琴模拟器</a></p>
 <hr>
 <p>6.14</p>
+<p>音色库来源：<a href="https://space.bilibili.com/243664595">@Colalala_冰阔落落落</a></p>
 <p>试了半天，发现没法正常播放这个风物之诗琴的音源，决定先用 smplr 默认的钢琴音源把别的写了。</p>
 <p>写好了键盘演奏函数、谱子 parser 以及自动播放功能。</p>
 <p>version 0.1.0</p>
@@ -299,6 +300,10 @@ r_{n-1}&amp;=r_{n}x_{n+1}\\
 <p><a href="https://wangdoc.com/javascript/">JavaScript 教程</a></p>
 <p><a href="https://www.zmln1021.cn/note/git/">git笔记</a></p>
 <p>发现拿 vim 默认的 bash 的高亮写谱子有奇效（不是</p>
+<hr>
+<p>6.27</p>
+<p>加了几首曲子</p>
+<p>version 1.9.0</p>
 ]]></content>
       <categories>
         <category>CS</category>
