@@ -5,7 +5,7 @@ import {
     init_constants,
 } from './constants.js'
 import { set_offset, env_verify, environment } from './player.js';
-import { play, note_down, note_up, note_stop, piano, stop } from './player.js'
+import { play, note_down, note_up, note_stop, piano, stop, drum } from './player.js'
 import { keyup_animation, keydown_animation, mouseenter, mouseleave } from './keyboard.js'
 
 let loading = 1;
@@ -325,6 +325,8 @@ function gamestart() {
     localStorage.setItem('delay', document.getElementById("delay-slider").value);
     const raw = document.getElementById("drop-slider").value;
     localStorage.setItem('drop_time', 1500 / raw);
+    const volume = document.getElementById('volume-slider').value;
+    localStorage.setItem('volume', volume);
     window.location.href = './game.html'
 }
 document.getElementById("gamestart").onclick = () => {

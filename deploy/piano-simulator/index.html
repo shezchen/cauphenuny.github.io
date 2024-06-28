@@ -114,6 +114,7 @@
             <p>
                 谱面根据主音轨自动创建，记得在左边输入谱子！<br><br>
                 音符下落速度：<input type="range" id="drop-slider" min="0.5" max="1.5" value="0.85" step="0.01"><br>
+                按键音效音量：<input type="range" id="volume-slider" min="0" max="100" value="50" step="0.01"><br>
                 判定延迟：<span id="delay-time">0</span>ms
                 <input type="range" id="delay-slider" min="0" max="100" value=0 onchange="update_value('delay-time', this.value)"><br>
                 （如果你使用蓝牙耳机，建议适当调大判定延迟）<br><br>
@@ -163,10 +164,10 @@
     字体：<a href="https://github.com/yakumioto/YaHei-Consolas-Hybrid-1.12">YaHei Consolas Hybrid 1.12</a>、<a href="https://www.fonts.net.cn/font-32635283155.html">汉仪文黑</a><br>
     钢琴、鼓组音源来自<a href="https://www.npmjs.com/package/smplr">smplr</a>库<br>
     背景来自 unsplash.com 和 pixiv.net<br>
-    其他素材均为手搓
+    其他素材、动画均为手搓
     </p>
     <hr>
-    当前版本 v1.9.0， <a href="https://cauphenuny.github.io/2024/06/14/build-a-windsonglyre-simulator/">开发日志</a>
+    当前版本 v1.10.0， <a href="https://cauphenuny.github.io/2024/06/14/build-a-windsonglyre-simulator/">开发日志</a>
     <br>
     <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fcauphenuny.github.io%2Fdeploy%2Fpiano-simulator&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=Hits&edge_flat=false"/></a>
     <a  href="https://github.com/cauphenuny/diy-rhythm-game">

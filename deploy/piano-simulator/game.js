@@ -2,6 +2,7 @@ let tape = localStorage.getItem('tape');
 let env = JSON.parse(localStorage.getItem('env'));
 let delay = parseInt(localStorage.getItem('delay'));
 let drop_time = parseInt(localStorage.getItem('drop_time'));
+let volume = parseInt(localStorage.getItem('volume'));
 let is_tutorial = parseInt(localStorage.getItem('is_tutorial'));
 let difficulty = parseInt(localStorage.getItem('difficulty'));
 console.log("环境：", env);
@@ -115,6 +116,8 @@ if (difficulty >= 2) {
 
 
 import { context, drum, piano, stroke } from "./player.js";
+
+drum.output.setVolume(volume);
 
 const frame_rate = 120;
 
